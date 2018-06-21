@@ -2,7 +2,7 @@ from riotwatcher import RiotWatcher
 from requests import HTTPError
 import json
 
-
+# A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
     def __init__(self):
         with open("config.json") as data_file:
