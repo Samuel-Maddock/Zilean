@@ -8,7 +8,7 @@ import league_api.graphs.games_per_month as gpmGraph
 
 class CorePlugin(Plugin):
     @Plugin.command('graph', '<summoner_name:str...>')
-    def command_ping(self, event, summoner_name):
+    def on_graph(self, event, summoner_name):
         event.msg.reply("Loading " + summoner_name +  " data...")
 
         if (summoner_name != ""):
