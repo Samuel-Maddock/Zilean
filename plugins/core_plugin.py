@@ -2,8 +2,9 @@ import os
 
 from disco.bot import Plugin
 from disco.types.user import GameType, Game, Status
+from disco.types.message import  MessageAttachment
 
-import league_api.graphs.games_per_month as gpm_graph
+from league_api.graphs.games_per_month import GamesPerMonthGraph
 from league_api.helper import LeagueHelper
 
 
@@ -14,14 +15,17 @@ class CorePlugin(Plugin):
 
     @Plugin.command('graph', '<summoner_name:str...>')
     def on_graph(self, event, summoner_name):
-        league_helper = self.league_helper
-        event.msg.reply("Loading " + summoner_name +  " data...")
+
+        gpm_graph = GamesPerMonthGraph(self.league_helper.watcher)
+        event.msg.reply("Loading " + summoner_name + " data...")
 
         if summoner_name != "":
-            if league_helper.user_exists(summoner_name):
-                gpm_graph.render(league_helper.watcher, summoner_name)
-                event.msg.reply(attachments=[("wow.png", open(summoner_name + ".png", "r"))])
-                os.remove(summoner_name+".png")
+            if self.league_helper.user_exists(summoner_name):
+                gpm_graph.render(summoner_name)
+                filepath = summoner_name + ".png"
+
+                event.msg.reply(attachments=[("wow.png", open(filepath, "rb"))])
+                os.remove(summoner_name + ".png")
             else:
                 event.msg.reply(":warning: This summoner does not exist :warning:")
 
