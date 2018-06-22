@@ -13,11 +13,11 @@ class CorePlugin(Plugin):
         super(CorePlugin, self).load(ctx)
         self.league_helper = LeagueHelper()
 
-    @Plugin.command('graph', '<summoner_name:str...>')
+    @Plugin.command('games_per_month', '<summoner_name:str...>', group="graph", aliases=["gpm"])
     def on_graph(self, event, summoner_name):
-
+        """Displays a graph of the league games played per month per year"""
         gpm_graph = GamesPerMonthGraph(self.league_helper.watcher)
-        event.msg.reply("Loading " + summoner_name + " data...")
+        event.msg.reply("Loading " + summoner_name + "'s data...")
 
         if summoner_name != "":
             if self.league_helper.user_exists(summoner_name):
@@ -31,6 +31,7 @@ class CorePlugin(Plugin):
 
     @Plugin.command("ping")
     def on_ping(self, event):
+        """A basic ping command"""
         event.msg.reply("Pong!")
 
     @Plugin.listen("Ready")
