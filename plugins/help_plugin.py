@@ -4,8 +4,14 @@ from datetime import datetime
 
 
 class HelpPlugin(Plugin):
+    def load(self, ctx):
+        super(HelpPlugin, self).load(ctx)
+        for command in self.commands:
+            command.description = "test"
+
     @Plugin.command("info")
     def on_info(self, event):
+        """Displays information about the bot"""
         print("Test")
         embed = MessageEmbed()
         embed.title = "Zilean Bot Info"
@@ -16,4 +22,34 @@ class HelpPlugin(Plugin):
         embed.color = "444751"
         embed.timestamp = datetime.utcnow().isoformat()
         embed.set_footer(text="Bot Information")
+        event.msg.reply(embed=embed)
+
+    @Plugin.command("help")
+    def on_help(self, event):
+        """Displays a list of all of commands"""
+
+        embed = MessageEmbed()
+        embed.title = "Zilean Command List"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.description = "A list of Zilean's commands"
+        embed.color = "444751"
+        embed.timestamp = datetime.utcnow().isoformat()
+        embed.set_footer(text="Zilean Commands")
+
+        for command in self.bot.commands:
+            prefix = self.bot.config.commands_prefix
+            description = command.get_docstring()
+            cmd_name = ""
+
+            if command.group:
+                prefix += command.group + " "
+
+            if len(command.triggers) > 1:
+                for trigger in command.triggers:
+                    cmd_name += prefix + trigger + " | "
+            else:
+                cmd_name = prefix + command.name
+
+            embed.add_field(name=cmd_name, value=description)
+
         event.msg.reply(embed=embed)
