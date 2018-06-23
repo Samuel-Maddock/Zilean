@@ -6,8 +6,8 @@ from .base_graph import Graph
 
 class GamesPerMonthGraph(Graph):
 
-    def __init__(self, api_watcher):
-        super(GamesPerMonthGraph, self).__init__(api_watcher)
+    def __init__(self, api_watcher, region):
+        super(GamesPerMonthGraph, self).__init__(api_watcher, region)
 
     def retrieve_matchlist(self, summoner):
         canBeLoaded = True
@@ -18,7 +18,7 @@ class GamesPerMonthGraph(Graph):
         # Retrieve a list of all game dates
         while canBeLoaded:
             beginIndex += 100
-            history = self.api_watcher.match.matchlist_by_account("EUW1", summoner["accountId"], begin_index=beginIndex)
+            history = self.api_watcher.match.matchlist_by_account(self.region, summoner["accountId"], begin_index=beginIndex)
 
             if len(history["matches"]) < 100:
                 canBeLoaded = False
@@ -34,9 +34,7 @@ class GamesPerMonthGraph(Graph):
 
     def render(self, summoner_name="SamuelTheRandom", filepath="gpm-summoner.png"):
         api_watcher = self.api_watcher
-
-        summoner = api_watcher.summoner.by_name("EUW1", summoner_name)
-
+        summoner = api_watcher.summoner.by_name(self.region, summoner_name)
         gameDateList = self.retrieve_matchlist(summoner)
 
         # Format data into a dictionary of games played per month
