@@ -18,3 +18,8 @@ class LeagueHelper:
             if err.response.status_code == 404:
                 result = False
         return result
+
+    def get_champion_data(self):
+        with open("league_api/static_data/champions.json") as data_file:
+            data = json.load(data_file)
+        return data

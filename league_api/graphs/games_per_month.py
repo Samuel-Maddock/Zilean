@@ -32,7 +32,7 @@ class GamesPerMonthGraph(Graph):
         print("All Game Dates have been loaded for: " + summoner["name"])
         return gameDateList
 
-    def render(self, summoner_name="SamuelTheRandom"):
+    def render(self, summoner_name="SamuelTheRandom", filepath="gpm-summoner.png"):
         api_watcher = self.api_watcher
 
         summoner = api_watcher.summoner.by_name("EUW1", summoner_name)
@@ -76,6 +76,4 @@ class GamesPerMonthGraph(Graph):
         plt.xlabel("Months of the Year")
         plt.ylabel("Number of Games Played")
         plt.legend(bbox_to_anchor=(1.05, 1),loc=2, borderaxespad=0.)
-        image = summoner_name + ".png"
-
-        plt.savefig(image, bbox_inches='tight')
+        plt.savefig(filepath, bbox_inches='tight')
