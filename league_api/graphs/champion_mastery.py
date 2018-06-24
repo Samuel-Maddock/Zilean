@@ -22,12 +22,7 @@ class ChampionMasteryGraph(Graph):
         for i in range(0,5):
             mastery = champion_mastery[i]
             champion_id = mastery["championId"]
-            champion_name = ""
-
-            for name, info in self.champion_json["data"].items():
-                if info["key"] == str(champion_id):
-                    champion_name = name
-
+            champion_name = self.champion_json["keys"][str(champion_id)]
             champion_level = mastery["championLevel"]
             cm_data.append((champion_name, champion_level))
 
