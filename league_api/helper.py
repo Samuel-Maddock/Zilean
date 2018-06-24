@@ -1,6 +1,7 @@
 from riotwatcher import RiotWatcher
 from requests import HTTPError
 import json
+import time
 
 # A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
@@ -26,6 +27,45 @@ class LeagueHelper:
             if err.response.status_code == 404:
                 return False
         return True
+
+    def update_static_data(self):
+        current_timestamp = time.time()
+
+        with open("league_api/static_data/cache_info.json") as update_info:
+            info = json.load(update_info)
+
+        cache_version = info["version"]
+        cache_timestamp = info["timestamp"]
+
+        if current_timestamp - int(cache_timestamp) >= 21600: # Update static data every 6 hours
+            server_version = self.watcher.static_data.versions("EUW1")[1] # The most recent live version
+            print("[LEAGUE-API] Version difference detected. detected version: " + cache_version + " live version: " + server_version)
+            if (server_version != cache_version):
+                print("[LEAGUE-API] Current static data out of date - Updating now...")
+                self.__update_cache(server_version, current_timestamp)
+        else:
+            print("[LEAGUE-API] Static data is up to date (within 6 hours) - version: " + cache_version)
+
+    def __update_cache(self, server_version, current_timestamp):
+        tags = set()
+        tags.add("all")
+
+        champions = self.watcher.static_data.champions(region="EUW1", tags=tags)
+        with open("league_api/static_data/champions.json", "w") as champion_file:
+            json.dump(champions, champion_file)
+
+        items = self.watcher.static_data.items(region="EUW1", tags=tags)
+        with open("league_api/static_data/items.json", "w") as item_file:
+            json.dump(items, item_file)
+
+        update_info = dict()
+        update_info["version"] = server_version
+        update_info["timestamp"] = current_timestamp
+
+        with open("league_api/static_data/cache_info.json", "w") as cache_info:
+            json.dump(update_info, cache_info)
+
+        print("[LEAGUE-API] Static data has been updated to version: " + server_version)
 
     @staticmethod
     def get_champion_data():
