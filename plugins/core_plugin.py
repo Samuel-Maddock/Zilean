@@ -32,7 +32,7 @@ class HelpPlugin(Plugin):
         embed = MessageEmbed()
         embed.title = "Zilean Command List"
         embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.description = "A list of Zilean's commands"
+        embed.description = "A list of Zilean's commands. Note that <arg> is a required argument, and [arg] is an optional argument"
         embed.color = "444751"
         embed.timestamp = datetime.utcnow().isoformat()
         embed.set_footer(text="Zilean Commands")
@@ -41,15 +41,23 @@ class HelpPlugin(Plugin):
             prefix = self.bot.config.commands_prefix
             description = command.get_docstring()
             cmd_name = ""
+            args = ""
 
             if command.group:
                 prefix += command.group + " "
 
+            if command.args:
+                for arg in command.args.args:
+                    if arg.required:
+                        args += "<" + arg.name + "> "
+                    else:
+                        args += "[" + arg.name + "] "
+
             if len(command.triggers) > 1:
                 for trigger in command.triggers:
-                    cmd_name += prefix + trigger + " | "
+                    cmd_name += prefix + trigger + " " + args + " | "
             else:
-                cmd_name = prefix + command.name
+                cmd_name = prefix + command.name + " " + args
 
             embed.add_field(name=cmd_name, value=description)
 
