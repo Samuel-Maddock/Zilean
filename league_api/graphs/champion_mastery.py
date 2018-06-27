@@ -8,7 +8,7 @@ import datetime
 
 class ChampionMasteryGraph(Graph):
 
-    def __init__(self, api_watcher, champion_json, region):
+    def __init__(self, api_watcher, region, champion_json):
         super(ChampionMasteryGraph, self).__init__(api_watcher, region)
         self.champion_json = champion_json
 
