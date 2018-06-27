@@ -2,6 +2,7 @@ from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from datetime import datetime
 from disco.types.user import GameType, Game, Status
+import math
 
 
 class HelpPlugin(Plugin):
@@ -65,8 +66,11 @@ class HelpPlugin(Plugin):
 
     @Plugin.command("ping")
     def on_ping(self, event):
-        """A basic ping command"""
-        event.msg.reply("Pong!")
+        """A basic ping command, returns the latency in milliseconds"""
+        delta = datetime.now() - event.msg.timestamp
+        delta_tuple = math.modf(delta.total_seconds())
+        ms = round(delta_tuple[0] * 1000)
+        event.msg.reply("Pong! " + str(ms) + "ms")
 
     @Plugin.listen("Ready")
     def on_ready(self, event):

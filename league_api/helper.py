@@ -39,8 +39,9 @@ class LeagueHelper:
 
         if current_timestamp - int(cache_timestamp) >= 21600: # Update static data every 6 hours
             server_version = self.watcher.static_data.versions("EUW1")[1] # The most recent live version
-            print("[LEAGUE-API] Version difference detected. detected version: " + cache_version + " live version: " + server_version)
+            print("[LEAGUE-API] Checking for static data version difference...")
             if (server_version != cache_version):
+                print("[LEAGUE-API] Version difference detected. detected version: " + cache_version + " live version: " + server_version)
                 print("[LEAGUE-API] Current static data out of date - Updating now...")
                 self.__update_cache(server_version, current_timestamp)
         else:
@@ -48,6 +49,7 @@ class LeagueHelper:
 
     def __update_cache(self, server_version, current_timestamp):
         tags = set()
+
         tags.add("all")
 
         champions = self.watcher.static_data.champions(region="EUW1", tags=tags)
