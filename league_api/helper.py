@@ -43,11 +43,24 @@ class LeagueHelper:
             if (server_version != cache_version):
                 print("[LEAGUE-API] Version difference detected. detected version: " + cache_version + " live version: " + server_version)
                 print("[LEAGUE-API] Current static data out of date - Updating now...")
-                self.__update_cache(server_version, current_timestamp)
+                self._update_cache(server_version, current_timestamp)
+            else:
+                self._update_cache_timestamp(server_version, current_timestamp)
+                print("[LEAGUE-API] Version up to date: " + server_version)
+
         else:
             print("[LEAGUE-API] Static data is up to date (within 6 hours) - version: " + cache_version)
 
-    def __update_cache(self, server_version, current_timestamp):
+    def _update_cache_timestamp(self, server_version, current_timestamp):
+
+        update_info = dict()
+        update_info["version"] = server_version
+        update_info["timestamp"] = current_timestamp
+
+        with open("league_api/static_data/cache_info.json", "w") as cache_info:
+            json.dump(update_info, cache_info)
+
+    def _update_cache(self, server_version, current_timestamp):
         tags = set()
 
         tags.add("all")
@@ -60,13 +73,7 @@ class LeagueHelper:
         with open("league_api/static_data/items.json", "w") as item_file:
             json.dump(items, item_file)
 
-        update_info = dict()
-        update_info["version"] = server_version
-        update_info["timestamp"] = current_timestamp
-
-        with open("league_api/static_data/cache_info.json", "w") as cache_info:
-            json.dump(update_info, cache_info)
-
+        self._update_cache_timestamp(server_version, current_timestamp) # Update the version and timestamp in cache_info.json
         print("[LEAGUE-API] Static data has been updated to version: " + server_version)
 
     @staticmethod
