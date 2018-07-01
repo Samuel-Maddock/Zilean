@@ -11,13 +11,23 @@ class LeagueHelper:
         watcher = RiotWatcher(data["riot_api_key"])
         self.watcher = watcher
 
-    def user_exists(self, region, summoner_name):
+    def user_in_game(self, region, summoner_id):
+        spectate_info = None
         try:
-            a = self.watcher.summoner.by_name(region, summoner_name)
+            spectate_info = self.watcher.spectator.by_summoner(region, summoner_id)
         except HTTPError as err:
             if err.response.status_code == 404:
                 return False
-        return True
+        return spectate_info
+
+    def user_exists(self, region, summoner_name):
+        summoner = None
+        try:
+            summoner = self.watcher.summoner.by_name(region, summoner_name)
+        except HTTPError as err:
+            if err.response.status_code == 404:
+                return False
+        return summoner
 
     def has_match_history(self, region, summoner_name):
         try:
