@@ -80,7 +80,7 @@ class GraphPlugin(Plugin):
 
     def _validate_region(self, event, region):
         if region is None:
-            event.get.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return False
         else:
             return True
