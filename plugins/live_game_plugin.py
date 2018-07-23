@@ -11,6 +11,7 @@ class LiveGamePlugin(Plugin):
 
     @Plugin.command('game_info', '<region:str> <summoner_name:str...>')
     def on_game_info(self, event, region, summoner_name):
+        '''Test'''
         region = LeagueHelper.validate_region(region)
         if region is None:
             event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
