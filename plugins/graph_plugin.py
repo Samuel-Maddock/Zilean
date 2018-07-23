@@ -65,7 +65,7 @@ class GraphPlugin(Plugin):
         event.msg.reply("Loading " + summoner_name + "'s data... :hourglass_flowing_sand:")
 
         if not self.league_helper.has_match_history(region, summoner_name) and match_validation:
-            event.msg.reply("This summoner doesn't have any recent match history :(")
+            event.msg.reply("This summoner does not exist or has no valid match history :(")
             return
         elif self.league_helper.user_exists(region, summoner_name):
             result = graph.render(summoner_name, filepath)
@@ -80,7 +80,7 @@ class GraphPlugin(Plugin):
 
     def _validate_region(self, event, region):
         if region is None:
-            event.get.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return False
         else:
             return True

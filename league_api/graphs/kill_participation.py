@@ -33,7 +33,10 @@ class KillParticipationGraph(Graph):
                     team_id = participant["teamId"]
                     summoner_kills = participant["stats"]["kills"] + participant["stats"]["assists"]
 
-            dataset.append(summoner_kills / team_kills[team_id])
+            if summoner_kills == 0 or team_kills == 0:
+                dataset.append(0)
+            else:
+                dataset.append(summoner_kills / team_kills[team_id])
 
         plt.clf()
         x = range(1,21) # 0 to 20
@@ -48,6 +51,7 @@ class KillParticipationGraph(Graph):
         plt.xlabel("Game Number")
         plt.title('Kill Participation over 20 games for ' + summoner["name"])
         plt.xticks(ind, x)
+        plt.yticks(np.arange(0, 1.1, 0.1))
         plt.savefig(filepath, bbox_inches='tight')
 
         mean = 0

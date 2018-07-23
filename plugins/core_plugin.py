@@ -8,8 +8,6 @@ import math
 class HelpPlugin(Plugin):
     def load(self, ctx):
         super(HelpPlugin, self).load(ctx)
-        for command in self.commands:
-            command.description = "test"
 
     @Plugin.command("info")
     def on_info(self, event):
