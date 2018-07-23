@@ -34,6 +34,8 @@ class LeagueHelper:
         try:
             summoner = self.watcher.summoner.by_name(region, summoner_name)
             history = self.watcher.match.matchlist_by_account(region, summoner["accountId"])
+            if len(history["matches"]) < 20:
+                return False
         except HTTPError as err:
             if err.response.status_code == 404:
                 return False
@@ -80,7 +82,7 @@ class LeagueHelper:
     def _update_cache(self, server_version, current_timestamp):
         endpoint_url = "http://ddragon.leagueoflegends.com/cdn/" + server_version + "/data/en_GB/"
 
-        with urllib.request.urlopen(endpoint_url + "champion.json") as url:
+        with urllib.request.urlopen(endpoint_url + "championFull.json") as url:
                 champions = json.loads(url.read().decode())
 
         with open("league_api/static_data/champions.json", "w") as champion_file:
