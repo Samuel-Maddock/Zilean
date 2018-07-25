@@ -65,7 +65,7 @@ class GraphPlugin(Plugin):
         event.msg.reply("Loading " + summoner_name + "'s data... :hourglass_flowing_sand:")
 
         if not self.league_helper.has_match_history(region, summoner_name) and match_validation:
-            event.msg.reply("This summoner does not exist or has no valid match history :(")
+            event.msg.reply("This summoner does not exist or has no/not enough games in their match history. Try again with a different summoner!")
             return
         elif self.league_helper.user_exists(region, summoner_name):
             result = graph.render(summoner_name, filepath)

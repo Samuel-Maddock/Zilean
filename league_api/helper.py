@@ -57,7 +57,6 @@ class LeagueHelper:
                 data = json.loads(url.read().decode())
 
             server_version = data["v"] # The most recent live version
-            print(server_version)
             print("[ZILEAN] Checking for static data version difference...")
             if (server_version != cache_version):
                 print("[ZILEAN] Version difference detected. detected version: " + cache_version + " live version: " + server_version)
@@ -66,7 +65,6 @@ class LeagueHelper:
             else:
                 self._update_cache_timestamp(server_version, current_timestamp)
                 print("[ZILEAN] Version up to date: " + server_version)
-
         else:
             print("[ZILEAN] Static data is up to date (within 6 hours) - version: " + cache_version)
 
@@ -81,25 +79,23 @@ class LeagueHelper:
 
     def _update_cache(self, server_version, current_timestamp):
         endpoint_url = "http://ddragon.leagueoflegends.com/cdn/" + server_version + "/data/en_GB/"
+        file_path = "league_api/static_data/"
 
-        with urllib.request.urlopen(endpoint_url + "championFull.json") as url:
-                champions = json.loads(url.read().decode())
+        static_file_list = ["championFull.json", "item.json"]
 
-        with open("league_api/static_data/champions.json", "w") as champion_file:
-            json.dump(champions, champion_file)
+        for filename in static_file_list:
+            with urllib.request.urlopen(endpoint_url + filename) as url:
+                raw_json = json.loads(url.read().decode())
 
-        with urllib.request.urlopen(endpoint_url + "item.json") as url:
-                items = json.loads(url.read().decode())
-
-        with open("league_api/static_data/items.json", "w") as item_file:
-            json.dump(items, item_file)
+            with open(file_path + filename, "w") as file:
+                json.dump(raw_json, file)
 
         self._update_cache_timestamp(server_version, current_timestamp) # Update the version and timestamp in cache_info.json
         print("[ZILEAN] Static data has been updated to version: " + server_version)
 
     @staticmethod
     def get_champion_data():
-        with open("league_api/static_data/champions.json") as data_file:
+        with open("league_api/static_data/championFull.json") as data_file:
             data = json.load(data_file)
         return data
 
