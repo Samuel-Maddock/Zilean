@@ -57,7 +57,6 @@ class LeagueHelper:
                 data = json.loads(url.read().decode())
 
             server_version = data["v"] # The most recent live version
-            print(server_version)
             print("[ZILEAN] Checking for static data version difference...")
             if (server_version != cache_version):
                 print("[ZILEAN] Version difference detected. detected version: " + cache_version + " live version: " + server_version)
