@@ -80,7 +80,7 @@ class LeagueHelper:
 
     def _update_cache(self, server_version, current_timestamp):
         endpoint_url = "http://ddragon.leagueoflegends.com/cdn/" + server_version + "/data/en_GB/"
-        file_path = "league_api/static_data/champions.json"
+        file_path = "league_api/static_data/"
 
         static_file_list = ["championFull.json", "item.json"]
 
@@ -88,7 +88,7 @@ class LeagueHelper:
             with urllib.request.urlopen(endpoint_url + filename) as url:
                 raw_json = json.loads(url.read().decode())
 
-            with open(file_path, "w") as file:
+            with open(file_path + filename, "w") as file:
                 json.dump(raw_json, file)
 
         self._update_cache_timestamp(server_version, current_timestamp) # Update the version and timestamp in cache_info.json
@@ -96,7 +96,7 @@ class LeagueHelper:
 
     @staticmethod
     def get_champion_data():
-        with open("league_api/static_data/champions.json") as data_file:
+        with open("league_api/static_data/championFull.json") as data_file:
             data = json.load(data_file)
         return data
 
