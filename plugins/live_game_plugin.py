@@ -77,6 +77,7 @@ class LiveGamePlugin(Plugin):
         rank_type = "N/A"
         is_ranked = False
         queue_name = "Unknown Queue Type" # Default value
+        pick_type = ""
         for queue in queue_data:
             if queue["id"] == spectate_info["gameQueueConfigId"]:
                 queue_name = queue["name"]

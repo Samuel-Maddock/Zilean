@@ -12,7 +12,6 @@ class HelpPlugin(Plugin):
     @Plugin.command("info")
     def on_info(self, event):
         """Displays information about the bot"""
-        print("Test")
         embed = MessageEmbed()
         embed.title = "Zilean Bot Info"
         embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
