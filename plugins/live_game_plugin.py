@@ -1,9 +1,12 @@
-import os
 from disco.bot import Plugin
-from league_api.helper import LeagueHelper
-from disco.types.message import MessageEmbed
-from datetime import datetime
 import json
+from datetime import datetime
+
+from disco.bot import Plugin
+from disco.types.message import MessageEmbed
+
+from league_api.helpers.league_helper import LeagueHelper
+
 
 class LiveGamePlugin(Plugin):
     def load(self,ctx):

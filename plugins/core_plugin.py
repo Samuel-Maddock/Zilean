@@ -74,7 +74,7 @@ class HelpPlugin(Plugin):
 
     @Plugin.command("bind")
     def on_bind(self, event):
-        '''In Development'''
+        '''Binds Zilean to the current text channel to be used during live game alerts'''
         guild = event.guild
         channel = event.channel
         channel_binds = LiveDataHelper.load_guild_binds()
@@ -86,7 +86,7 @@ class HelpPlugin(Plugin):
 
         channel_binds[str(guild.id)] = channel.id
         LiveDataHelper.save_guild_binds(channel_binds)
-        event.msg.reply("The tracker messages are now bound to the following text channel: `" + channel.name + "`")
+        event.msg.reply("The tracker messages are now bound to the following text channel: `#" + channel.name + "`")
 
     @Plugin.listen("Ready")
     def on_ready(self, event):
