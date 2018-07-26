@@ -1,8 +1,11 @@
+import math
+from datetime import datetime
+
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
-from datetime import datetime
 from disco.types.user import GameType, Game, Status
-import math
+
+from league_api.helpers.live_data_helper import LiveDataHelper
 
 
 class HelpPlugin(Plugin):
@@ -68,6 +71,22 @@ class HelpPlugin(Plugin):
         delta_tuple = math.modf(delta.total_seconds())
         ms = round(delta_tuple[0] * 1000)
         event.msg.reply("Pong! " + str(ms) + "ms")
+
+    @Plugin.command("bind")
+    def on_bind(self, event):
+        '''In Development'''
+        guild = event.guild
+        channel = event.channel
+        channel_binds = LiveDataHelper.load_guild_binds()
+
+        if LiveDataHelper.guild_is_binded(channel_binds, str(guild.id)):
+            if channel_binds[str(guild.id)] == channel.id:
+                event.msg.reply("Zilean is already bound to this channel: `" + channel.name + "`")
+                return
+
+        channel_binds[str(guild.id)] = channel.id
+        LiveDataHelper.save_guild_binds(channel_binds)
+        event.msg.reply("The tracker messages are now bound to the following text channel: `" + channel.name + "`")
 
     @Plugin.listen("Ready")
     def on_ready(self, event):
