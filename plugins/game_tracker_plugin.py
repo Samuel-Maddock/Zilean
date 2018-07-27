@@ -22,6 +22,9 @@ class GameTracker(Plugin):
     @Plugin.command("add", '<region:str> <summoner_name:str...>', group="tracker")
     def on_track(self, event, region, summoner_name):
         '''Adds a summoner for Zilean to track whether they are in a live game'''
+        if event.msg.channel.is_dm:
+            return event.msg.reply("You must use this command in a guild!")
+
         region = LeagueHelper.validate_region(region)
 
         if region is None:
@@ -39,6 +42,9 @@ class GameTracker(Plugin):
     @Plugin.command("list", group="tracker")
     def on_list(self, event):
         '''Displays a list of all summoners that Zilean is tracking to see if they are in a live game'''
+        if event.msg.channel.is_dm:
+            return event.msg.reply("You must use this command in a guild!")
+
         guild_id = str(event.guild.id)
 
         if not self._guild_is_tracked(self.tracker, guild_id):
@@ -66,6 +72,9 @@ class GameTracker(Plugin):
     @Plugin.command("remove", '<region:str> <summoner_name:str...>', group="tracker")
     def on_remove(self, event, region, summoner_name):
         '''Removes a summoner that is being tracked by Zilean'''
+        if event.msg.channel.is_dm:
+            return event.msg.reply("You must use this command in a guild!")
+
         region = LeagueHelper.validate_region(region)
 
         if region is None:
@@ -77,7 +86,7 @@ class GameTracker(Plugin):
 
         self._remove_summoner(event, region, summoner_name)
 
-    @Plugin.schedule(20, init=False) # 5 minute schedule
+    @Plugin.schedule(600, init=False) # 5 minute schedule
     def on_schedule_track(self):
         tracker = self.load_tracker()
         channel_binds = LiveDataHelper.load_guild_binds()
@@ -114,7 +123,7 @@ class GameTracker(Plugin):
                 footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
 
             embed = MessageEmbed()
-            embed.title = "Tracking Live Games..."
+            embed.title = ":eye: Tracking Live Games... :eye:"
             embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
             embed.add_field(name="Summoner Name", value=summoner_names, inline=True)
             embed.add_field(name="Region", value=regions, inline=True)
@@ -127,7 +136,10 @@ class GameTracker(Plugin):
     def _guild_is_tracked(self, tracker, guild_id):
         try:
             a = tracker[str(guild_id)]
-            return True
+            if len(a) == 0:
+                return False
+            else:
+                return True
         except KeyError as err:
             return False
 
