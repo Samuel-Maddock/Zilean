@@ -65,7 +65,7 @@ class GameTracker(Plugin):
 
         self._remove_summoner(event, region, summoner_name)
 
-    @Plugin.schedule(300, init=False) # 5 minute schedule
+    @Plugin.schedule(600, init=False) # 5 minute schedule
     def on_schedule_track(self):
         tracker = self.load_tracker()
         channel_binds = LiveDataHelper.load_guild_binds()
