@@ -36,7 +36,7 @@ class GameInfo():
         self.league_helper = LeagueHelper()
 
     def _get_queue_data(self):
-        with open("league_api/static_data/queue.json") as data_file:
+        with open("league_api/data/static/queue.json") as data_file:
             data = json.load(data_file)
         return data
 

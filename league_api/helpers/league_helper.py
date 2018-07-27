@@ -43,7 +43,7 @@ class LeagueHelper:
 
     @staticmethod
     def get_champion_data():
-        with open("league_api/static_data/championFull.json") as data_file:
+        with open("league_api/data/static/championFull.json") as data_file:
             data = json.load(data_file)
         return data
 

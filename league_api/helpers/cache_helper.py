@@ -7,13 +7,13 @@ class CacheHelper:
 
     @staticmethod
     def get_logger(log_name):
-        ZILEAN_CACHE = 20
-        logging.addLevelName(ZILEAN_CACHE, "ZILEAN-CACHE")
+        ZILEAN = 20
+        logging.addLevelName(ZILEAN, "ZILEAN")
 
         # Should probably just subclass this logger TODO
 
         def zilean_cache(self, message, *args, **kws):
-            self._log(ZILEAN_CACHE, message, args, **kws)
+            self._log(ZILEAN, message, args, **kws)
 
         logging.Logger.static_cache = zilean_cache
         logging.basicConfig(level=logging.INFO)
@@ -24,7 +24,7 @@ class CacheHelper:
         current_timestamp = time.time()
         logger = CacheHelper.get_logger("StaticCache")
 
-        with open("league_api/static_data/cache_info.json") as update_info:
+        with open("league_api/data/static/cache_info.json") as update_info:
             info = json.load(update_info)
 
         cache_version = info["version"]
@@ -56,13 +56,13 @@ class CacheHelper:
         update_info["version"] = server_version
         update_info["timestamp"] = current_timestamp
 
-        with open("league_api/static_data/cache_info.json", "w") as cache_info:
+        with open("league_api/data/static/cache_info.json", "w") as cache_info:
             json.dump(update_info, cache_info)
 
     @staticmethod
     def update_cache(server_version, current_timestamp):
         endpoint_url = "http://ddragon.leagueoflegends.com/cdn/" + server_version + "/data/en_GB/"
-        file_path = "league_api/static_data/"
+        file_path = "league_api/data/static/"
 
         static_file_list = ["championFull.json", "item.json"]
 
