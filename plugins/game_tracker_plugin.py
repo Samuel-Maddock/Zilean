@@ -1,7 +1,7 @@
 import json
-
+from datetime import datetime
 from disco.bot import Plugin
-
+from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.live_data_helper import LiveDataHelper
 from plugins.game_info_plugin import GameInfo
@@ -13,7 +13,7 @@ class GameTracker(Plugin):
         self.tracker = self.load_tracker()
 
     def load_tracker(self):
-        with open("league_api/live_data/tracker.json") as tracker_file:
+        with open("league_api/data/live/tracker.json") as tracker_file:
             return json.load(tracker_file)
 
     def update_tracker(self, tracker):
@@ -39,7 +39,6 @@ class GameTracker(Plugin):
     @Plugin.command("list", group="tracker")
     def on_list(self, event):
         '''Displays a list of all summoners that Zilean is tracking to see if they are in a live game'''
-        msg_content = ""
         guild_id = str(event.guild.id)
 
         if not self._guild_is_tracked(self.tracker, guild_id):
@@ -47,9 +46,22 @@ class GameTracker(Plugin):
             return
 
         summoner_list = self.tracker[guild_id]
-        for index, summoner in enumerate(summoner_list):
-                msg_content += str(index+1) + " - " + summoner[1] + " " + summoner[2] + "\n"
-        event.msg.reply(msg_content)
+        summoner_names = ""
+        regions = ""
+
+        for summoner in summoner_list:
+                summoner_names += summoner[1] + "\n"
+                regions += summoner[2] + "\n"
+
+        embed = MessageEmbed()
+        embed.title = "List of tracked summoners :eye:"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.add_field(name="Summoner Name", value=summoner_names, inline=True)
+        embed.add_field(name="Region", value=regions, inline=True)
+        embed.color = "444751"
+        embed.timestamp = datetime.utcnow().isoformat()
+        embed.set_footer(text="To remove use ~tracker remove <region> <summoner_name>")
+        event.msg.reply(embed=embed)
 
     @Plugin.command("remove", '<region:str> <summoner_name:str...>', group="tracker")
     def on_remove(self, event, region, summoner_name):
@@ -65,7 +77,7 @@ class GameTracker(Plugin):
 
         self._remove_summoner(event, region, summoner_name)
 
-    @Plugin.schedule(600, init=False) # 5 minute schedule
+    @Plugin.schedule(20, init=False) # 5 minute schedule
     def on_schedule_track(self):
         tracker = self.load_tracker()
         channel_binds = LiveDataHelper.load_guild_binds()
@@ -78,24 +90,43 @@ class GameTracker(Plugin):
             game_found = False
             summoner_list = tracker[guild_id]
             channel = self.bot.client.state.channels.get(channel_binds[guild_id])
-            channel.send_message(":eye: Tracking live games... :eye:")
             has_live_games = False
-
+            summoner_names = ""
+            regions = ""
+            in_game = ""
+            footer = ""
             for summoner in summoner_list:
+                summoner_names += summoner[1] + "\n"
+                regions += summoner[2] + "\n"
+
                 spectate_info = self.league_helper.user_in_game(summoner[2], summoner[0])
                 if spectate_info:
-                    game_info = GameInfo()
-                    game_info.display(channel, summoner[2], spectate_info)
+                    in_game += "**Yes**" + "\n"
+                    #game_info = GameInfo()
+                    #game_info.display(channel, summoner[2], spectate_info)
                     has_live_games = True
                 else:
-                    pass
+                    in_game += "No" + "\n"
 
             if not has_live_games:
-                channel.send_message("No one is currently in a live game")
+                footer = "No one is currently in a live game :("
+            else:
+                footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
+
+            embed = MessageEmbed()
+            embed.title = "Tracking Live Games..."
+            embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+            embed.add_field(name="Summoner Name", value=summoner_names, inline=True)
+            embed.add_field(name="Region", value=regions, inline=True)
+            embed.add_field(name="In Game?", value=in_game, inline=True)
+            embed.color = "444751"
+            embed.timestamp = datetime.utcnow().isoformat()
+            embed.set_footer(text=footer)
+            channel.send_message(embed=embed)
 
     def _guild_is_tracked(self, tracker, guild_id):
         try:
-            print(tracker[str(guild_id)])
+            a = tracker[str(guild_id)]
             return True
         except KeyError as err:
             return False
@@ -123,7 +154,7 @@ class GameTracker(Plugin):
         summoner_list.append(data)
         tracker[guild_id] = summoner_list
 
-        with open("league_api/live_data/tracker.json", "w") as tracker_file:
+        with open("league_api/data/live/tracker.json", "w") as tracker_file:
             json.dump(tracker, tracker_file)
 
         event.msg.reply("The summoner `" + summoner["name"] + "` is now being tracked :eye:")
@@ -153,7 +184,7 @@ class GameTracker(Plugin):
 
         tracker[guild_id] = summoner_list
 
-        with open("league_api/live_data/tracker.json", "w") as tracker_file:
+        with open("league_api/data/live/tracker.json", "w") as tracker_file:
             json.dump(tracker, tracker_file)
 
         event.msg.reply("This summoner is no longer being tracked.")
