@@ -1,11 +1,14 @@
 import os
+
 from disco.bot import Plugin
-from league_api.graphs.games_per_month import GamesPerMonthGraph
+
 from league_api.graphs.champion_mastery import ChampionMasteryGraph
 from league_api.graphs.champion_wins import ChampionWinsGraph
+from league_api.graphs.games_per_month import GamesPerMonthGraph
 from league_api.graphs.kill_participation import KillParticipationGraph
 from league_api.graphs.living_time import LivingTimeGold
-from league_api.helper import LeagueHelper
+from league_api.helpers.league_helper import LeagueHelper
+
 
 class GraphPlugin(Plugin):
     def load(self,ctx):
