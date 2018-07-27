@@ -1,8 +1,10 @@
 import json
 
 from disco.bot import Plugin
+
 from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.live_data_helper import LiveDataHelper
+from plugins.game_info_plugin import GameInfo
 
 class GameTracker(Plugin):
     def load(self,ctx):
@@ -63,10 +65,11 @@ class GameTracker(Plugin):
 
         self._remove_summoner(event, region, summoner_name)
 
-    @Plugin.schedule(20, init=False)
+    @Plugin.schedule(300, init=False) # 5 minute schedule
     def on_schedule_track(self):
         tracker = self.load_tracker()
         channel_binds = LiveDataHelper.load_guild_binds()
+        game_info = GameInfo()
 
         if len(tracker) == 0:
             return
@@ -74,10 +77,21 @@ class GameTracker(Plugin):
         for guild_id in channel_binds.keys():
             game_found = False
             summoner_list = tracker[guild_id]
-            self.bot.client.state.channels.get(channel_binds[guild_id]).send_message(":eye: Tracking live games... :eye:")
+            channel = self.bot.client.state.channels.get(channel_binds[guild_id])
+            channel.send_message(":eye: Tracking live games... :eye:")
+            has_live_games = False
 
             for summoner in summoner_list:
-                # Display live game info...
+                spectate_info = self.league_helper.user_in_game(summoner[2], summoner[0])
+                if spectate_info:
+                    game_info = GameInfo()
+                    game_info.display(channel, summoner[2], spectate_info)
+                    has_live_games = True
+                else:
+                    pass
+
+            if not has_live_games:
+                channel.send_message("No one is currently in a live game")
 
     def _guild_is_tracked(self, tracker, guild_id):
         try:

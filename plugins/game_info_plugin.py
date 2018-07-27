@@ -1,16 +1,14 @@
-from disco.bot import Plugin
-import json
-from datetime import datetime
 
+import json
+
+from datetime import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
-
 from league_api.helpers.league_helper import LeagueHelper
 
-
-class LiveGamePlugin(Plugin):
+class GameInfoPlugin(Plugin):
     def load(self,ctx):
-        super(LiveGamePlugin, self).load(ctx)
+        super(GameInfoPlugin, self).load(ctx)
         self.league_helper = LeagueHelper()
 
     @Plugin.command('game_info', '<region:str> <summoner_name:str...>')
@@ -26,18 +24,23 @@ class LiveGamePlugin(Plugin):
         if summoner:
             spectate_info = self.league_helper.user_in_game(region, summoner["id"])
             if spectate_info:
-                self._send_game_info(event, region, spectate_info)
+                game_info = GameInfo()
+                game_info.display(event.msg.channel, region, spectate_info)
             else:
                 event.msg.reply("This summoner is not currently in a game!")
         else:
-            event.msg.reply("This summoner does not exist on: " + region)
+            event.msg.reply("This summoner does not exist on the region: `" + region + "`")
+
+class GameInfo():
+    def __init__(self):
+        self.league_helper = LeagueHelper()
 
     def _get_queue_data(self):
         with open("league_api/static_data/queue.json") as data_file:
             data = json.load(data_file)
         return data
 
-    def _get_rank_by_queue(self, queue_name, is_ranked, ranked_positions):
+    def _get_rank_by_queue(self,queue_name, is_ranked, ranked_positions):
         rank_type = "N/A"
         if is_ranked:
             summoner_rank = "Unranked"
@@ -93,11 +96,11 @@ class LiveGamePlugin(Plugin):
 
         return (description, queue_name, pick_type, is_ranked)
 
-    def _send_game_info(self, event, region, spectate_info):
-        event.msg.reply("Game found generating live info...")
+    def display(self, channel, region, spectate_info):
+        channel.send_message("Game found generating live info...")
 
         if spectate_info["gameType"] == "CUSTOM_GAME":
-            event.msg.reply("Custom game spectating is not supported SOONtm")
+            channel.send_message("Custom game spectating is not supported SOONtm")
             return
 
         champion_data = LeagueHelper.get_champion_data()
@@ -116,7 +119,7 @@ class LiveGamePlugin(Plugin):
 
         # Find the current game mode that is being played using a CDragon json
         # Currently this needs to be updated manually -> TODO
-        description, queue_name, pick_type, is_ranked = self._get_queue_data(region, spectate_info)
+        description, queue_name, pick_type, is_ranked = self._get_queue_info(region, spectate_info)
 
         # Find the summoners names, champions and ranks on each team
         for participant in team_info:
@@ -159,4 +162,4 @@ class LiveGamePlugin(Plugin):
         embed.color = "444751"
         embed.timestamp = datetime.utcnow().isoformat()
         embed.set_footer(text="Live Game Info")
-        event.msg.reply(embed=embed)
+        channel.send_message(embed=embed)
