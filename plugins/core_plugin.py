@@ -8,9 +8,9 @@ from disco.types.user import GameType, Game, Status
 from league_api.helpers.live_data_helper import LiveDataHelper
 
 
-class HelpPlugin(Plugin):
+class UtilityPlugin(Plugin):
     def load(self, ctx):
-        super(HelpPlugin, self).load(ctx)
+        super(UtilityPlugin, self).load(ctx)
 
     @Plugin.command("info")
     def on_info(self, event):
@@ -30,39 +30,47 @@ class HelpPlugin(Plugin):
     def on_help(self, event):
         """Displays a list of all of commands"""
 
+        if not event.msg.channel.is_dm:
+            event.msg.reply("Check your DMs... :cyclone:")
+
+        user = event.msg.author
+
         embed = MessageEmbed()
         embed.title = "Zilean Command List"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.description = "A list of Zilean's commands. Note that <arg> is a required argument, and [arg] is an optional argument"
-        embed.color = "444751"
-        embed.timestamp = datetime.utcnow().isoformat()
-        embed.set_footer(text="Zilean Commands")
 
-        for command in self.bot.commands:
-            prefix = self.bot.config.commands_prefix
-            description = command.get_docstring()
-            cmd_name = ""
-            args = ""
+        for name, plugin in self.bot.plugins.items():
+            embed = MessageEmbed()
+            embed.title = "Zilean Commands: " + name
+            embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+            embed.description = "Note that <arg> is a required argument, and [arg] is an optional argument"
+            embed.color = "444751"
+            embed.timestamp = datetime.utcnow().isoformat()
+            embed.set_footer(text="Zilean Commands")
+            for command in plugin.commands:
+                prefix = self.bot.config.commands_prefix
+                description = command.get_docstring()
+                cmd_name = ""
+                args = ""
 
-            if command.group:
-                prefix += command.group + " "
+                if command.group:
+                    prefix += command.group + " "
 
-            if command.args:
-                for arg in command.args.args:
-                    if arg.required:
-                        args += "<" + arg.name + "> "
-                    else:
-                        args += "[" + arg.name + "] "
+                if command.args:
+                    for arg in command.args.args:
+                        if arg.required:
+                            args += "<" + arg.name + "> "
+                        else:
+                            args += "[" + arg.name + "] "
 
-            if len(command.triggers) > 1:
-                for trigger in command.triggers:
-                    cmd_name += prefix + trigger + " " + args + " | "
-            else:
-                cmd_name = prefix + command.name + " " + args
+                if len(command.triggers) > 1:
+                    for trigger in command.triggers:
+                        cmd_name += prefix + trigger + " " + args + " | "
+                else:
+                    cmd_name = prefix + command.name + " " + args
 
-            embed.add_field(name=cmd_name, value=description)
+                embed.add_field(name=cmd_name, value=description)
 
-        event.msg.reply(embed=embed)
+            user.open_dm().send_message(embed=embed)
 
     @Plugin.command("ping")
     def on_ping(self, event):
@@ -75,13 +83,17 @@ class HelpPlugin(Plugin):
     @Plugin.command("bind")
     def on_bind(self, event):
         '''Binds Zilean to the current text channel to be used during live game alerts'''
+
+        if event.msg.channel.is_dm:
+            return event.msg.reply("You must use this command in a guild!")
+
         guild = event.guild
         channel = event.channel
         channel_binds = LiveDataHelper.load_guild_binds()
 
         if LiveDataHelper.guild_is_binded(channel_binds, str(guild.id)):
             if channel_binds[str(guild.id)] == channel.id:
-                event.msg.reply("Zilean is already bound to this channel: `" + channel.name + "`")
+                event.msg.reply("Zilean is already bound to this channel: `#" + channel.name + "`")
                 return
 
         channel_binds[str(guild.id)] = channel.id

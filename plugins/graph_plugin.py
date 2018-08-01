@@ -8,6 +8,7 @@ from league_api.graphs.games_per_month import GamesPerMonthGraph
 from league_api.graphs.kill_participation import KillParticipationGraph
 from league_api.graphs.living_time import LivingTimeGold
 from league_api.helpers.league_helper import LeagueHelper
+from league_api.helpers.cache_helper import CacheHelper
 
 
 class GraphPlugin(Plugin):
@@ -17,7 +18,7 @@ class GraphPlugin(Plugin):
 
     @Plugin.listen("Ready")
     def on_ready(self, event):
-        self.league_helper.update_static_data()
+        CacheHelper.update_static_data()
 
     @Plugin.command('games_per_month', '<region:str> <summoner_name:str...>', group="graph", aliases=["gpm"])
     def on_gpm_graph(self, event, region, summoner_name):
