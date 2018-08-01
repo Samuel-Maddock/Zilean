@@ -93,7 +93,7 @@ class UtilityPlugin(Plugin):
 
         if LiveDataHelper.guild_is_binded(channel_binds, str(guild.id)):
             if channel_binds[str(guild.id)] == channel.id:
-                event.msg.reply("Zilean is already bound to this channel: `" + channel.name + "`")
+                event.msg.reply("Zilean is already bound to this channel: `#" + channel.name + "`")
                 return
 
         channel_binds[str(guild.id)] = channel.id

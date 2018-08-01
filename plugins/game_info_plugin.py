@@ -118,7 +118,7 @@ class GameInfo():
         red_rank = ""
 
         # Find the current game mode that is being played using a CDragon json
-        # Currently this needs to be updated manually -> TODO
+        # Currently the CDragon json needs to be updated manually -> TODO
         description, queue_name, pick_type, is_ranked = self._get_queue_info(region, spectate_info)
 
         # Find the summoners names, champions and ranks on each team
