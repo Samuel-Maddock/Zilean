@@ -1,6 +1,7 @@
 
 import json
-
+import re
+import random
 from datetime import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
@@ -24,16 +25,83 @@ class GameInfoPlugin(Plugin):
         if summoner:
             spectate_info = self.league_helper.user_in_game(region, summoner["id"])
             if spectate_info:
-                game_info = GameInfo()
+                game_info = GameInfo(self.league_helper)
                 game_info.display(event.msg.channel, region, spectate_info)
             else:
                 event.msg.reply("This summoner is not currently in a game!")
         else:
             event.msg.reply("This summoner does not exist on the region: `" + region + "`")
 
+    @Plugin.command("game", "<region:str> <summoner_name:str> [game_number:int]")
+    def on_recent_game(self, event, region, summoner_name, game_number=0):
+        '''[IN DEVELOPMENT] Displays the most recent game in the summoners match history'''
+
+        if game_number < 0:
+            game_number = 0
+
+        region = LeagueHelper.validate_region(region)
+
+        if region is None:
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
+            return
+
+        # TODO: has_match_history returns false if history < 20, need to change this...
+        if not self.league_helper.has_match_history(region, summoner_name):
+            event.msg.reply("This summoner has no valid match history at this time...")
+            return
+
+        summoner = self.league_helper.user_exists(region, summoner_name)
+
+        if not summoner:
+            event.msg.reply("This summoner does not exist on the region: `" + region + "`")
+            return
+
+        matchlist = self.league_helper.watcher.match.matchlist_by_account(region, summoner["id"])
+
+        if game_number > len(matchlist):
+            event.msg.reply("The game number entered has exceeded the number of games available (100 max)")
+            return
+        else:
+            game_info = GameInfo()
+            match = self.league_helper.watcher.match.by_id(region, matchlist["matches"][game_number]["gameId"])
+            print(match)
+            game_info.display(event.msg.channel, region, match)
+            pass
+
+    @Plugin.command("item", "<item_name:str...>")
+    def on_item(self, event, item_name):
+        '''Searches and displays the corresponding league of legends item'''
+        items = LeagueHelper.get_item_data()
+        game_info = GameInfo(self.league_helper)
+        item_found = False
+
+        for key, value in items["data"].items():
+            if item_name.lower() in value["name"].lower() and len(item_name) > 3:
+                game_info.display_item(event.msg.channel, items["version"], items["data"][key])
+                item_found = True
+
+        if not item_found:
+            event.msg.reply("This item does not exist...")
+
+    @Plugin.command("champion", "<champion_name:str...>")
+    def on_champion(self, event, champion_name):
+        '''Searches and displays the corresponding league of legends champion'''
+        champions = LeagueHelper.get_champion_data()
+        game_info = GameInfo(self.league_helper)
+        champ_found = False
+
+        for key, name in champions["keys"].items():
+            if champion_name.lower() == name.lower():
+                game_info.display_champ(event.msg.channel, champions["version"], champions["data"][name])
+                champ_found = True
+
+        if not champ_found:
+            event.msg.reply("This champ does not exist...")
+
+
 class GameInfo():
-    def __init__(self):
-        self.league_helper = LeagueHelper()
+    def __init__(self, league_helper):
+        self.league_helper = league_helper
 
     def _get_queue_data(self):
         with open("league_api/data/static/queue.json") as data_file:
@@ -163,3 +231,51 @@ class GameInfo():
         embed.timestamp = datetime.utcnow().isoformat()
         embed.set_footer(text="Live Game Info")
         channel.send_message(embed=embed)
+
+    def display_item(self, channel, version, item):
+        image_url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/"
+
+        embed = MessageEmbed()
+        embed.title = item["name"]
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.description = item["plaintext"]
+        embed.set_thumbnail(url=image_url + item["image"]["full"])
+        embed.color = "4390911" # Decimal representation of hex code
+        description = re.sub('<[^<]+?>', '\n ', item["description"])
+        description = re.sub(r'(\n\s*)+\n+', '\n\n', description)
+        embed.add_field(name="Item Description", value=description, inline=True)
+        embed.add_field(name ="Buy Price", value=str(item["gold"]["total"]) + " gold", inline=True)
+        embed.add_field(name="Sell Price", value=str(item["gold"]["sell"]) + " gold", inline=True)
+
+        channel.send_message(embed=embed)
+
+    def display_champ(self, channel, version, champion):
+        image_url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/champion/"
+        spells = ""
+        for spell in champion["spells"]:
+            ability = spell["id"].strip(champion["name"])
+            name = spell["name"]
+            description = spell["description"]
+            spells += "**" + ability + ":** " + name + "\n" + description + "\n\n"
+
+        spells += "**Passive:** " + champion["passive"]["name"] + "\n" + champion["passive"]["description"]
+
+        embed = MessageEmbed()
+        embed.title = "Champion Info"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.description = champion["name"] + " " + champion["title"]
+        embed.set_thumbnail(url=image_url + champion["image"]["full"])
+        embed.color = "4390911" # Decimal representation of hex code
+
+        embed.add_field(name="Lore", value=champion["lore"])
+        embed.add_field(name="Abilities", value=spells)
+
+        skin_num = random.randint(0, len(champion["skins"])-1)
+        embed.set_image(url="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champion["name"] +"_" + str(skin_num) + ".jpg")
+        embed.set_footer(text="Splash art: " + str(champion["skins"][skin_num]["name"]))
+
+        channel.send_message(embed=embed)
+
+    # TODO
+    def display_past_game(self, channel, region, match):
+        pass

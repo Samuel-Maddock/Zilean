@@ -8,6 +8,8 @@ from plugins.game_info_plugin import GameInfo
 
 TRACKER_SCHEDULE = 600 # Every 10 minutes
 
+''' TODO: Add subscribe command to DM auto-display games'''
+
 class GameTracker(Plugin):
     def load(self,ctx):
         super(GameTracker, self).load(ctx)
@@ -119,16 +121,16 @@ class GameTracker(Plugin):
     def on_schedule_track(self):
         tracker = self.tracker
         channel_binds = LiveDataHelper.load_guild_binds()
-        game_info = GameInfo()
+        game_info = GameInfo(self.league_helper)
 
         if len(tracker) == 0:
             return
 
         for guild_id in channel_binds.keys():
             guild_id = str(guild_id)
-            channel = self.bot.client.state.channels.get(channel_binds[guild_id])
-            summoner_list = tracker[guild_id]
-            if len(summoner_list) != 0:
+            if self._guild_is_tracked(guild_id):
+                channel = self.bot.client.state.channels.get(channel_binds[guild_id])
+                summoner_list = tracker[guild_id]
                 self._display_track(tracker[guild_id], channel)
 
     def _display_track(self, summoner_list, channel):
@@ -148,7 +150,7 @@ class GameTracker(Plugin):
                 if spectate_info:
                     in_game += "**Yes** | " + self.boolMsg(auto_display) + "\n"
                     if auto_display:
-                        game_info = GameInfo()
+                        game_info = GameInfo(self.league_helper)
                         game_info.display(channel, summoner[2], spectate_info)
                     has_live_games = True
                 else:

@@ -48,6 +48,12 @@ class LeagueHelper:
         return data
 
     @staticmethod
+    def get_item_data():
+        with open("league_api/data/static/item.json") as data_file:
+            data = json.load(data_file)
+        return data
+
+    @staticmethod
     def validate_region(region):
         region = region.upper()
         if region in ["EUW", "NA", "EUN", "JP", "LAN", "OCE", "TR", "RU"]:
