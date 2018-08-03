@@ -1,4 +1,5 @@
 import math
+import json
 from datetime import datetime
 
 from disco.bot import Plugin
@@ -12,6 +13,11 @@ class UtilityPlugin(Plugin):
     def load(self, ctx):
         super(UtilityPlugin, self).load(ctx)
 
+        with open("league_api/data/version.json") as data_file:
+            data = json.load(data_file)
+
+        self.version = data["version"]
+
     @Plugin.command("info")
     def on_info(self, event):
         """Displays information about the bot"""
@@ -19,6 +25,7 @@ class UtilityPlugin(Plugin):
         embed.title = "Zilean Bot Info"
         embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
         embed.description = "A discord bot that tracks time spent playing league and other statistics :hourglass_flowing_sand: https://github.com/Samuel-Maddock/Zilean"
+        embed.add_field(name="Version:", value=self.version)
         embed.add_field(name="Developed using:", value="https://github.com/pseudonym117/Riot-Watcher https://github.com/b1naryth1ef/disco")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
         embed.color = "444751"

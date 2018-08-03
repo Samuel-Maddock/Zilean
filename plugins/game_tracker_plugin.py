@@ -151,7 +151,7 @@ class GameTracker(Plugin):
                     in_game += "**Yes** | " + self.boolMsg(auto_display) + "\n"
                     if auto_display:
                         game_info = GameInfo(self.league_helper)
-                        game_info.display(channel, summoner[2], spectate_info)
+                        game_info.display_live_game(channel, summoner[2], spectate_info)
                     has_live_games = True
                 else:
                     in_game += "No | " + self.boolMsg(auto_display) + "\n"
