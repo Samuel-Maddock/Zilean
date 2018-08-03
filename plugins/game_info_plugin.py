@@ -2,7 +2,7 @@
 import json
 import re
 import random
-from datetime import datetime
+import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
@@ -12,8 +12,8 @@ class GameInfoPlugin(Plugin):
         super(GameInfoPlugin, self).load(ctx)
         self.league_helper = LeagueHelper()
 
-    @Plugin.command('game_info', '<region:str> <summoner_name:str...>')
-    def on_game_info(self, event, region, summoner_name):
+    @Plugin.command('live_game', '<region:str> <summoner_name:str...>')
+    def on_live_game(self, event, region, summoner_name):
         '''Displays the live game info if a summoner is in a game. Supports all game types and ranked modes'''
         region = LeagueHelper.validate_region(region)
         if region is None:
@@ -26,15 +26,17 @@ class GameInfoPlugin(Plugin):
             spectate_info = self.league_helper.user_in_game(region, summoner["id"])
             if spectate_info:
                 game_info = GameInfo(self.league_helper)
-                game_info.display(event.msg.channel, region, spectate_info)
+                game_info.display_live_game(event.msg.channel, region, spectate_info)
             else:
                 event.msg.reply("This summoner is not currently in a game!")
         else:
             event.msg.reply("This summoner does not exist on the region: `" + region + "`")
 
-    @Plugin.command("game", "<region:str> <summoner_name:str> [game_number:int]")
+    @Plugin.command("match_history", "<region:str> <summoner_name:str> [game_number:int]")
     def on_recent_game(self, event, region, summoner_name, game_number=0):
-        '''[IN DEVELOPMENT] Displays the most recent game in the summoners match history'''
+        '''Displays a match in the summoners match history, by default displays the most recent game'''
+
+        game_number = game_number - 1
 
         if game_number < 0:
             game_number = 0
@@ -56,17 +58,15 @@ class GameInfoPlugin(Plugin):
             event.msg.reply("This summoner does not exist on the region: `" + region + "`")
             return
 
-        matchlist = self.league_helper.watcher.match.matchlist_by_account(region, summoner["id"])
+        matchlist = self.league_helper.watcher.match.matchlist_by_account(region, summoner["accountId"])
 
-        if game_number > len(matchlist):
-            event.msg.reply("The game number entered has exceeded the number of games available (100 max)")
+        if game_number > len(matchlist["matches"]):
+            event.msg.reply("The game number entered has exceeded the number of games available `Max Games: " + str(len(matchlist["matches"])) + "`")
             return
         else:
-            game_info = GameInfo()
+            game_info = GameInfo(self.league_helper)
             match = self.league_helper.watcher.match.by_id(region, matchlist["matches"][game_number]["gameId"])
-            print(match)
-            game_info.display(event.msg.channel, region, match)
-            pass
+            game_info.display_past_game(event.msg.channel, region, match, summoner["accountId"])
 
     @Plugin.command("item", "<item_name:str...>")
     def on_item(self, event, item_name):
@@ -164,7 +164,7 @@ class GameInfo():
 
         return (description, queue_name, pick_type, is_ranked)
 
-    def display(self, channel, region, spectate_info):
+    def display_live_game(self, channel, region, spectate_info):
         channel.send_message("Game found generating live info...")
 
         if spectate_info["gameType"] == "CUSTOM_GAME":
@@ -228,7 +228,7 @@ class GameInfo():
             embed.add_field(name=":no_entry_sign: Blue Team Bans :no_entry_sign:", value=blue_ban, inline=True)
 
         embed.color = "444751"
-        embed.timestamp = datetime.utcnow().isoformat()
+        embed.timestamp = datetime.datetime.utcnow().isoformat()
         embed.set_footer(text="Live Game Info")
         channel.send_message(embed=embed)
 
@@ -276,6 +276,53 @@ class GameInfo():
 
         channel.send_message(embed=embed)
 
-    # TODO
-    def display_past_game(self, channel, region, match):
-        pass
+    def display_past_game(self, channel, region, match, summoner_id):
+
+        # Find the current game mode that is being played using a CDragon json
+        match["gameQueueConfigId"] = match["queueId"]
+        description, queue_name, pick_type, is_ranked = self._get_queue_info(region, match)
+
+        game_epoch = match["gameCreation"]
+        game_duration = datetime.timedelta(seconds=match["gameDuration"])
+        game_date = datetime.datetime.fromtimestamp(game_epoch/1000).strftime('%d-%m-%Y')
+
+        champion_data = LeagueHelper.get_champion_data()
+        image_url = "http://ddragon.leagueoflegends.com/cdn/" + champion_data["version"] + "/img/champion/"
+
+        for participant in match["participantIdentities"]:
+            if participant["player"]["currentAccountId"] == summoner_id:
+                target_player = participant
+
+        for participant in match["participants"]:
+            if participant["participantId"] == target_player["participantId"]:
+                target_champion_id = participant["championId"]
+                target_stats = str(participant["stats"]["kills"]) + "/" + str(participant["stats"]["deaths"]) + "/" + str(participant["stats"]["assists"])
+                target_team = participant["teamId"]
+
+        for team in match["teams"]:
+            if team["teamId"] == target_team:
+                match_outcome = team["win"]
+
+        if match_outcome == "Fail":
+            match_outcome = "Defeat"
+            embed_color = 16711686
+        else:
+            match_outcome = "Victory"
+            embed_color = 65286
+
+        target_champion = champion_data["keys"][str(target_champion_id)]
+
+        embed = MessageEmbed()
+        embed.title = "Match History Game Info"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.set_thumbnail(url=image_url + target_champion + ".png")
+        embed.color = embed_color
+        embed.description = queue_name
+        embed.add_field(name="Summoner Name", value=target_player["player"]["summonerName"], inline=True)
+        embed.add_field(name="Champion", value=target_champion, inline=True)
+        embed.add_field(name="k/d/a", value=target_stats, inline=True)
+        embed.add_field(name="Match Outcome", value=match_outcome, inline=True)
+        embed.add_field(name="Game Duration:", value = str(game_duration), inline=True)
+        embed.add_field(name="Game Date:", value=game_date, inline=True)
+        embed.add_field(name="More Info", value="http://matchhistory.euw.leagueoflegends.com/en/#match-details/" + region + "/" + str(match["gameId"]) + "/" + str(summoner_id) + "?tab=overview")
+        channel.send_message(embed=embed)
