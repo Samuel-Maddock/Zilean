@@ -1,2 +1,2 @@
 # Zilean
-⏳ A discord bot that tracks time spent playing league and other statistics
+⏳ A League of Legends Discord Bot that displays live game data and other statistics

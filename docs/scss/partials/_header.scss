@@ -1,0 +1,19 @@
+.navbar{
+    color: $nav-font-color;
+}
+
+.navbar-item{
+    color: $nav-font-color;
+    font-size: 1.25rem;
+}
+
+a.navbar-item:hover{
+    background-color: $nav-hover-color;
+}
+
+.navbar-brand{
+    font-family: "Exo 2";
+    font-size: 2.5rem;
+    margin-top: 0.5%;
+    margin-left: 0.5%;
+}

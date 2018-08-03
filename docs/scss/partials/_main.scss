@@ -1,0 +1,113 @@
+@keyframes bgcolor {
+    0% {
+        background-color: #8AEA92;
+    }
+
+    30% {
+        background-color: #06D6A0;
+    }
+
+    60% {
+        background-color: #84DCCF;
+    }
+
+    90% {
+        background-color: #54C6EB;
+    }
+
+    100% {
+        background-color: #47E5BC;
+    }
+}
+
+body{
+    background-color: $nav-background-color;
+    color: $nav-hover-color;
+    height: 100%;
+}
+
+html{
+    height: 100%;
+}
+
+.splash{
+    -webkit-animation: bgcolor 10s infinite;
+    animation: bgcolor 10s infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+    position: relative;
+    //background: linear-gradient(180deg, #263238 2%, #42BF94 100%), #C4C4C4;
+    overflow: hidden;
+}
+
+.splash:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    background-image: url("/docs/assets/background2.png");
+    background-repeat: no-repeat;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.splash-button{
+    z-index: 2;
+    margin-top: 35px;
+    background-color: $nav-background-color;
+    color: $nav-font-color;
+    border:none;
+}
+
+.splash-button:hover{
+    background-color: $nav-hover-color
+}
+
+.command-section{
+    background-color: $hero-background-color;
+    display: none;
+}
+
+.discord{
+    margin-left: 4.5%;
+}
+
+.nav-icon{
+    margin-left: 6.5%;
+}
+
+.zilean{
+    font-family: "Exo 2";
+    font-size: 2.5rem;
+    color: $nav-background-color;
+}
+
+.subtitle{
+    padding-top: 20px;
+    font-size: 1.5rem;
+    color: $nav-background-color;
+    z-index: 5;
+}
+
+#discord{
+    color: $discord-color;
+}
+
+#lol{
+    color: $league-color;
+}
+
+#lol:hover{
+    color: $nav-background-color;
+}
+
+#discord:hover{
+    color: $nav-background-color;
+}
