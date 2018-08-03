@@ -1,0 +1,17 @@
+{
+    "name": "zilean",
+    "version": "1.0.0",
+    "description": "Github.io site for Zilean bot",
+    "main": "index.js",
+    "dependencies": {
+      "font-awesome": "^4.7.0",
+      "bulma": "^0.5.1"
+    },
+    "devDependencies": {},
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Samuel Maddock",
+    "license": "ISC"
+  }
+  
