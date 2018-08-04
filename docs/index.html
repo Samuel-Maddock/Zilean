@@ -3,37 +3,63 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Zilean</title>
+    <title>Zilean: A League of Legends Discord Bot That Displays Live Game Data and other statistics</title>
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Exo+2:900" rel="stylesheet">
     <link rel="stylesheet" href="scss/style.css">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="favicon/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="favicon/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="favicon/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="favicon.apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="favicon/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="favicon/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="favicon/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
     <!-- Navigation Bar  -->
     <nav class="navbar">
         <div class="navbar-brand has-text-centered">
-            <a href="">ZILEAN</a>
+            <a href="">ZILEAN <i class="fas fa-hourglass-half brand-icon"></i></a>
+            
         </div>
         <div class="navbar-end has-text-centered">
-            <a href="" class="navbar-item">About</a>
-            <a href="" class="navbar-item">Commands</a>
+            <a id="about-button" class="navbar-item">About</a>
+            <a href="#commands" class="navbar-item">Commands</a>
             <a href="https://github.com/Samuel-Maddock/Zilean" class="navbar-item">GitHub
                 <i class="fab fa-github nav-icon"></i>
             </a>
         </div>
     </nav>
+
+    <!-- Intro Splash -->
     <section class="hero splash">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title zilean">ZILEAN</h1>
                 <h2 class="subtitle">
                     A
-                    <a id = "lol" class = "subtitle-link" href="https://play.euw.leagueoflegends.com/en_GB">League of Legends</a>
-                    <a id = "discord" class = "subtitle-link" href="https://discordapp.com">Discord</a> 
-                    Bot that displays live game data and other statistics 
+                    <a id="lol" class="subtitle-link" href="https://play.euw.leagueoflegends.com/en_GB">League of Legends</a>
+                    <a id="discord" class="subtitle-link" href="https://discordapp.com">Discord</a>
+                    Bot that displays live game data and other statistics
                 </h2>
                 <img class="splash-image" src="assets/Zilean.png" alt="Zilean" height="300px" width="300px">
             </div>
@@ -45,14 +71,88 @@
         </div>
     </section>
 
-    <section class="hero is-large command-section">
+    <!-- About Modal Card-->
+    <div id="about-modal" class="modal">
+        <div class="modal-background">
+        </div>
+        <div class="modal-card about-card">
+            <header class="modal-card-head about-card-head">
+                <p class="modal-card-title zilean about-title">About Zilean</p>
+                <button id="modal-close" class="delete is-medium"></button>
+            </header>
+            <section class="modal-card-body about-card-body">
+                Zilean is a discord bot that displays live game data and other statistics
+                <h1 class="about-title zilean">Features</h1>
+                <p>Zilean is currently still in development but already has quite a few features. The commands for Zilean are
+                    split into various plugins based on there function. A rough list of features is shown below. </p>
+                <br/>
+                <p> Zilean can do the following:</p>
+                <ul class="about-list">
+                    <li>
+                        <i class="fas fa-star about-icon"></i> Display and search for a LoL Champion and Item </li>
+                    <li>
+                        <i class="fas fa-star about-icon"></i> Display a match from a summoners match history</li>
+                    <li>
+                        <i class="fas fa-star about-icon"></i> Display live game information for a summoner that is in a game</li>
+                    <li>
+                        <i class="fas fa-star about-icon"></i> Add summoners to a tracker list, that automatically displays whether they are in-game every
+                        10 minutes</li>
+                    <li>
+                        <i class="fas fa-star about-icon"></i> Display various graphs such as kill participation, champion wins, game per month</li>
+                </ul>
+                <br/>
+                <p> For more information see the Commands Section!</p>
+                <h1 class="about-title zilean"> Development</h1>
+                <p>You can view Zileans GitHub Repo
+                    <a class="about-link" href="https://github.com/Samuel-Maddock/Zilean">
+                        here
+                        <i class="fab fa-github"></i>
+                    </a>
+                </p>
+                <br/>
+                <p>Zilean was developed in Python using the following libraries:</p>
+                <ul class="about-list">
+                    <li>
+                        <i class="fab fa-github about-icon"></i>Discord API Python Wrapper:
+                        <a class="about-link" href="https://github.com/b1naryth1ef/disco">disco.py</a>
+                    </li>
+                    <li>
+                        <i class="fab fa-github about-icon"></i>League of Legends API Python Wrapper:
+                        <a class="about-link" href="https://riot-watcher.readthedocs.io/en/latest/">RiotWatcher</a>
+                    </li>
+                </ul>
+
+            </section>
+            <footer class="modal-card-foot about-card-head">
+            </footer>
+        </div>
+    </div>
+
+    <!-- Command List Section -->
+    <section id="commands" class="hero command-section">
         <div class="hero-body">
             <div class="container has-text-centered">
-                Command List Being Added Soon...
+                <h1 class="command-title">Command List</h1>
+                <div class="tabs is-centered is-toggle is-toggle-rounded">
+                    <ul id = "tab-list">
+                    </ul>
+                </div>
+                <table id="commandTable" class="table command-table">
+                    <thead class="table-title">
+                        <tr>
+                            <th>Command Name</th>
+                            <th>Usage</th>
+                            <th>Description</th>
+                        </tr>
+
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
-
+    
     <!-- Footer  -->
     <footer class="footer">
         <div class="container has-text-centered">
@@ -61,6 +161,18 @@
             </p>
         </div>
         <div class="container has-text-centered">
+            <p>
+                Designed using
+                <a class="link" href="https://bulma.io"> bulma.io </a> and
+                <a class="link" href="https://fontawesome.com"> Font Awesome </a>
+                <i class="fas fa-heart"></i>
+            </p>
+            <p>
+                Background splash by
+                <a href="http://www.freepik.com">
+                    Kjpartgeter
+                </a>
+            </p>
             <p>
                 <a href="https://github.com/Samuel-Maddock/Zilean" class="icon">
                     <i class="fab fa-github"></i>

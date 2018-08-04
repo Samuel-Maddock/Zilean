@@ -4339,8 +4339,8 @@ a.box:active {
 }
 
 .table {
-  background-color: white;
-  color: #363636;
+  background-color: #263238;
+  color: #42BF94;
   margin-bottom: 1.5rem;
 }
 
@@ -4422,7 +4422,7 @@ a.box:active {
 }
 
 .table th {
-  color: #363636;
+  color: #f5d158;
   text-align: left;
 }
 
@@ -7472,7 +7472,7 @@ label.panel-block:hover {
   border-bottom-color: #dbdbdb;
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  color: #4a4a4a;
+  color: #f5d158;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -7486,7 +7486,7 @@ label.panel-block:hover {
 
 .tabs a:hover {
   border-bottom-color: #363636;
-  color: #363636;
+  color: #42BF94;
 }
 
 .tabs li {
@@ -7593,7 +7593,7 @@ label.panel-block:hover {
 }
 
 .tabs.is-toggle a:hover {
-  background-color: whitesmoke;
+  background-color: #374851;
   border-color: #b5b5b5;
   z-index: 2;
 }
@@ -7611,7 +7611,7 @@ label.panel-block:hover {
 }
 
 .tabs.is-toggle li.is-active a {
-  background-color: #00d1b2;
+  background-color: #42BF94;
   border-color: #00d1b2;
   color: #fff;
   z-index: 1;
@@ -10149,8 +10149,15 @@ a.navbar-item:hover {
 .navbar-brand {
   font-family: "Exo 2";
   font-size: 2.5rem;
-  margin-top: 0.5%;
   margin-left: 0.5%;
+}
+
+.brand-icon {
+  color: #f5d158;
+}
+
+a:hover {
+  color: #f5d158;
 }
 
 @-webkit-keyframes bgcolor {
@@ -10216,7 +10223,7 @@ html {
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.2;
+  opacity: 0.4;
   background-image: url("../assets/background2.png");
   background-repeat: no-repeat;
   -ms-background-size: cover;
@@ -10233,11 +10240,6 @@ html {
 
 .splash-button:hover {
   background-color: #f5d158;
-}
-
-.command-section {
-  background-color: #4D575C;
-  display: none;
 }
 
 .discord {
@@ -10262,7 +10264,7 @@ html {
 }
 
 #discord {
-  color: #7289DA;
+  color: #3757C5;
 }
 
 #lol {
@@ -10277,7 +10279,73 @@ html {
   color: #263238;
 }
 
-a:hover {
+.about-card {
+  color: #19c1a5;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-card-body {
+  background-color: #303f47;
+}
+
+.about-card-head {
+  background-color: #263238;
+}
+
+.about-title {
+  color: #42BF94;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.about-list {
+  margin-top: 5px;
+}
+
+.about-icon {
+  margin-right: 1.5%;
   color: #f5d158;
+}
+
+.about-link {
+  color: #f5d158;
+}
+
+.command-section {
+  background-color: #303f47;
+}
+
+.command-table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table thead th {
+  color: #f5d158;
+}
+
+.table thead tr:hover {
+  background-color: #263238;
+}
+
+.table tr:hover {
+  background-color: #4D575C;
+  color: #f5d158;
+}
+
+.command-title {
+  margin-bottom: 25px;
+  position: relative;
+  font-family: "Exo 2";
+  font-size: 2.5rem;
+  color: #42BF94;
+}
+
+.tab-item {
+  background-color: #263238;
 }
 /*# sourceMappingURL=style.css.map */

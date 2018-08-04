@@ -1,17 +1,26 @@
 @import "../node_modules/bulma/sass/utilities/initial-variables.sass";
 @import "partials/_colours.scss"; // Import main colour scheme variables
 
-// Custom Bulma Styling
+// Custom Bulma Styling:
 
-// Nav-bar Styles:
+// Bulma Nav-bar Styles:
 $family-sans-serif: "Comfortaa";
 $navbar-background-color: $nav-background-color;
 
-// Footer Styles:
+// Bulma Footer Styles:
 $footer-background-color: $nav-background-color;
 
-@import "../node_modules/bulma/bulma.sass"; 
-@import "partials/_header.scss";
-@import "partials/_main.scss";
-@import "partials/_footer.scss";
+//Bulma Table Styles:
+$table-background-color: $nav-background-color;
+$table-color: $nav-font-color;
+$table-cell-heading-color: $nav-hover-color;
 
+//Bulma Tab Styles:
+$tabs-toggle-link-active-background-color: $nav-font-color;
+$tabs-link-color: $nav-hover-color;
+$tabs-toggle-link-hover-background-color: $hero-2;
+$tabs-link-hover-color: $nav-font-color;
+
+@import "../node_modules/bulma/bulma.sass"; 
+@import "partials/_nav.scss";
+@import "partials/_main.scss";

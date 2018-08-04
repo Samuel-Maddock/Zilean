@@ -48,7 +48,7 @@ html{
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.2;
+    opacity: 0.4;
     background-image: url("../assets/background2.png");
     background-repeat: no-repeat;
     -ms-background-size: cover;
@@ -68,11 +68,6 @@ html{
 
 .splash-button:hover{
     background-color: $nav-hover-color
-}
-
-.command-section{
-    background-color: $hero-background-color;
-    display: none;
 }
 
 .discord{
@@ -110,4 +105,80 @@ html{
 
 #discord:hover{
     color: $nav-background-color;
+}
+
+// About Modal Card
+.about-card {
+    color: $about-color;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-card-body{
+    background-color: $hero-background-color;
+}
+
+.about-card-head{
+    background-color: $nav-background-color;
+}
+
+.about-title{
+    color: $nav-font-color;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
+.about-list{
+    margin-top: 5px;
+}
+
+.about-icon{
+    margin-right: 1.5%;
+    color: $nav-hover-color;
+}
+
+.about-link{
+    color: $nav-hover-color;
+}
+
+// Command Hero
+
+.command-section{
+    background-color: $hero-background-color;
+}
+
+.command-table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table thead th{
+    color: $nav-hover-color;
+}
+
+.table thead tr:hover{
+    background-color: $nav-background-color;
+}
+
+.table tr:hover{
+    background-color: $table-hover-color;
+    color: $nav-hover-color;
+}
+
+.command-title{
+    margin-bottom: 25px;
+    position: relative;
+    font-family: "Exo 2";
+    font-size: 2.5rem;
+    color: $nav-font-color;
+}
+
+.tab-item{
+    background-color: $nav-background-color;
 }
