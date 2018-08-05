@@ -7,9 +7,9 @@ from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
 
-class GameInfoPlugin(Plugin):
+class GameInfoCommands(Plugin):
     def load(self,ctx):
-        super(GameInfoPlugin, self).load(ctx)
+        super(GameInfoCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
 
     @Plugin.command('live_game', '<region:str> <summoner_name:str...>')

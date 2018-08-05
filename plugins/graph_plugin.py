@@ -11,9 +11,9 @@ from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.cache_helper import CacheHelper
 
 
-class GraphPlugin(Plugin):
+class GraphCommands(Plugin):
     def load(self,ctx):
-        super(GraphPlugin, self).load(ctx)
+        super(GraphCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
 
     @Plugin.listen("Ready")
@@ -56,6 +56,7 @@ class GraphPlugin(Plugin):
             filepath = "kp-" + summoner_name + ".png"
             self._graph_renderer(event, kp_graph, summoner_name, region, filepath, match_validation=True)
 
+    '''
     @Plugin.command("living_time_vs_gold", "<region:str> <summoner_name:str...>", group="graph", aliases=["ltg"])
     def on_ltg_graph(self, event, region, summoner_name):
         """Displays a scatter graph of your longest living time against your total gold earned for 100 recent games"""
@@ -63,7 +64,8 @@ class GraphPlugin(Plugin):
         if self._validate_region(event, region):
             ltg_graph = LivingTimeGold(self.league_helper.watcher, region, LeagueHelper.get_champion_data())
             filepath = "ltg-" + summoner_name + ".png"
-            self._graph_renderer(event, ltg_graph, summoner_name, region, filepath, match_validation=True)
+            self._graph_renderer(event, ltg_graph, summoner_name, region, filepath, match_validation=True) 
+    '''
 
     def _graph_renderer(self, event, graph, summoner_name, region, filepath, match_validation=False):
         event.msg.reply("Loading " + summoner_name + "'s data... :hourglass_flowing_sand:")

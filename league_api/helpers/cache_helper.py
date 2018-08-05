@@ -15,7 +15,7 @@ class CacheHelper:
         def zilean_cache(self, message, *args, **kws):
             self._log(ZILEAN, message, args, **kws)
 
-        logging.Logger.static_cache = zilean_cache
+        logging.Logger.zilean = zilean_cache
         logging.basicConfig(level=logging.INFO)
         return logging.getLogger(log_name)
 
@@ -37,18 +37,18 @@ class CacheHelper:
                 data = json.loads(url.read().decode())
 
             server_version = data["v"] # The most recent live version
-            logger.static_cache("Checking for static data version difference...")
+            logger.zilean("Checking for static data version difference...")
             if server_version != cache_version:
-                logger.static_cache("Version difference detected. detected version: " + cache_version + " live version: " + server_version)
-                logger.static_cache("Current static data out of date - Updating now...")
+                logger.zilean("Version difference detected. detected version: " + cache_version + " live version: " + server_version)
+                logger.zilean("Current static data out of date - Updating now...")
                 CacheHelper.update_cache(server_version, current_timestamp)
-                logger.static_cache("Static data hs been updated to version: " + server_version)
+                logger.zilean("Static data hs been updated to version: " + server_version)
             else:
                 CacheHelper._update_cache_timestamp(server_version, current_timestamp)
-                logger.static_cache("Version up to date: " + server_version)
+                logger.zilean("Version up to date: " + server_version)
         else:
 
-            logger.static_cache("Static data is up to date (within 6 hours) - version: " + cache_version)
+            logger.zilean("Static data is up to date (within 6 hours) - version: " + cache_version)
 
     @staticmethod
     def _update_cache_timestamp(server_version, current_timestamp):

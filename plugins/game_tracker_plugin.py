@@ -10,9 +10,9 @@ TRACKER_SCHEDULE = 600 # Every 10 minutes
 
 ''' TODO: Add subscribe command to DM auto-display games'''
 
-class GameTracker(Plugin):
+class GameTrackerCommands(Plugin):
     def load(self,ctx):
-        super(GameTracker, self).load(ctx)
+        super(GameTrackerCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
         self.tracker = self.load_tracker()
 
@@ -109,7 +109,7 @@ class GameTracker(Plugin):
 
         for index, summoner_tuple in enumerate(summoner_list):
             if summoner_tuple[1] == summoner_name.lower() and region == summoner_tuple[2]:
-                summoner_list[index][3] = (not summoner_tuple[3]) # Invert the current bool
+                summoner_list[index][3] = not summoner_tuple[3] # Invert the current bool
                 if summoner_list[index][3]:
                     auto_message = "now being auto-displayed :white_check_mark:"
 
