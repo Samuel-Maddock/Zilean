@@ -1,0 +1,167 @@
+
+// About Modal Card
+.about-card {
+    color: $league-color;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-card-body{
+    background-color: $hero-background-color;
+}
+
+.about-card-head{
+    background-color: $nav-background-color;
+}
+
+.about-title{
+    color: $nav-hover-color;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
+.about-list{
+    margin-top: 5px;
+}
+
+.about-icon{
+    margin-right: 1.5%;
+    color: $nav-hover-color;
+}
+
+.about-link{
+    color: $nav-font-color;
+}
+
+.table-container{
+    overflow: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+#about-close{
+    font-size: 1.5rem;
+    align-content: center;
+    margin-top: 10px;
+}
+
+#about-close:hover{
+    color: $nav-font-color;
+    cursor: pointer;
+}
+
+// Command Hero
+
+.command-section{
+    background-color: $hero-background-color;
+}
+
+.command-table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table thead th{
+    color: $nav-hover-color;
+}
+
+.table thead tr:hover{
+    background-color: $nav-background-color;
+}
+
+.table tr:hover{
+    background-color: $table-hover-color;
+    color: $nav-hover-color;
+}
+
+.command-title{
+    margin-bottom: 20px;
+    position: relative;
+    font-family: "Exo 2";
+    font-size: 2.5rem;
+    color: $nav-font-color;
+}
+
+.command-subtitle{ 
+    margin-bottom: 20px;
+}
+
+.tab-item{
+    background-color: $nav-background-color;
+}
+
+.command-modal-content{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Applied to the body when the about modal is open
+.modal-open{
+    overflow: hidden;
+}
+
+// Idea/Feature Hero
+.ideas{
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg, #0087ff, #00ff77);
+    background-size: 150% 150%;
+    -webkit-animation: ideaGradient 5s ease infinite;
+    -moz-animation: ideaGradient 5s ease infinite;
+    animation: ideaGradient 5s ease infinite;
+}
+
+.ideas:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    background-image: url("../assets/background3.png");
+    background-repeat: no-repeat;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+@-webkit-keyframes ideaGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes ideaGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@keyframes ideaGradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.card{ 
+    margin-top: 50px;
+    max-width: 50%;
+    background-color: $hero-background-color;
+    color: $nav-font-color;
+}
+
+.feature-card{
+    margin-left: auto;
+    margin-right: auto;
+}

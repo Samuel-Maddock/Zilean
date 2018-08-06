@@ -10160,42 +10160,6 @@ a:hover {
   color: #f5d158;
 }
 
-@-webkit-keyframes bgcolor {
-  0% {
-    background-color: #8AEA92;
-  }
-  30% {
-    background-color: #06D6A0;
-  }
-  60% {
-    background-color: #84DCCF;
-  }
-  90% {
-    background-color: #54C6EB;
-  }
-  100% {
-    background-color: #47E5BC;
-  }
-}
-
-@keyframes bgcolor {
-  0% {
-    background-color: #8AEA92;
-  }
-  30% {
-    background-color: #06D6A0;
-  }
-  60% {
-    background-color: #84DCCF;
-  }
-  90% {
-    background-color: #54C6EB;
-  }
-  100% {
-    background-color: #47E5BC;
-  }
-}
-
 body {
   background-color: #263238;
   color: #f5d158;
@@ -10206,9 +10170,45 @@ html {
   height: 100%;
 }
 
+@-webkit-keyframes splashcolor {
+  0% {
+    background-color: #8AEA92;
+  }
+  30% {
+    background-color: #06D6A0;
+  }
+  60% {
+    background-color: #84DCCF;
+  }
+  90% {
+    background-color: #54C6EB;
+  }
+  100% {
+    background-color: #47E5BC;
+  }
+}
+
+@keyframes splashcolor {
+  0% {
+    background-color: #8AEA92;
+  }
+  30% {
+    background-color: #06D6A0;
+  }
+  60% {
+    background-color: #84DCCF;
+  }
+  90% {
+    background-color: #54C6EB;
+  }
+  100% {
+    background-color: #47E5BC;
+  }
+}
+
 .splash {
-  -webkit-animation: bgcolor 10s infinite;
-  animation: bgcolor 10s infinite;
+  -webkit-animation: splashcolor 10s infinite;
+  animation: splashcolor 10s infinite;
   -webkit-animation-direction: alternate;
   animation-direction: alternate;
   position: relative;
@@ -10280,7 +10280,7 @@ html {
 }
 
 .about-card {
-  color: #19c1a5;
+  color: #EBCB66;
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -10298,7 +10298,7 @@ html {
 }
 
 .about-title {
-  color: #42BF94;
+  color: #f5d158;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
@@ -10312,7 +10312,25 @@ html {
 }
 
 .about-link {
-  color: #f5d158;
+  color: #42BF94;
+}
+
+.table-container {
+  overflow: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+#about-close {
+  font-size: 1.5rem;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  margin-top: 10px;
+}
+
+#about-close:hover {
+  color: #42BF94;
+  cursor: pointer;
 }
 
 .command-section {
@@ -10338,14 +10356,161 @@ html {
 }
 
 .command-title {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   position: relative;
   font-family: "Exo 2";
   font-size: 2.5rem;
   color: #42BF94;
 }
 
+.command-subtitle {
+  margin-bottom: 20px;
+}
+
 .tab-item {
   background-color: #263238;
+}
+
+.command-modal-content {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.ideas {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(45deg, #0087ff, #00ff77);
+  background-size: 150% 150%;
+  -webkit-animation: ideaGradient 5s ease infinite;
+  animation: ideaGradient 5s ease infinite;
+}
+
+.ideas:before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background-image: url("../assets/background3.png");
+  background-repeat: no-repeat;
+  -ms-background-size: cover;
+  background-size: cover;
+}
+
+@-webkit-keyframes ideaGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes ideaGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card {
+  margin-top: 50px;
+  max-width: 50%;
+  background-color: #303f47;
+  color: #42BF94;
+}
+
+.feature-card {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  .navbar-brand a {
+    font-family: "Exo 2";
+    font-size: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  tr {
+    border: 1px solid #ccc;
+    background-color: #263238;
+    margin-top: 20px;
+  }
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  td:before {
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    margin-right: 10px;
+    white-space: nowrap;
+    color: #f5d158;
+  }
+  .table {
+    background-color: transparent;
+  }
+  /*
+	Label the data
+    */
+  td:nth-of-type(1):before {
+    content: "Name:";
+  }
+  td:nth-of-type(2):before {
+    content: "Usage:";
+  }
+  td:nth-of-type(3):before {
+    content: "Description:";
+  }
+  .about-card {
+    color: #EBCB66;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+  }
+  .about-card-head {
+    overflow: hidden;
+  }
+  .tab-list {
+    display: inline !important;
+  }
+  .modal-card-foot {
+    display: none;
+  }
+  .card {
+    max-width: 70%;
+  }
 }
 /*# sourceMappingURL=style.css.map */
