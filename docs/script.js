@@ -5,10 +5,21 @@ $.ajaxSetup({
 function onAboutClick(){
     $("#about-button").click(function() {
         $("#about-modal").show();
+        $("body").addClass("modal-open");
     });
 
-    $("#modal-close").click(function(){
+    $("#about-close").click(function(){
         $("#about-modal").hide();
+        $("body").removeClass("modal-open")
+    });
+
+    // Command image modal close button
+    $("#command-modal-close").click(function(){
+        $("#command-modal").hide();
+    });
+
+    $("#command-modal-background").click(function(){
+        $("#command-modal").hide();
     });
 }
 
@@ -30,13 +41,22 @@ function initTabs(){
     return keys
 }
 
+function imageOnClick(command){
+    $("#" + command).click(function(){
+        $("#command-modal-image").attr("src", "assets/commands/~" + command + ".png");
+        $("#command-modal").show();
+    });
+}
+
 function createTable(key){
     $.getJSON("commandList.json", function(json) {
         arr = json[key]
         
         var html = ""
+        var command = ""
         arr.forEach(element => {
-            html +='<tr><td>' + element[0] + '</td><td>';
+            command = element[0].substr(1).replace(/\s+/g, '-')
+            html +='<tr id="' + command + '"><td>' + element[0] + '</td><td>';
             if (element[1].length > 1) {
                 for(i = 0; i < element[1].length; i++){
                     if (i>0){
@@ -51,6 +71,12 @@ function createTable(key){
             html += '</td><td>' + element[2] + '</td></tr>';
         });
         $('#table-body').append(html); 
+
+        arr.forEach(element=>{
+            command = element[0].substr(1).replace(/\s+/g, '-')
+            imageOnClick(command)
+        })
+        
     });
 }
 

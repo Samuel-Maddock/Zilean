@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -7,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
         crossorigin="anonymous">
+    <link rel="icon" href="favicon/favicon-196x196.png">
     <link href="https://fonts.googleapis.com/css?family=Exo+2:900" rel="stylesheet">
     <link rel="stylesheet" href="scss/style.css">
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon/apple-touch-icon-57x57.png" />
@@ -64,7 +66,7 @@
                 <img class="splash-image" src="assets/Zilean.png" alt="Zilean" height="300px" width="300px">
             </div>
             <div class="container has-text-centered">
-                <a class="button is-large splash-button">Add To Discord
+                <a href="https://discordapp.com/oauth2/authorize?client_id=459139146544578571&scope=bot" class="button is-large splash-button">Add To Discord
                     <i class="fab fa-discord discord"></i>
                 </a>
             </div>
@@ -78,7 +80,7 @@
         <div class="modal-card about-card">
             <header class="modal-card-head about-card-head">
                 <p class="modal-card-title zilean about-title">About Zilean</p>
-                <button id="modal-close" class="delete is-medium"></button>
+                <i id="about-close" class="far fa-times-circle"></i>
             </header>
             <section class="modal-card-body about-card-body">
                 Zilean is a discord bot that displays live game data and other statistics
@@ -128,28 +130,60 @@
         </div>
     </div>
 
+    <!-- Command Image Modal-->
+    <div id="command-modal" class="modal">
+        <div class="modal-background" id="command-modal-background"></div>
+        <div class="modal-content command-modal-content">
+            <p class="image">
+                <img id="command-modal-image" src="" alt="">
+            </p>
+        </div>
+        <button id="command-modal-close" class="modal-close is-large" aria-label="close"></button>
+    </div>
+
     <!-- Command List Section -->
     <section id="commands" class="hero command-section">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="command-title">Command List</h1>
+                <div class="container has-text-centered command-subtitle">
+                    <p>Note that [arg] is a required argument and (arg) is an optional argument</p>
+                    <p>Click a command to view it in action!</p>
+                </div>
                 <div class="tabs is-centered is-toggle is-toggle-rounded">
-                    <ul id = "tab-list">
+                    <ul id = "tab-list" class = "tab-list">
                     </ul>
                 </div>
-                <table id="commandTable" class="table command-table">
-                    <thead class="table-title">
-                        <tr>
-                            <th>Command Name</th>
-                            <th>Usage</th>
-                            <th>Description</th>
-                        </tr>
-
-                    </thead>
-                    <tbody id="table-body">
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table id="commandTable" class="table command-table">
+                        <thead class="table-title">
+                            <tr>
+                                <th>Command Name</th>
+                                <th>Usage</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <section class="hero ideas">
+        <div class="hero-body ideas-list">
+            <div class="container has-text-centered">
+                <h1 class="title zilean">Request Features</h1>
+            </div>
+            
+            <div class="card feature-card">
+                <div class="card-content has-text-centered">
+                <p>Zilean is still in development, help shape the bot by requesting commands/features</p>
+                <p> Coming soon!</p>
+                </div>
+              </div>
+        
         </div>
     </section>
     
