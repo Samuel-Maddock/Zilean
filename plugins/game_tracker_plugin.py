@@ -141,22 +141,31 @@ class GameTrackerCommands(Plugin):
             in_game = ""
             footer = ""
 
+            hasFailed = False
             for summoner in summoner_list:
                 auto_display = summoner[3]
                 summoner_names += summoner[1] + "\n"
                 regions += summoner[2] + "\n"
 
-                spectate_info = self.league_helper.user_in_game(summoner[2], summoner[0])
-                if spectate_info:
+                try:
+                    spectate_info = self.league_helper.user_in_game(summoner[2], summoner[0])
+                except ConnectionError as e:
+                    hasFailed = True
+
+                if spectate_info and not hasFailed:
                     in_game += "**Yes** | " + self.boolMsg(auto_display) + "\n"
                     if auto_display:
                         game_info = GameInfo(self.league_helper)
                         game_info.display_live_game(channel, summoner[2], spectate_info)
                     has_live_games = True
-                else:
+                elif not hasFailed:
                     in_game += "No | " + self.boolMsg(auto_display) + "\n"
+                else:
+                    in_game += "Summoner info cannot be retrieved at this time\n"
 
-            if not has_live_games:
+            if hasFailed:
+                footer = "No connection can be made to the Riot Servers"
+            elif not has_live_games:
                 footer = "No one is currently in a live game :("
             else:
                 footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
@@ -171,6 +180,10 @@ class GameTrackerCommands(Plugin):
             embed.add_field(name="Summoner Name", value=summoner_names, inline=True)
             embed.add_field(name="Region", value=regions, inline=True)
             embed.add_field(name="In Game | Auto-Display", value=in_game, inline=True)
+
+            if hasFailed:
+                embed.add_field(name="Connection Issue", value="One or more summoners info could not be retrieved. Please try again in a few minutes.")
+
             embed.color = "444751"
             embed.timestamp = datetime.utcnow().isoformat()
             embed.set_footer(text=footer)
