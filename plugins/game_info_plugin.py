@@ -2,11 +2,12 @@ import json
 import re
 import random
 import datetime
+import urllib
+
+from requests import HTTPError
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
-import urllib
-
 
 class GameInfoCommands(Plugin):
     def load(self,ctx):
@@ -78,7 +79,7 @@ class GameInfoCommands(Plugin):
         region = LeagueHelper.validate_region(region)
 
         if region is None:
-            event.msg.reply("Please enter a valid region")
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return
 
         embed = MessageEmbed()
@@ -194,6 +195,91 @@ class GameInfoCommands(Plugin):
 
         if not champ_found:
             event.msg.reply("This champ does not exist...")
+
+    @Plugin.command("summoner", "<region:str> <summoner_name:str...>")
+    def on_summoner(self, event, region, summoner_name):
+        '''Displays information about a League of Legends summoner'''
+
+        # TODO: Tidy this up...
+
+        region = LeagueHelper.validate_region(region)
+
+        if region is None:
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
+            return
+
+        summoner = self.league_helper.user_exists(region, summoner_name)
+
+        if not summoner:
+            event.msg.reply("This summoner does not exist. Try again with a different summoner!")
+            return
+
+        version = LeagueHelper.get_champion_data()["version"]
+        embed = MessageEmbed()
+        embed.title = "Summoner Profile: " + summoner["name"] + " " + region
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.color = "444751"
+        embed.timestamp = datetime.datetime.utcnow().isoformat()
+        embed.set_footer(text="Displaying summoner info for " + summoner["name"])
+        embed.set_thumbnail(url="http://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + str(summoner["profileIconId"]) + ".png")
+
+        embed.add_field(name="Summoner Level", value=str(summoner["summonerLevel"]))
+        ranked_positions = self.league_helper.watcher.league.positions_by_summoner(region, summoner["id"])
+
+        ranks_array = ["RANKED SOLO 5x5", "RANKED FLEX TT", "RANKED FLEX SR"]
+        for rank in ranked_positions:
+            rank_name = rank["queueType"].replace("_", " ")
+            embed.add_field(name="Queue Type", value=rank_name, inline=True)
+            ranks_array.remove(rank_name)
+
+            winrate = round((rank["wins"] / (rank["wins"] + rank["losses"])) * 100)
+            rank_msg = rank["tier"] + " " + rank["rank"] + " (" + str(rank["leaguePoints"]) + "lp)"
+            winrate_msg = " | " + str(winrate) + "%"
+            winloss_msg = " | W:" + str(rank["wins"]) + " L:" + str(rank["losses"])
+
+            embed.add_field(name="Rank | Wins/Losses | Winrate", value= rank_msg + winloss_msg + winrate_msg , inline=True)
+
+        for rank in ranks_array:
+            embed.add_field(name="Queue Type", value=rank, inline=True)
+            embed.add_field(name="Rank | Wins/Losses | Winrate", value= "UNRANKED", inline=True)
+
+        try:
+            matchlist = self.league_helper.watcher.match.matchlist_by_account(region, summoner["accountId"])
+            match = self.league_helper.watcher.match.by_id(region, matchlist["matches"][0]["gameId"])
+
+            for participant in match["participantIdentities"]:
+                if participant["player"]["currentAccountId"] == summoner["accountId"]:
+                    target_player = participant
+
+            for participant in match["participants"]:
+                if participant["participantId"] == target_player["participantId"]:
+                    target_champion_id = participant["championId"]
+                    target_stats = str(participant["stats"]["kills"]) + "/" + str(participant["stats"]["deaths"]) + "/" + str(participant["stats"]["assists"])
+                    target_team = participant["teamId"]
+
+            for team in match["teams"]:
+                if team["teamId"] == target_team:
+                    match_outcome = team["win"]
+
+            if match_outcome == "Fail":
+                match_outcome = "Defeat :x:"
+            else:
+                match_outcome = "Victory :white_check_mark:"
+
+            target_champion = LeagueHelper.get_champion_data()["keys"][str(target_champion_id)]
+            embed.add_field(name="Last Game Played:", value= "**" + match_outcome + "**\n" + target_champion + " " + target_stats + " http://matchhistory.euw.leagueoflegends.com/en/#match-details/" + region + "/" + str(match["gameId"]) + "/" + str(summoner["accountId"]) + "?tab=overview")
+
+        except HTTPError as err:
+            if err.response.status_code == 404:
+                embed.add_field(name="Last Game Played", value="This summoner has not recently played a game.")
+
+        if not self.league_helper.user_in_game(region, summoner["id"]):
+            embed.add_field(name="Live Game", value="This summoner is not currently in a live game.")
+        else:
+            embed.add_field(name="Live Game", value="This summoner is in a live game, type ~live_game " + region + " " + summoner_name + " for more info.")
+
+
+        event.msg.reply(embed=embed)
 
 
 class GameInfo():
