@@ -4,7 +4,9 @@ from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.live_data_helper import LiveDataHelper
+from league_api.helpers.cache_helper import CacheHelper
 from plugins.game_info_plugin import GameInfo
+
 
 TRACKER_SCHEDULE = 600 # Every 10 minutes
 
@@ -187,7 +189,13 @@ class GameTrackerCommands(Plugin):
             embed.color = "444751"
             embed.timestamp = datetime.utcnow().isoformat()
             embed.set_footer(text=footer)
-            channel.send_message(embed=embed)
+
+            try:
+                channel.send_message(embed=embed)
+            except ConnectionError as e:
+                logger = CacheHelper.get_logger("TrackerFailure")
+                logger.zilean("Tracker message failed to send. Could not connect to the Discord API")
+
 
     def boolMsg(self, bool):
         if bool:
