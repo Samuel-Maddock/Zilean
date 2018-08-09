@@ -6,6 +6,8 @@ import time
 
 # A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
+    API_ENDPOINTS = ["EUW1", "NA1", "EUN1", "KR", "LA1", "LA2", "JP1", "OC1", "TR1", "RU"]
+
     def __init__(self):
         with open("config.json") as data_file:
             data = json.load(data_file)
@@ -56,14 +58,21 @@ class LeagueHelper:
     @staticmethod
     def validate_region(region):
         region = region.upper()
-        if region in ["EUW", "NA", "EUN", "JP", "LAN", "OCE", "TR", "RU"]:
+        # TODO: Rework this
+        if region in ["EUW", "NA", "EUN", "JP", "TR", "BR"]:
             region += "1"
-        elif region == "KR":
+        elif region == "KR" or region == "RU":
             pass
+        elif region == "LAN":
+            region = "LA1"
         elif region == "LAS":
-            region += "2"
+            region = "LA2"
         elif region == "EU":
             region = "EUW1"
+        elif region == "EUNE":
+            region = "EUN1"
+        elif region == "OCE":
+            region = "OC1"
         else:
             region = None
         return region
