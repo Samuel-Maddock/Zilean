@@ -1,4 +1,3 @@
-
 import json
 import re
 import random
@@ -6,11 +5,46 @@ import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
+import urllib
+
 
 class GameInfoCommands(Plugin):
     def load(self,ctx):
         super(GameInfoCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
+
+    @Plugin.command("patch", "[version:str]")
+    def on_patch(self, event, version=None):
+        '''Displays the latest patch notes for League of Legends'''
+        s = "."
+        if not version:
+            version = s.join(LeagueHelper.get_champion_data()["version"].split(".", 2)[:2])
+
+        version_url = version.strip(".")
+        patch_url = "http://na.leagueoflegends.com/en/news/game-updates/patch/patch-" + version_url + "-notes"
+        version_url = "http://ddragon.leagueoflegends.com/api/versions.json"
+
+        with urllib.request.urlopen(version_url) as url:
+            raw_json = json.loads(url.read().decode())
+
+        versionExists = False
+        for patch in raw_json:
+            if patch.startswith(version):
+                versionExists = True
+
+        if not versionExists:
+            event.msg.reply("This is not a valid patch number. Try ~patch for the most recent patch notes!")
+            return
+
+        embed = MessageEmbed()
+        embed.title = "League of Legends Patch Notes"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.description = version + " Patch Notes"
+        embed.color = "444751"
+        embed.timestamp = datetime.datetime.utcnow().isoformat()
+        embed.set_footer(text=version + " Patch Notes")
+        embed.add_field(name="Notes", value=patch_url)
+        event.msg.reply(embed=embed)
 
     @Plugin.command("status", "[region:str]")
     def on_status(self, event, region=None):

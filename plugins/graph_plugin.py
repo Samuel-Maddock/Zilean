@@ -6,7 +6,6 @@ from league_api.graphs.champion_mastery import ChampionMasteryGraph
 from league_api.graphs.champion_wins import ChampionWinsGraph
 from league_api.graphs.games_per_month import GamesPerMonthGraph
 from league_api.graphs.kill_participation import KillParticipationGraph
-from league_api.graphs.living_time import LivingTimeGold
 from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.cache_helper import CacheHelper
 
