@@ -1,4 +1,3 @@
-
 import json
 import re
 import random
@@ -6,11 +5,109 @@ import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
+import urllib
+
 
 class GameInfoCommands(Plugin):
     def load(self,ctx):
         super(GameInfoCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
+
+    @Plugin.command("patch", "[version:str]")
+    def on_patch(self, event, version=None):
+        '''Displays the latest patch notes for League of Legends'''
+        s = "."
+        if not version:
+            version = s.join(LeagueHelper.get_champion_data()["version"].split(".", 2)[:2])
+
+        version_url = version.strip(".")
+        patch_url = "http://na.leagueoflegends.com/en/news/game-updates/patch/patch-" + version_url + "-notes"
+        version_url = "http://ddragon.leagueoflegends.com/api/versions.json"
+
+        with urllib.request.urlopen(version_url) as url:
+            raw_json = json.loads(url.read().decode())
+
+        versionExists = False
+        for patch in raw_json:
+            if patch.startswith(version):
+                versionExists = True
+
+        if not versionExists:
+            event.msg.reply("This is not a valid patch number. Try ~patch for the most recent patch notes!")
+            return
+
+        embed = MessageEmbed()
+        embed.title = "League of Legends Patch Notes"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.description = version + " Patch Notes"
+        embed.color = "444751"
+        embed.timestamp = datetime.datetime.utcnow().isoformat()
+        embed.set_footer(text=version + " Patch Notes")
+        embed.add_field(name="Notes", value=patch_url)
+        event.msg.reply(embed=embed)
+
+    @Plugin.command("status", "[region:str]")
+    def on_status(self, event, region=None):
+        '''Displays the status of the league of legends servers. Use ~status (region) for a more detailed breakdown'''
+
+        if region:
+            self._display_region_status(event, region)
+            return
+
+        embed = MessageEmbed()
+        embed.title = "League of Legends Server Status"
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.description = "Use ~status [region] for a more detailed breakdown of server status! Displayed below is the game status"
+        embed.color = "444751"
+        embed.timestamp = datetime.datetime.utcnow().isoformat()
+        embed.set_footer(text="League of Legends Server Status")
+
+        for endpoint in LeagueHelper.API_ENDPOINTS:
+            endpoint_status = self.league_helper.watcher.lol_status.shard_data(endpoint)
+            embed.add_field(name=endpoint_status["name"] + " (" + endpoint_status["slug"].upper() + ")", value=self._emojify_status(endpoint_status["services"][0]["status"]),inline=True)
+
+        event.msg.reply(embed=embed)
+
+    def _emojify_status(self, status):
+        if status == "online":
+            return ":white_check_mark:"
+        else:
+            return ":no_entry_sign:"
+
+    def _display_region_status(self, event, region):
+        region = LeagueHelper.validate_region(region)
+
+        if region is None:
+            event.msg.reply("Please enter a valid region")
+            return
+
+        embed = MessageEmbed()
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed.color = "444751"
+        embed.timestamp = datetime.datetime.utcnow().isoformat()
+        embed.set_footer(text="League of Legends Server Status for " + region)
+
+        endpoint_status = self.league_helper.watcher.lol_status.shard_data(region)
+        embed.add_field(name=endpoint_status["name"] + " (" + endpoint_status["slug"].upper() + ")", value="Server Status")
+
+        services = endpoint_status["services"]
+
+        for service in endpoint_status["services"]:
+            embed.add_field(name=service["name"], value=self._emojify_status(service["status"]), inline=True)
+
+            if len(service["incidents"]) != 0:
+                embed.add_field(name="Incidents", value=str(len(service["incidents"])), inline=True)
+                incident_msg = ""
+                for incident in service["incidents"]:
+                    if len(incident["updates"]) != 0:
+                        recent_update = incident["updates"][0]
+                        incident_msg += incident["created_at"][0:10] + " " + recent_update["severity"].upper() + ": " + recent_update["content"] + "\n"
+                        embed.add_field(name="Incident Description", value= incident_msg, inline=True)
+            else:
+                embed.add_field(name="Incidents", value="No incidents!", inline=True)
+                embed.add_field(name= "Incident Description", value="N/A", inline=True)
+
+        event.msg.reply(embed=embed)
 
     @Plugin.command('live_game', '<region:str> <summoner_name:str...>')
     def on_live_game(self, event, region, summoner_name):
