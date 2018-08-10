@@ -28,6 +28,10 @@ a.navbar-item:hover{
     background-color: $nav-hover-color;
 }
 
+a:hover{
+    color: $nav-hover-color;
+}
+
 a {
     color: $nav-font-color;
 }

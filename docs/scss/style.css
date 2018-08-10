@@ -10663,6 +10663,10 @@ a.navbar-item:hover {
   background-color: #f5d158;
 }
 
+a:hover {
+  color: #f5d158;
+}
+
 a {
   color: #42BF94;
 }
