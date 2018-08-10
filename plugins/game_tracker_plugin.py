@@ -235,6 +235,10 @@ class GameTrackerCommands(Plugin):
             else:
                 summoner_list = tracker[guild_id]
 
+        if len(summoner_list) >= 10:
+            event.msg.reply("You are already tracking the maximum number (10) of summoners! Use ~tracker remove [region] [summoner_name] to remove a summoner")
+            return
+
         summoner_list.append(data)
         tracker[guild_id] = summoner_list
         self.update_tracker(tracker)
