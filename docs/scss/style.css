@@ -10644,14 +10644,14 @@ label.panel-block:hover {
   font-size: 1.25rem;
 }
 
-a.navbar-item:hover {
-  background-color: #f5d158;
-}
-
 .navbar-brand {
   font-family: "Exo 2";
   font-size: 2.5rem;
   margin-left: 0.5%;
+}
+
+.header-brand:hover {
+  color: #f5d158 !important;
 }
 
 .brand-icon {
@@ -10660,6 +10660,7 @@ a.navbar-item:hover {
 
 a.navbar-item:hover {
   color: #263238;
+  background-color: #f5d158;
 }
 
 a {
