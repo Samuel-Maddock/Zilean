@@ -10658,8 +10658,8 @@ a.navbar-item:hover {
   color: #f5d158;
 }
 
-a:hover {
-  color: #f5d158;
+a.navbar-item:hover {
+  color: #263238;
 }
 
 a {

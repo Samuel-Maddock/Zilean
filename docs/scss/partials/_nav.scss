@@ -23,8 +23,8 @@ a.navbar-item:hover{
 }
 
 // Footer Styling
-a:hover{
-    color: $nav-hover-color;
+a.navbar-item:hover{
+    color: $nav-background-color;
 }
 
 a {
