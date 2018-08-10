@@ -4,8 +4,7 @@
     "description": "Github.io site for Zilean bot",
     "main": "index.js",
     "dependencies": {
-      "font-awesome": "^4.7.0",
-      "bulma": "^0.5.1"
+      "bulma": "^0.7.1"
     },
     "devDependencies": {},
     "scripts": {

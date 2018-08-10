@@ -96,6 +96,10 @@
     background-color: $nav-background-color;
 }
 
+.tabs.is-toggle li.is-active a{
+    border-color: #fff;
+}
+
 .command-modal-content{
     position: relative;
     top: 50%;
@@ -115,9 +119,9 @@
     overflow: hidden;
     background: linear-gradient(45deg, #0087ff, #00ff77);
     background-size: 150% 150%;
-    -webkit-animation: ideaGradient 5s ease infinite;
-    -moz-animation: ideaGradient 5s ease infinite;
-    animation: ideaGradient 5s ease infinite;
+    -webkit-animation: ideaGradient 4s ease infinite;
+    -moz-animation: ideaGradient 4s ease infinite;
+    animation: ideaGradient 4s ease infinite;
 }
 
 .ideas:before {
@@ -158,10 +162,22 @@
     margin-top: 50px;
     max-width: 50%;
     background-color: $hero-background-color;
-    color: $nav-font-color;
+    color: $nav-hover-color;
 }
 
 .feature-card{
     margin-left: auto;
     margin-right: auto;
+}
+
+// Contact
+
+.discord-name{
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: $about-color;
+}
+
+.contact-para{
+    margin-top: 10px;
 }
