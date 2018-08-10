@@ -8,14 +8,14 @@
     font-size: 1.25rem;
 }
 
-a.navbar-item:hover{
-    background-color: $nav-hover-color;
-}
-
 .navbar-brand{
     font-family: "Exo 2";
     font-size: 2.5rem;
     margin-left: 0.5%;
+}
+
+.header-brand:hover{
+    color: $nav-hover-color !important;
 }
 
 .brand-icon{
@@ -25,6 +25,7 @@ a.navbar-item:hover{
 // Footer Styling
 a.navbar-item:hover{
     color: $nav-background-color;
+    background-color: $nav-hover-color;
 }
 
 a {
