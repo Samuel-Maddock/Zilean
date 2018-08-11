@@ -3,6 +3,8 @@ from requests import HTTPError
 import json
 import urllib
 import time
+from requests.exceptions import ConnectionError
+from league_api.helpers.cache_helper import CacheHelper
 
 # A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
@@ -18,6 +20,9 @@ class LeagueHelper:
         spectate_info = None
         try:
             spectate_info = self.watcher.spectator.by_summoner(region, summoner_id)
+        except ConnectionError:
+            logger = CacheHelper.get_logger("UserInGameFailure")
+            logger.zilean("Failed to connect to the Riot API")
         except HTTPError as err:
             if err.response.status_code == 404:
                 return False

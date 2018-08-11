@@ -6,7 +6,7 @@ from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.live_data_helper import LiveDataHelper
 from league_api.helpers.cache_helper import CacheHelper
 from plugins.game_info_plugin import GameInfo
-
+from requests.exceptions import ConnectionError
 
 TRACKER_SCHEDULE = 600 # Every 10 minutes
 
