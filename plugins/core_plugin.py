@@ -98,6 +98,20 @@ class UtilityCommands(Plugin):
         logger = CacheHelper.get_logger("GuildCreate")
         logger.zilean("New Guild Created: " + event.guild.name + " " + str(event.guild.id))
 
+    @Plugin.listen("GuildDelete")
+    def on_guild_remove(self, event):
+        guild = self.client.state.guilds[event.id]
+        self.guild_list.pop(str(event.id))
+        logger = CacheHelper.get_logger("GuildRemove")
+        logger.zilean("Guild Removed: " + guild.name + " " + str(guild.id))
+
+        channel_binds = LiveDataHelper.load_guild_binds()
+        channel_bind = channel_binds.pop(str(event.id), None)
+
+        if channel_bind:
+            logger.zilean("Guild-Channel bind has been removed for " + guild.name + " " + guild.id)
+        LiveDataHelper.save_guild_binds(channel_binds)
+
     def on_bot_shutdown(self):
         with open("league_api/data/guilds.json", "w") as data_file:
             json.dump(self.guild_list, data_file)
