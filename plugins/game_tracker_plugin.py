@@ -143,8 +143,9 @@ class GameTrackerCommands(Plugin):
             in_game = ""
             footer = ""
 
-            hasFailed = False
+            connection_failure = False
             for summoner in summoner_list:
+                summoner_failed = False
                 auto_display = summoner[3]
                 summoner_names += summoner[1] + "\n"
                 regions += summoner[2] + "\n"
@@ -152,22 +153,25 @@ class GameTrackerCommands(Plugin):
                 try:
                     spectate_info = self.league_helper.user_in_game(summoner[2], summoner[0])
                 except ConnectionError as e:
-                    hasFailed = True
+                    logger = CacheHelper.get_logger("TrackerError")
+                    logger.zilean("Could not connect to the Riot API. Summoner: " + summoner[1] + "Channel: " + channel.name)
+                    summoner_failed = True
+                    connection_failure = True
 
-                if spectate_info and not hasFailed:
+                if spectate_info and not summoner_failed:
                     in_game += "**Yes** | " + self.boolMsg(auto_display) + "\n"
                     if auto_display:
                         game_info = GameInfo(self.league_helper)
                         game_info.display_live_game(channel, summoner[2], spectate_info)
                     has_live_games = True
-                elif not hasFailed:
+                elif not summoner_failed:
                     in_game += "No | " + self.boolMsg(auto_display) + "\n"
                 else:
                     in_game += "Summoner info cannot be retrieved at this time\n"
 
-            if hasFailed:
-                footer = "No connection can be made to the Riot Servers"
-            elif not has_live_games:
+            if connection_failure:
+                footer = "Error retrieving one or more summoners info"
+            if not has_live_games:
                 footer = "No one is currently in a live game :("
             else:
                 footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
@@ -183,7 +187,7 @@ class GameTrackerCommands(Plugin):
             embed.add_field(name="Region", value=regions, inline=True)
             embed.add_field(name="In Game | Auto-Display", value=in_game, inline=True)
 
-            if hasFailed:
+            if connection_failure:
                 embed.add_field(name="Connection Issue", value="One or more summoners info could not be retrieved. Please try again in a few minutes.")
 
             embed.color = "444751"
@@ -193,7 +197,7 @@ class GameTrackerCommands(Plugin):
             try:
                 channel.send_message(embed=embed)
             except ConnectionError as e:
-                logger = CacheHelper.get_logger("TrackerFailure")
+                logger = CacheHelper.get_logger("TrackerError")
                 logger.zilean("Tracker message failed to send. Could not connect to the Discord API")
 
 

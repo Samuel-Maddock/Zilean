@@ -20,9 +20,6 @@ class LeagueHelper:
         spectate_info = None
         try:
             spectate_info = self.watcher.spectator.by_summoner(region, summoner_id)
-        except ConnectionError:
-            logger = CacheHelper.get_logger("UserInGameFailure")
-            logger.zilean("Failed to connect to the Riot API")
         except HTTPError as err:
             if err.response.status_code == 404:
                 return False
