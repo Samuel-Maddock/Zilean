@@ -37,6 +37,8 @@ class UtilityCommands(Plugin):
         embed.add_field(name="Guilds Connected: ", value=len(guild_list), inline=True)
         embed.add_field(name="Users Connected: ", value=len(user_list), inline=True)
         embed.add_field(name="Channels Connected: ", value=len(channel_list), inline=True)
+        embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
+        embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Add me on discord: Samuel Maddock#7207")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
         embed.color = "444751"
         embed.timestamp = datetime.utcnow().isoformat()
@@ -55,7 +57,14 @@ class UtilityCommands(Plugin):
         embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#commands")
         embed.set_footer(text="Zilean Commands")
         embed.description = "Note that [arg] is a required argument and (arg) is an optional argument"
+        embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
+        embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Add me on discord: Samuel Maddock#7207")
         event.msg.reply(embed=embed)
+
+    @Plugin.command("commands", aliases=["cmd", "cmds", "command"])
+    def on_commands(self, event):
+        """Displays the link to the commands"""
+        event.msg.reply("Zilean Commands: https://samuel-maddock.github.io/Zilean/#commands :hourglass_flowing_sand:")
 
     @Plugin.command("ping")
     def on_ping(self, event):
@@ -94,29 +103,39 @@ class UtilityCommands(Plugin):
 
     @Plugin.listen("GuildCreate")
     def on_guild_create(self, event):
-        self.guild_list[event.guild.id] = (event.guild.name, event.guild.id)
+        self.guild_list[str(event.guild.id)] = (event.guild.name, event.guild.id)
         logger = CacheHelper.get_logger("GuildCreate")
         logger.zilean("New Guild Created: " + event.guild.name + " " + str(event.guild.id))
 
     @Plugin.listen("GuildDelete")
     def on_guild_remove(self, event):
-        guild = self.client.state.guilds[event.id]
-        self.guild_list.pop(str(event.id))
+        guild_list = self.guild_list
+        guild = guild_list[str(event.id)]
+        guild_list.pop(str(event.id))
+
         logger = CacheHelper.get_logger("GuildRemove")
-        logger.zilean("Guild Removed: " + guild.name + " " + str(guild.id))
+        logger.zilean("Guild Removed: " + guild[0] + " " + str(guild[1]))
 
         channel_binds = LiveDataHelper.load_guild_binds()
         channel_bind = channel_binds.pop(str(event.id), None)
 
         if channel_bind:
-            logger.zilean("Guild-Channel bind has been removed for " + guild.name + " " + guild.id)
+            logger.zilean("Guild-Channel bind has been removed for " + guild[0] + " " + str(guild[1]))
+
         LiveDataHelper.save_guild_binds(channel_binds)
 
     def on_bot_shutdown(self):
-        with open("league_api/data/guilds.json", "w") as data_file:
-            json.dump(self.guild_list, data_file)
+        CacheHelper.save_guilds(self.guild_list)
         logger = CacheHelper.get_logger("ShutdownHook")
         logger.zilean("Bot Shutdown - Guild List saved successfully")
+
+        # Send restart messages to those who have bound the bot to a channel
+        channel_binds = LiveDataHelper.load_guild_binds()
+        for guild_id in channel_binds.keys():
+            guild_id = str(guild_id)
+            channel = self.bot.client.state.channels.get(channel_binds[guild_id])
+            channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
+
 
     def generate_command_list(self):
         command_list = dict()
