@@ -38,7 +38,7 @@ class UtilityCommands(Plugin):
         embed.add_field(name="Users Connected: ", value=len(user_list), inline=True)
         embed.add_field(name="Channels Connected: ", value=len(channel_list), inline=True)
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
-        embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Add me on discord: Samuel Maddock#7207")
+        embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
         embed.color = "444751"
         embed.timestamp = datetime.utcnow().isoformat()
@@ -54,17 +54,17 @@ class UtilityCommands(Plugin):
         embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://samuel-maddock.github.io/Zilean/#commands")
         embed.color = "444751"
         embed.timestamp = datetime.utcnow().isoformat()
-        embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#commands")
+        embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#command-section")
         embed.set_footer(text="Zilean Commands")
         embed.description = "Note that [arg] is a required argument and (arg) is an optional argument"
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
-        embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Add me on discord: Samuel Maddock#7207")
+        embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         event.msg.reply(embed=embed)
 
     @Plugin.command("commands", aliases=["cmd", "cmds", "command"])
     def on_commands(self, event):
         """Displays the link to the commands"""
-        event.msg.reply("Zilean Commands: https://samuel-maddock.github.io/Zilean/#commands :hourglass_flowing_sand:")
+        event.msg.reply("Zilean Commands: https://samuel-maddock.github.io/Zilean/#command-section :hourglass_flowing_sand:")
 
     @Plugin.command("ping")
     def on_ping(self, event):
@@ -123,6 +123,12 @@ class UtilityCommands(Plugin):
             logger.zilean("Guild-Channel bind has been removed for " + guild[0] + " " + str(guild[1]))
 
         LiveDataHelper.save_guild_binds(channel_binds)
+
+    @Plugin.listen("MessageCreate")
+    def on_message_create(self, event):
+        content = event.message.content
+        if content == "<@459139146544578571>":
+            event.message.reply("Type ~help and ~info to get started!")
 
     def on_bot_shutdown(self):
         CacheHelper.save_guilds(self.guild_list)
