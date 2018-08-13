@@ -74,3 +74,13 @@ class CacheHelper:
                 json.dump(raw_json, file)
 
         CacheHelper._update_cache_timestamp(server_version, current_timestamp) # Update the version and timestamp in cache_info.json
+
+    @staticmethod
+    def get_guilds():
+        with open("league_api/data/guilds.json") as data_file:
+            return json.load(data_file)
+
+    @staticmethod
+    def save_guilds(guild_list):
+        with open("league_api/data/guilds.json", "w") as data_file:
+            json.dump(guild_list, data_file)

@@ -3,6 +3,8 @@ from requests import HTTPError
 import json
 import urllib
 import time
+from requests.exceptions import ConnectionError
+from league_api.helpers.cache_helper import CacheHelper
 
 # A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
