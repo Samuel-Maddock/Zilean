@@ -28,10 +28,7 @@ class UtilityCommands(Plugin):
         user_list = self.client.state.users
         channel_list = self.client.state.channels
 
-        embed = MessageEmbed()
-        embed.title = "Zilean Bot Info"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://samuel-maddock.github.io/Zilean/")
-        embed.description = "A discord bot that tracks time spent playing league and other statistics :hourglass_flowing_sand: https://samuel-maddock.github.io/Zilean/"
+        embed = CacheHelper.getZileanEmbed(title="Zilean Bot Info", footer="Bot Information", description="A discord bot that tracks time spent playing league and other statistics :hourglass_flowing_sand: https://samuel-maddock.github.io/Zilean/")
         embed.add_field(name="Version:", value=self.version)
         embed.add_field(name="Developed using:", value="https://github.com/pseudonym117/Riot-Watcher https://github.com/b1naryth1ef/disco")
         embed.add_field(name="Guilds Connected: ", value=len(guild_list), inline=True)
@@ -40,23 +37,13 @@ class UtilityCommands(Plugin):
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
-        embed.color = "444751"
-        embed.timestamp = datetime.utcnow().isoformat()
-        embed.set_footer(text="Bot Information")
         event.msg.reply(embed=embed)
 
     @Plugin.command("help")
     def on_help(self, event):
         """Displays a list of all of commands"""
-        embed = MessageEmbed()
-        embed.title = "Zilean Command List"
-        embed = MessageEmbed()
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://samuel-maddock.github.io/Zilean/#commands")
-        embed.color = "444751"
-        embed.timestamp = datetime.utcnow().isoformat()
+        embed = CacheHelper.getZileanEmbed(title="Zilean Command List", footer="Zilean Commands", description="Note that [arg] is a required argument and (arg) is an optional argument")
         embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#command-section")
-        embed.set_footer(text="Zilean Commands")
-        embed.description = "Note that [arg] is a required argument and (arg) is an optional argument"
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         event.msg.reply(embed=embed)

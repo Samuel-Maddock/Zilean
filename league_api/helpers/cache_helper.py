@@ -2,6 +2,8 @@ import json
 import time
 import urllib
 import logging
+from datetime import datetime
+from disco.types.message import MessageEmbed
 
 class CacheHelper:
 
@@ -84,3 +86,16 @@ class CacheHelper:
     def save_guilds(guild_list):
         with open("league_api/data/guilds.json", "w") as data_file:
             json.dump(guild_list, data_file)
+
+    @staticmethod
+    def getZileanEmbed(title="Zilean Bot", footer="Zilean Bot", description="Zilean Bot"):
+        embed = MessageEmbed()
+
+        embed.title = title
+        embed.description = description
+        embed.set_footer(text=footer)
+
+        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://samuel-maddock.github.io/Zilean/#commands")
+        embed.color = 0x59fff9
+        embed.timestamp = datetime.utcnow().isoformat()
+        return embed
