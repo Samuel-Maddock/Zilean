@@ -8,7 +8,7 @@ from league_api.helpers.cache_helper import CacheHelper
 
 # A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
-    API_ENDPOINTS = ["EUW1", "NA1", "EUN1", "KR", "LA1", "LA2", "JP1", "OC1", "TR1", "RU", "BR"]
+    API_ENDPOINTS = ["EUW1", "NA1", "EUN1", "KR", "LA1", "LA2", "JP1", "OC1", "TR1", "RU", "BR1"]
 
     def __init__(self):
         with open("config.json") as data_file:
