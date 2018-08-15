@@ -400,18 +400,19 @@ class GameInfo():
     def display_champ(self, channel, version, champion):
         image_url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/champion/"
         spells = ""
-        for spell in champion["spells"]:
-            ability = spell["id"].strip(champion["name"])
-            name = spell["name"]
-            description = spell["description"]
-            spells += "**" + ability + ":** " + name + "\n" + description + "\n\n"
-
-        spells += "**Passive:** " + champion["passive"]["name"] + "\n" + champion["passive"]["description"]
+        ability_list = ["Q", "W", "E", "R"]
 
         embed = CacheHelper.getZileanEmbed(title="Champion Info", description=champion["name"] + " " + champion["title"])
-        embed.set_thumbnail(url=image_url + champion["image"]["full"])
         embed.add_field(name="Lore", value=champion["lore"])
-        embed.add_field(name="Abilities", value=spells)
+        embed.add_field(name="Passive - " + champion["passive"]["name"], value="\n" + champion["passive"]["description"])
+
+        for index, spell in enumerate(champion["spells"]):
+            ability = ability_list[index]
+            name = spell["name"]
+            description = spell["description"]
+            embed.add_field(name=ability + "- " + name, value="\n" + description)
+
+        embed.set_thumbnail(url=image_url + champion["image"]["full"])
         skin_num = random.randint(0, len(champion["skins"])-1)
         embed.set_image(url="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champion["name"] +"_" + str(skin_num) + ".jpg")
         embed.set_footer(text="Splash art: " + str(champion["skins"][skin_num]["name"]))
