@@ -18,6 +18,11 @@ class GameTrackerCommands(Plugin):
         self.league_helper = LeagueHelper()
         self.tracker = self.load_tracker()
 
+    @Plugin.pre_command()
+    def on_command_event(self, command, event, args, kwargs):
+        CacheHelper.log_command(command, event)
+        return event
+
     def load_tracker(self):
         with open("league_api/data/live/tracker.json") as tracker_file:
             return json.load(tracker_file)

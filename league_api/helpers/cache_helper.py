@@ -22,6 +22,11 @@ class CacheHelper:
         return logging.getLogger(log_name)
 
     @staticmethod
+    def log_command(command, event):
+        logger = CacheHelper.get_logger(command.name)
+        logger.zilean("Guild: " + event.guild.name + " Message: " + event.msg.content + " User: " + str(event.author))
+
+    @staticmethod
     def update_static_data():
         current_timestamp = time.time()
         logger = CacheHelper.get_logger("StaticCache")

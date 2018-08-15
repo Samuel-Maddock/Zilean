@@ -123,6 +123,11 @@ class UtilityCommands(Plugin):
         if content == "<@459139146544578571>":
             event.message.reply("Type ~help and ~info to get started!")
 
+    @Plugin.pre_command()
+    def on_command_event(self, command, event, args, kwargs):
+        CacheHelper.log_command(command, event)
+        return event
+
     def on_bot_shutdown(self):
         CacheHelper.save_guilds(self.guild_list)
         logger = CacheHelper.get_logger("ShutdownHook")
@@ -134,7 +139,6 @@ class UtilityCommands(Plugin):
             guild_id = str(guild_id)
             channel = self.bot.client.state.channels.get(channel_binds[guild_id])
             channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
-
 
     def generate_command_list(self):
         command_list = dict()

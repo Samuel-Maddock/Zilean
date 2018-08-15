@@ -15,6 +15,11 @@ class GameInfoCommands(Plugin):
         super(GameInfoCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
 
+    @Plugin.pre_command()
+    def on_command_event(self, command, event, args, kwargs):
+        CacheHelper.log_command(command, event)
+        return event
+
     @Plugin.command("patch", "[version:str]")
     def on_patch(self, event, version=None):
         '''Displays the latest patch notes for League of Legends'''
