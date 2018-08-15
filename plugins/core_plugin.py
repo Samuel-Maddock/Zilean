@@ -11,6 +11,8 @@ from league_api.helpers.live_data_helper import LiveDataHelper
 from league_api.helpers.cache_helper import CacheHelper
 
 
+CACHE_SCHEDULE = 21600
+
 class UtilityCommands(Plugin):
     def load(self, ctx):
         super(UtilityCommands, self).load(ctx)
@@ -87,6 +89,10 @@ class UtilityCommands(Plugin):
         command_list = self.generate_command_list()
         self.update_command_list(command_list)
         atexit.register(self.on_bot_shutdown)  # Register bot shutdown hook
+
+    @Plugin.schedule(CACHE_SCHEDULE)
+    def on_cache_update(self):
+        CacheHelper.update_static_data()
 
     @Plugin.listen("GuildCreate")
     def on_guild_create(self, event):
