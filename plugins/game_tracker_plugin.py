@@ -31,6 +31,10 @@ class GameTrackerCommands(Plugin):
     @Plugin.command("tracker")
     def on_tracker(self, event):
         '''Displays the list of tracked summoners and whether they are in game'''
+
+        if len(event.args) >= 1:
+            return;
+
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
@@ -176,13 +180,11 @@ class GameTrackerCommands(Plugin):
             else:
                 footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
 
-            embed = MessageEmbed()
-            embed.title = ":eye: Tracking Live Games... :eye:"
 
-            embed.description = "This message is automatically displayed every " + str(int(TRACKER_SCHEDULE/60)) + " minutes!" + \
+            description = "This message is automatically displayed every " + str(int(TRACKER_SCHEDULE/60)) + " minutes!" + \
                                 "\n If auto-display is turned on for a summoner their game is automatically displayed"
 
-            embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+            embed = CacheHelper.getZileanEmbed(title=":eye: Tracking Live Games... :eye:", description=description, footer=footer)
             embed.add_field(name="Summoner Name", value=summoner_names, inline=True)
             embed.add_field(name="Region", value=regions, inline=True)
             embed.add_field(name="In Game | Auto-Display", value=in_game, inline=True)
@@ -190,16 +192,11 @@ class GameTrackerCommands(Plugin):
             if connection_failure:
                 embed.add_field(name="Connection Issue", value="One or more summoners info could not be retrieved. Please try again in a few minutes.")
 
-            embed.color = "444751"
-            embed.timestamp = datetime.utcnow().isoformat()
-            embed.set_footer(text=footer)
-
             try:
                 channel.send_message(embed=embed)
             except ConnectionError as e:
                 logger = CacheHelper.get_logger("TrackerError")
                 logger.zilean("Tracker message failed to send. Could not connect to the Discord API")
-
 
     def boolMsg(self, bool):
         if bool:
@@ -219,6 +216,9 @@ class GameTrackerCommands(Plugin):
             return False
 
     def _summoner_is_tracked(self, guild_id, summoner_name, region):
+        if not self._guild_is_tracked(guild_id):
+            return False
+
         tracker = self.tracker
         summoner_info_list = tracker[str(guild_id)]
         for summoner_tuple in summoner_info_list:

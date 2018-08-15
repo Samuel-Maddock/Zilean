@@ -8,6 +8,7 @@ from requests import HTTPError
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
+from league_api.helpers.league_helper import CacheHelper
 
 class GameInfoCommands(Plugin):
     def load(self,ctx):
@@ -37,13 +38,7 @@ class GameInfoCommands(Plugin):
             event.msg.reply("This is not a valid patch number. Try ~patch for the most recent patch notes!")
             return
 
-        embed = MessageEmbed()
-        embed.title = "League of Legends Patch Notes"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.description = version + " Patch Notes"
-        embed.color = "444751"
-        embed.timestamp = datetime.datetime.utcnow().isoformat()
-        embed.set_footer(text=version + " Patch Notes")
+        embed = CacheHelper.getZileanEmbed(title="League of Legends Patch Notes", description=version+ " Patch Notes", footer=version + " Patch Notes")
         embed.add_field(name="Notes", value=patch_url)
         event.msg.reply(embed=embed)
 
@@ -55,14 +50,7 @@ class GameInfoCommands(Plugin):
             self._display_region_status(event, region)
             return
 
-        embed = MessageEmbed()
-        embed.title = "League of Legends Server Status"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.description = "Use ~status [region] for a more detailed breakdown of server status! Displayed below is the game status"
-        embed.color = "444751"
-        embed.timestamp = datetime.datetime.utcnow().isoformat()
-        embed.set_footer(text="League of Legends Server Status")
-
+        embed = CacheHelper.getZileanEmbed(title="League of Legends Server Status", description="Use ~status [region] for a more detailed breakdown of server status! Displayed below is the game status", footer="League of Legends Server Status")
         for endpoint in LeagueHelper.API_ENDPOINTS:
             endpoint_status = self.league_helper.watcher.lol_status.shard_data(endpoint)
             embed.add_field(name=endpoint_status["name"] + " (" + endpoint_status["slug"].upper() + ")", value=self._emojify_status(endpoint_status["services"][0]["status"]),inline=True)
@@ -82,17 +70,11 @@ class GameInfoCommands(Plugin):
             event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return
 
-        embed = MessageEmbed()
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.color = "444751"
-        embed.timestamp = datetime.datetime.utcnow().isoformat()
-        embed.set_footer(text="League of Legends Server Status for " + region)
-
+        embed = CacheHelper.getZileanEmbed(title="Zilean Bot", footer="League of Legends Server Status for " + region, description="Type ~status to see every regions status!")
         endpoint_status = self.league_helper.watcher.lol_status.shard_data(region)
         embed.add_field(name=endpoint_status["name"] + " (" + endpoint_status["slug"].upper() + ")", value="Server Status")
 
         services = endpoint_status["services"]
-
         for service in endpoint_status["services"]:
             embed.add_field(name=service["name"], value=self._emojify_status(service["status"]), inline=True)
 
@@ -215,14 +197,8 @@ class GameInfoCommands(Plugin):
             return
 
         version = LeagueHelper.get_champion_data()["version"]
-        embed = MessageEmbed()
-        embed.title = "Summoner Profile: " + summoner["name"] + " " + region
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.color = "444751"
-        embed.timestamp = datetime.datetime.utcnow().isoformat()
-        embed.set_footer(text="Displaying summoner info for " + summoner["name"])
+        embed = CacheHelper.getZileanEmbed(title="Summoner Profile: ", footer="Displaying summoner info for " + summoner["name"], description=summoner["name"] + " " + region)
         embed.set_thumbnail(url="http://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + str(summoner["profileIconId"]) + ".png")
-
         embed.add_field(name="Summoner Level", value=str(summoner["summonerLevel"]))
         ranked_positions = self.league_helper.watcher.league.positions_by_summoner(region, summoner["id"])
 
@@ -393,11 +369,7 @@ class GameInfo():
             description = "Playing an unknown gamemode/map -> Please update queue.json "
 
         # Format all of the live game info using a discord embed message
-        embed = MessageEmbed()
-        embed.title = "Live Game Info"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        description += "**Ranked Type Being Displayed:** " + rank_type + "\n"
-        embed.description = description
+        embed = CacheHelper.getZileanEmbed(title="Live Game Info", description=description, footer="Live Game Info")
 
         embed.add_field(name=":large_blue_circle: Blue Team", value=blue_names, inline=True)
         embed.add_field(name="Rank", value=blue_rank, inline=True)
@@ -410,20 +382,13 @@ class GameInfo():
             embed.add_field(name=":no_entry_sign: Red Team Bans :no_entry_sign:", value=red_ban, inline=True)
             embed.add_field(name=":no_entry_sign: Blue Team Bans :no_entry_sign:", value=blue_ban, inline=True)
 
-        embed.color = "444751"
-        embed.timestamp = datetime.datetime.utcnow().isoformat()
-        embed.set_footer(text="Live Game Info")
         channel.send_message(embed=embed)
 
     def display_item(self, channel, version, item):
         image_url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/"
 
-        embed = MessageEmbed()
-        embed.title = item["name"]
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.description = item["plaintext"]
+        embed = CacheHelper.getZileanEmbed(title=item["name"], description=item["plaintext"])
         embed.set_thumbnail(url=image_url + item["image"]["full"])
-        embed.color = "4390911" # Decimal representation of hex code
         description = re.sub('<[^<]+?>', '\n ', item["description"])
         description = re.sub(r'(\n\s*)+\n+', '\n\n', description)
         embed.add_field(name="Item Description", value=description, inline=True)
@@ -443,20 +408,13 @@ class GameInfo():
 
         spells += "**Passive:** " + champion["passive"]["name"] + "\n" + champion["passive"]["description"]
 
-        embed = MessageEmbed()
-        embed.title = "Champion Info"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
-        embed.description = champion["name"] + " " + champion["title"]
+        embed = CacheHelper.getZileanEmbed(title="Champion Info", description=champion["name"] + " " + champion["title"])
         embed.set_thumbnail(url=image_url + champion["image"]["full"])
-        embed.color = "4390911" # Decimal representation of hex code
-
         embed.add_field(name="Lore", value=champion["lore"])
         embed.add_field(name="Abilities", value=spells)
-
         skin_num = random.randint(0, len(champion["skins"])-1)
         embed.set_image(url="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + champion["name"] +"_" + str(skin_num) + ".jpg")
         embed.set_footer(text="Splash art: " + str(champion["skins"][skin_num]["name"]))
-
         channel.send_message(embed=embed)
 
     def display_past_game(self, channel, region, match, summoner_id):
@@ -495,12 +453,9 @@ class GameInfo():
 
         target_champion = champion_data["keys"][str(target_champion_id)]
 
-        embed = MessageEmbed()
-        embed.title = "Match History Game Info"
-        embed.set_author(name="Zilean", icon_url="https://i.imgur.com/JreyU9y.png", url="https://github.com/Samuel-Maddock/Zilean")
+        embed = CacheHelper.getZileanEmbed(title="Match History Game Info", description=queue_name)
         embed.set_thumbnail(url=image_url + target_champion + ".png")
         embed.color = embed_color
-        embed.description = queue_name
         embed.add_field(name="Summoner Name", value=target_player["player"]["summonerName"], inline=True)
         embed.add_field(name="Champion", value=target_champion, inline=True)
         embed.add_field(name="k/d/a", value=target_stats, inline=True)

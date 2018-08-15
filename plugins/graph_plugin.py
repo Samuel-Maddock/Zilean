@@ -15,10 +15,6 @@ class GraphCommands(Plugin):
         super(GraphCommands, self).load(ctx)
         self.league_helper = LeagueHelper()
 
-    @Plugin.listen("Ready")
-    def on_ready(self, event):
-        CacheHelper.update_static_data()
-
     @Plugin.command('games_per_month', '<region:str> <summoner_name:str...>', group="graph", aliases=["gpm"])
     def on_gpm_graph(self, event, region, summoner_name):
         """Displays a graph of the league games played per month per year"""
