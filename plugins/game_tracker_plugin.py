@@ -31,6 +31,10 @@ class GameTrackerCommands(Plugin):
     @Plugin.command("tracker")
     def on_tracker(self, event):
         '''Displays the list of tracked summoners and whether they are in game'''
+
+        if len(event.args) >= 1:
+            return;
+
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
