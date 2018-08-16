@@ -120,7 +120,8 @@ class GameTrackerCommands(Plugin):
 
         for index, summoner_tuple in enumerate(summoner_list):
             if summoner_tuple[1] == summoner_name.lower() and region == summoner_tuple[2]:
-                summoner_list[index][3] = not summoner_tuple[3] # Invert the current bool
+                summoner_tuple = summoner_list[index]
+                summoner_list[index] = (summoner_tuple[0], summoner_tuple[1], summoner_tuple[2], not summoner_tuple[3]) # Invert the current bool
                 if summoner_list[index][3]:
                     auto_message = "now being auto-displayed :white_check_mark:"
 

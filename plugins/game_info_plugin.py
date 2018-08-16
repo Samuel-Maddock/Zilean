@@ -192,7 +192,8 @@ class GameInfoCommands(Plugin):
         region = LeagueHelper.validate_region(region)
 
         if region is None:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:")
+            # LeagueHelper.region_error_message(event)
             return
 
         summoner = self.league_helper.user_exists(region, summoner_name)
