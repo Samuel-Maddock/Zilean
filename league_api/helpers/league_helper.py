@@ -33,7 +33,7 @@ class LeagueHelper:
         except HTTPError as err:
             if err.response.status_code == 404:
                 if event is not None:
-                    event.msg.reply("The summoner `" + summoner_name + "` does not exist on `" + region + "` Try another summoner!")
+                    event.msg.reply("The summoner `" + summoner_name + "` does not exist on `" + region + "`\nTry another summoner!")
                 return False
         return summoner
 

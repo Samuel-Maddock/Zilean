@@ -114,8 +114,6 @@ class GameInfoCommands(Plugin):
                 game_info.display_live_game(event.msg.channel, region, spectate_info)
             else:
                 event.msg.reply("This summoner is not currently in a game!")
-        else:
-            event.msg.reply("This summoner does not exist on the region: `" + region + "`")
 
     @Plugin.command("match_history", "<summoner_name:str> [region:str] [game_number:int]")
     def on_recent_game(self, event, summoner_name, region=None, game_number=0):
@@ -129,7 +127,7 @@ class GameInfoCommands(Plugin):
         # If we want users to choose a match history game and use the default region for the server
         # Then the game number is actually passed to the region variable
         # So we swap them or just leave it if the game number they has passe is not an int
-        if LiveDataHelper.guild_has_region(LiveDataHelper.load_region_binds(), str(event.guild.id)):
+        if LiveDataHelper.guild_has_region(LiveDataHelper.load_region_binds(), str(event.guild.id)) and region is not None:
             try:
                 game_number = int(region)
                 region = None
