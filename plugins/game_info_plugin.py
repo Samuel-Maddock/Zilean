@@ -8,6 +8,7 @@ from requests import HTTPError
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
+from league_api.helpers.league_helper import LiveDataHelper
 from league_api.helpers.league_helper import CacheHelper
 
 class GameInfoCommands(Plugin):
@@ -97,15 +98,14 @@ class GameInfoCommands(Plugin):
 
         event.msg.reply(embed=embed)
 
-    @Plugin.command('live_game', '<region:str> <summoner_name:str...>')
-    def on_live_game(self, event, region, summoner_name):
+    @Plugin.command('live_game', '"<summoner_name:str> [region:str]"')
+    def on_live_game(self, event, summoner_name, region=None):
         '''Displays the live game info if a summoner is in a game. Supports all game types and ranked modes'''
-        region = LeagueHelper.validate_region(region)
+        region = LeagueHelper.validate_region(region, event)
         if region is None:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name)
+        summoner = self.league_helper.user_exists(region, summoner_name, event)
 
         if summoner:
             spectate_info = self.league_helper.user_in_game(region, summoner["id"])
@@ -117,8 +117,8 @@ class GameInfoCommands(Plugin):
         else:
             event.msg.reply("This summoner does not exist on the region: `" + region + "`")
 
-    @Plugin.command("match_history", "<region:str> <summoner_name:str> [game_number:int]")
-    def on_recent_game(self, event, region, summoner_name, game_number=0):
+    @Plugin.command("match_history", "<summoner_name:str> [region:str] [game_number:int]")
+    def on_recent_game(self, event, summoner_name, region=None, game_number=0):
         '''Displays a match in the summoners match history, by default displays the most recent game'''
 
         game_number = game_number - 1
@@ -126,21 +126,27 @@ class GameInfoCommands(Plugin):
         if game_number < 0:
             game_number = 0
 
-        region = LeagueHelper.validate_region(region)
+        # If we want users to choose a match history game and use the default region for the server
+        # Then the game number is actually passed to the region variable
+        # So we swap them or just leave it if the game number they has passe is not an int
+        if LiveDataHelper.guild_has_region(LiveDataHelper.load_region_binds(), str(event.guild.id)):
+            try:
+                game_number = int(region)
+                region = None
+            except ValueError as err:
+                region = None
 
+        region = LeagueHelper.validate_region(region, event)
         if region is None:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return
 
         # TODO: has_match_history returns false if history < 20, need to change this...
         if not self.league_helper.has_match_history(region, summoner_name):
-            event.msg.reply("This summoner has no valid match history at this time...")
+            event.msg.reply("This summoner has no valid match history at this time or does not exist on the region given: `" + region + "`")
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name)
-
+        summoner = self.league_helper.user_exists(region, summoner_name, event)
         if not summoner:
-            event.msg.reply("This summoner does not exist on the region: `" + region + "`")
             return
 
         matchlist = self.league_helper.watcher.match.matchlist_by_account(region, summoner["accountId"])
@@ -183,23 +189,17 @@ class GameInfoCommands(Plugin):
         if not champ_found:
             event.msg.reply("This champ does not exist...")
 
-    @Plugin.command("summoner", "<region:str> <summoner_name:str...>")
-    def on_summoner(self, event, region, summoner_name):
+    @Plugin.command("summoner", "<summoner_name:str> [region:str]")
+    def on_summoner(self, event, summoner_name, region=None):
         '''Displays information about a League of Legends summoner'''
-
         # TODO: Tidy this up...
 
-        region = LeagueHelper.validate_region(region)
-
+        region = LeagueHelper.validate_region(region, event)
         if region is None:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:")
-            # LeagueHelper.region_error_message(event)
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name)
-
+        summoner = self.league_helper.user_exists(region, summoner_name, event)
         if not summoner:
-            event.msg.reply("This summoner does not exist. Try again with a different summoner!")
             return
 
         version = LeagueHelper.get_champion_data()["version"]
