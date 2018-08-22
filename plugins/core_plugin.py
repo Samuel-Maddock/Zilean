@@ -41,6 +41,7 @@ class UtilityCommands(Plugin):
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
         event.msg.reply(embed=embed)
+        event.msg.reply(embed=self.get_notification())
 
     @Plugin.command("help")
     def on_help(self, event):
@@ -50,6 +51,7 @@ class UtilityCommands(Plugin):
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         event.msg.reply(embed=embed)
+        event.msg.reply(embed=self.get_notification())
 
     @Plugin.command("commands", aliases=["cmd", "cmds", "command"])
     def on_commands(self, event):
@@ -93,7 +95,7 @@ class UtilityCommands(Plugin):
                 event.msg.reply("The current default region for League of Legends commands is: `" + region_binds[str(event.guild.id)] + "`")
             else:
                 endpoints = str(LeagueHelper.API_ENDPOINTS).replace("[","").replace("'","").replace("]", "")
-                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following:\n" + endpoints)
+                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following:`" + endpoints + "`")
         else:
             region = LeagueHelper.validate_region(region, event)
             if region is None:
@@ -178,7 +180,7 @@ class UtilityCommands(Plugin):
                         if arg.required:
                             args += "[" + arg.name + "] "
                         else:
-                            args += "(" + arg.name + ")"
+                            args += "(" + arg.name + ") "
 
                 if len(command.triggers) > 1:
                     for trigger in command.triggers:
@@ -197,3 +199,8 @@ class UtilityCommands(Plugin):
             json.dump(command_list, data_file)
         logger = CacheHelper.get_logger("CommandList")
         logger.zilean("Command List Generated")
+
+    def get_notification(self):
+        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description="In order to support adding a default LoL region, the command structure for some commands have changed!\n\nFor many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**.\n\nThe region is only optional if you set a default region for your server using **~region [league region]**")
+        embed.color = 0xFF3B73
+        return embed
