@@ -104,6 +104,12 @@ class GameTrackerCommands(Plugin):
     @Plugin.command("auto", "<region:str> <summoner_name:str...>", group="tracker")
     def on_auto(self, event, region, summoner_name):
         '''Toggles a summoner that is being tracked to auto-display there game'''
+
+        # Need to rework this command!
+        event.msg.reply("This command is currently being rehauled. For more information join the support server: https://discord.gg/ZjAyh7N")
+        return
+        # TODO: Rework this command
+
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
