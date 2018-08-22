@@ -18,3 +18,21 @@ class LiveDataHelper():
             return True
         except KeyError as err:
             return False
+
+    @staticmethod
+    def load_region_binds():
+        with open("league_api/data/live/region_binds.json") as bind_file:
+            return json.load(bind_file)
+
+    @staticmethod
+    def save_region_binds(region_binds):
+        with open("league_api/data/live/region_binds.json", "w") as bind_file:
+            json.dump(region_binds, bind_file)
+
+    @staticmethod
+    def guild_has_region(region_binds, guild_id):
+        try:
+            region_binds[guild_id]
+            return True
+        except KeyError as err:
+            return False

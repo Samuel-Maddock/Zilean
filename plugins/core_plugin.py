@@ -8,6 +8,7 @@ from disco.types.message import MessageEmbed
 from disco.types.user import GameType, Game, Status
 
 from league_api.helpers.live_data_helper import LiveDataHelper
+from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.cache_helper import CacheHelper
 
 
@@ -82,6 +83,25 @@ class UtilityCommands(Plugin):
         channel_binds[str(guild.id)] = channel.id
         LiveDataHelper.save_guild_binds(channel_binds)
         event.msg.reply("The tracker messages are now bound to the following text channel: `#" + channel.name + "`")
+
+    @Plugin.command("region", "[region:str]")
+    def on_region(self, event, region=None):
+        '''Sets the overall default region for League of Legends commands'''
+        region_binds = LiveDataHelper.load_region_binds()
+        if region is None:
+            if LiveDataHelper.guild_has_region(region_binds, str(event.guild.id)):
+                event.msg.reply("The current default region for League of Legends commands is: `" + region_binds[str(event.guild.id)] + "`")
+            else:
+                endpoints = str(LeagueHelper.API_ENDPOINTS).replace("[","").replace("'","").replace("]", "")
+                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following:\n" + endpoints)
+        else:
+            region = LeagueHelper.validate_region(region, event)
+            if region is None:
+                return
+            region_binds = LiveDataHelper.load_region_binds()
+            region_binds[str(event.guild.id)] = region
+            LiveDataHelper.save_region_binds(region_binds)
+            event.msg.reply("The default region for League of Legends commands is now `" + region + "`")
 
     @Plugin.listen("Ready")
     def on_ready(self, event):

@@ -5,6 +5,7 @@ import urllib
 import time
 from requests.exceptions import ConnectionError
 from league_api.helpers.cache_helper import CacheHelper
+from league_api.helpers.live_data_helper import LiveDataHelper
 
 # A class that initialises the riot api and provides a set of utility methods for accessing it.
 class LeagueHelper:
@@ -58,13 +59,18 @@ class LeagueHelper:
         return data
 
     @staticmethod
-    def validate_region(region):
+    def validate_region(region, event=None):
         region = region.upper()
-        # TODO: Rework this
-        if region in ["EUW", "NA", "EUN", "JP", "TR", "BR"]:
-            region += "1"
-        elif region == "KR" or region == "RU":
+
+        region_binds = LiveDataHelper.load_region_binds()
+        if region is None and event is not None:
+            if LiveDataHelper.guild_has_region(region_binds, str(event.guild.id)):
+                region = region_binds[str(event.guild.id)]
+
+        if region in LeagueHelper.API_ENDPOINTS:
             pass
+        elif region in ["EUW", "NA", "EUN", "JP", "TR", "BR"]:
+            region += "1"
         elif region == "LAN":
             region = "LA1"
         elif region == "LAS":
@@ -77,4 +83,8 @@ class LeagueHelper:
             region = "OC1"
         else:
             region = None
+
+        if event is not None and region is None:
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:")
+
         return region
