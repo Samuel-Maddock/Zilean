@@ -103,4 +103,8 @@ $(document).ready(function() {
     tabKeys = initTabs();
     createTable(tabKeys[0]);
     initTabClick(tabKeys);
+    
+    $("#notification-close").click(function() {
+        $("#notification").addClass("hide-notification");
+    });
 });

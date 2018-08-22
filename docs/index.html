@@ -153,6 +153,20 @@
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="command-title">Command List</h1>
+                <article id="notification" class="message is-danger">
+                    <div class="message-header">
+                        <p>Important Zilean Changes</p>
+                        <button id="notification-close" class="delete" aria-label="delete"></button>
+                    </div>
+                    <div class="message-body">
+                        In order to support adding a default LoL region, the command structure for some commands have changed!
+                        <br>
+                        <br>
+                        For many LoL commands you used to state <span class="notification-emphasis">[region] [summoner_name]</span> but now the order is <span class="notification-emphasis">[summoner_name] (region)</span>
+                        <br>
+                        The region is only optional if you set a default region for your server using <span class="notification-emphasis">~region [league region] </span>
+                    </div>
+                </article>
                 <div class="container has-text-centered command-subtitle">
                     <p>Note that [arg] is a required argument and (arg) is an optional argument</p>
                     <p>Click a command to view it in action!</p>
@@ -161,6 +175,7 @@
                     <ul id="tab-list" class="tab-list">
                     </ul>
                 </div>
+                
                 <div class="table-container">
                     <table id="commandTable" class="table command-table">
                         <thead class="table-title">

@@ -10973,6 +10973,15 @@ html {
   margin-top: 10px;
 }
 
+.notification-emphasis {
+  font-weight: bold;
+  color: #263238;
+}
+
+.hide-notification {
+  display: none;
+}
+
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
   .navbar-brand a {
     font-family: "Exo 2";
