@@ -95,7 +95,7 @@ class UtilityCommands(Plugin):
                 event.msg.reply("The current default region for League of Legends commands is: `" + region_binds[str(event.guild.id)] + "`")
             else:
                 endpoints = str(LeagueHelper.API_ENDPOINTS).replace("[","").replace("'","").replace("]", "")
-                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following:`" + endpoints + "`")
+                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following: `" + endpoints + "`")
         else:
             region = LeagueHelper.validate_region(region, event)
             if region is None:

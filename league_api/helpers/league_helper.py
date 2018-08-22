@@ -67,6 +67,8 @@ class LeagueHelper:
         if region is None and event is not None:
             if LiveDataHelper.guild_has_region(region_binds, str(event.guild.id)):
                 region = region_binds[str(event.guild.id)]
+            else:
+                region = "a"
 
         region = region.upper()
 
