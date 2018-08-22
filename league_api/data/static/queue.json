@@ -874,5 +874,21 @@
       {"id": 200, "name": "Red", "size": 5}
     ],
     "released": "7.24"
+  },
+
+  {
+    "id": 1200,
+    "name": "PvP Nexus Blitz 5v5",
+    "gameMode": "GAMEMODEX",
+    "mapType": "NEXUS BLITZ",
+    "rotating": true,
+    "ranked": false,
+    "pickType": "BLIND PICK",
+    "teams": [
+      {"id": 100, "name": "Blue", "size": 5},
+      {"id": 200, "name": "Red", "size": 5}
+    ],
+    "released": "8.16"
   }
+
 ]
