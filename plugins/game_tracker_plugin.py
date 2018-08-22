@@ -51,16 +51,14 @@ class GameTrackerCommands(Plugin):
 
         self._display_track(tracker[str(event.msg.guild.id)], event.msg.channel)
 
-    @Plugin.command("add", '<region:str> <summoner_name:str...>', group="tracker")
-    def on_track(self, event, region, summoner_name):
+    @Plugin.command("add", '<summoner_name:str> [region:str]', group="tracker")
+    def on_track(self, event, summoner_name, region=None):
         '''Adds a summoner for Zilean to track whether they are in a live game'''
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
-        region = LeagueHelper.validate_region(region)
-
+        region = LeagueHelper.validate_region(region, event)
         if region is None:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
             return
 
         summoner = self.league_helper.user_exists(region, summoner_name)
@@ -71,17 +69,14 @@ class GameTrackerCommands(Plugin):
 
         self._add_summoner(event, region, summoner)
 
-    @Plugin.command("remove", '<region:str> <summoner_name:str...>', group="tracker")
-    def on_remove(self, event, region, summoner_name):
+    @Plugin.command("remove", '<summoner_name:str> [region:str]', group="tracker")
+    def on_remove(self, event, summoner_name, region=None):
         '''Removes a summoner that is being tracked by Zilean'''
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
-        region = LeagueHelper.validate_region(region)
+        region = LeagueHelper.validate_region(region, event, send_event_msg=False)
 
-        if region is None:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR* :warning:")
-            return
         if not self._summoner_is_tracked(event.guild.id, summoner_name, region):
             event.msg.reply("This summoner is not being tracked. Track them by ~tracker add <region> <summoner_name>")
             return
@@ -282,4 +277,4 @@ class GameTrackerCommands(Plugin):
 
         tracker[guild_id] = summoner_list
         self.update_tracker(tracker)
-        event.msg.reply("This summoner is no longer being tracked.")
+        event.msg.reply("The summoner `" + summoner_name + " " + region + "` is no longer being tracked.")

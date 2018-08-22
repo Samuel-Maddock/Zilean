@@ -61,8 +61,9 @@ class LeagueHelper:
         return data
 
     @staticmethod
-    def validate_region(region, event=None):
+    def validate_region(region, event=None, send_event_msg=True):
         region_binds = LiveDataHelper.load_region_binds()
+
         if region is None and event is not None:
             if LiveDataHelper.guild_has_region(region_binds, str(event.guild.id)):
                 region = region_binds[str(event.guild.id)]
@@ -86,7 +87,7 @@ class LeagueHelper:
         else:
             region = None
 
-        if event is not None and region is None:
+        if event is not None and region is None and send_event_msg:
             event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:")
 
         return region
