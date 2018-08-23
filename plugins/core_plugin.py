@@ -205,6 +205,6 @@ class UtilityCommands(Plugin):
         logger.zilean("Command List Generated")
 
     def get_notification(self):
-        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description="In order to support adding a default LoL region, the command structure for some commands have changed!\n\nFor many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**.\n\nThe region is only optional if you set a default region for your server using **~region [league region]**")
+        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description="In order to support adding a default LoL region, the command structure for some commands have changed!\n\nFor many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**.\n\nThe region is only optional if you set a default region for your server using **~region [league region]**\n\n**Note that you need to remove any spaces from a summoner name for the commands to work!**")
         embed.color = 0xFF3B73
         return embed
