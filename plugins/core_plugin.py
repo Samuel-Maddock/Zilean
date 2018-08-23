@@ -158,9 +158,13 @@ class UtilityCommands(Plugin):
         # Send restart messages to those who have bound the bot to a channel
         channel_binds = LiveDataHelper.load_guild_binds()
         for guild_id in channel_binds.keys():
-            guild_id = str(guild_id)
-            channel = self.bot.client.state.channels.get(channel_binds[guild_id])
-            channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
+
+            try:
+                channel = self.bot.client.state.channels[channel_binds[guild_id]]
+                channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
+            except KeyError as err:
+                logger = CacheHelper.get_logger("GuildBindError")
+                logger.zilean("Guild ID failed to be removed when the bot was offline: " + str(guild_id))
 
     def generate_command_list(self):
         command_list = dict()

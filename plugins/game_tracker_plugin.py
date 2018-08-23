@@ -231,7 +231,7 @@ class GameTrackerCommands(Plugin):
         tracker = self.tracker
         summoner_info_list = tracker[str(guild_id)]
         for summoner_tuple in summoner_info_list:
-            if summoner_name.lower() == summoner_tuple[1] and region == summoner_tuple[2]:
+            if summoner_name.lower() == summoner_tuple[1].replace(" ", "").lower() and region == summoner_tuple[2]:
                 return True
         return False
 
