@@ -95,7 +95,7 @@ class UtilityCommands(Plugin):
                 event.msg.reply("The current default region for League of Legends commands is: `" + region_binds[str(event.guild.id)] + "`")
             else:
                 endpoints = str(LeagueHelper.API_ENDPOINTS).replace("[","").replace("'","").replace("]", "")
-                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following:`" + endpoints + "`")
+                event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following: `" + endpoints + "`")
         else:
             region = LeagueHelper.validate_region(region, event)
             if region is None:
@@ -158,9 +158,13 @@ class UtilityCommands(Plugin):
         # Send restart messages to those who have bound the bot to a channel
         channel_binds = LiveDataHelper.load_guild_binds()
         for guild_id in channel_binds.keys():
-            guild_id = str(guild_id)
-            channel = self.bot.client.state.channels.get(channel_binds[guild_id])
-            channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
+
+            try:
+                channel = self.bot.client.state.channels[channel_binds[guild_id]]
+                channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
+            except KeyError as err:
+                logger = CacheHelper.get_logger("GuildBindError")
+                logger.zilean("Guild ID failed to be removed when the bot was offline: " + str(guild_id))
 
     def generate_command_list(self):
         command_list = dict()
@@ -201,6 +205,6 @@ class UtilityCommands(Plugin):
         logger.zilean("Command List Generated")
 
     def get_notification(self):
-        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description="In order to support adding a default LoL region, the command structure for some commands have changed!\n\nFor many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**.\n\nThe region is only optional if you set a default region for your server using **~region [league region]**")
+        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description="In order to support adding a default LoL region, the command structure for some commands have changed!\n\nFor many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**.\n\nThe region is only optional if you set a default region for your server using **~region [league region]**\n\n**Note that you need to remove any spaces from a summoner name for the commands to work!**")
         embed.color = 0xFF3B73
         return embed
