@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zilean: A League of Legends Discord Bot That Displays Live Game Data and other statistics</title>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <link rel="icon" href="favicon/favicon-196x196.png">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2:900" rel="stylesheet">
+    <link rel="stylesheet" href="scss/style.css">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="favicon/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="favicon/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="favicon/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="favicon.apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="favicon/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="favicon/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="favicon/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <!-- Navigation Bar  -->
+    <nav class="navbar">
+        <div class="navbar-brand has-text-centered">
+            <a href="index.html" class="header-brand" href="">ZILEAN
+                <i class="fas fa-hourglass-half brand-icon"></i>
+            </a>
+
+        </div>
+        <div class="navbar-end has-text-centered">
+            <a href="index.html" id="about-button" class="navbar-item">About</a>
+            <a href="index.html#command-section" class="navbar-item">Commands</a>
+            <a id="changelog-button" class="navbar-item">Changelog</a>
+            <a href="https://github.com/Samuel-Maddock/Zilean" class="navbar-item">GitHub
+                <i class="fab fa-github nav-icon"></i>
+            </a>
+        </div>
+    </nav>
+
+    <section id="changlog-section" class="hero changelog-section">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="command-title">Changelog</h1>
+                <article id="notification" class="message changlog-notif">
+                    <div class="message-header changelog-title">
+                        <p>Changelog</p>
+                    </div>
+                    <div class="message-body changelog-title-body">
+                        <span class="notification-emphasis"> From version 1.0.5 onwards, all updates and important changes
+                            will be detailed here in the changelog. The key for the changelog is shown below</span>
+                        <br>
+                        <div class="notif-key">
+                            <div class="notif-square patch">
+                                <p class="notif-text">Patch Notes</p>
+                            </div>
+                        </div>
+                        <div class="notif-key">
+                            <div class="notif-square warning">
+                                <p class="notif-text">Important/Breaking Changes</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </article>
+                <article id="notification" class="message changelog-notif">
+                    <div class="message-header changelog-header">
+                        <p>Version 1.0.7 - Zilean Bot Patch Notes (26/08/18)</p>
+                    </div>
+                    <div class="message-body changelog-body">
+                            <span class="notification-emphasis">Two New Commands: </span>
+                            <br><span class="notification-emphasis">~changelog </span> - Displays any recent changes to Zilean and links to this page 
+                            <br><span class="notification-emphasis">~iam [summoner_name] [region]</span> - Binds a summoner to your discord account, so you no longer have to type your summoner name in commands
+                            <br><br>
+                            <span class="notification-emphasis">Bug fixes and two new commands:</span>
+                            <ul>
+                                <li><i class="fas fa-star list-star"></i>Added a changelog command that displays the latest patch info, and links to the changelog you are currently reading!
+                                </li>
+                                <li><i class="fas fa-star list-star"></i>Added an "I am" command that allows you to bind a summoner to yourself on discord so you no longer have to ener it when typing league commands.
+                                </li>
+                                <li><i class="fas fa-star list-star"></i>Added the changelog page to the site which shows patch notes and important/breaking changes
+                                </li>
+                                <li><i class="fas fa-star list-star"></i>Added a clearer error message when entering the wrong region and the wrong order of arguments
+                                </li>
+                                <li><i class="fas fa-star list-star"></i>Updated site command images to their new updated versions
+                                </li>
+                                <li><i class="fas fa-star list-star"></i> Fixed an issue where Zilean restart messages would break if it didn't have the correct permissions
+                                </li>
+                            </ul>
+                    </div>
+                </article>
+                <article id="notification" class="message changelog-notif">
+                    <div class="message-header changelog-header">
+                        <p>Version 1.0.6 - Zilean Bot Patch Notes (23/08/18)</p>
+                    </div>
+                    <div class="message-body changelog-body">
+                        <span class="notification-emphasis"> Hotfix for:</span>
+                        <ul>
+                            <li><i class="fas fa-star list-star"></i>An issue where the you couldn't remove a summoner with
+                                a space in their name from the tracker</li>
+                            <li><i class="fas fa-star list-star"></i>An issue where an error message for if you entered an
+                                incorrect region for any league command failed to display fully</li>
+                        </ul>
+                    </div>
+                </article>
+                <article id="notification" class="message is-danger">
+                    <div class="message-header">
+                        <p>Important Zilean Changes From 1.0.5 Onwards </p>
+                    </div>
+                    <div class="message-body">
+                        As of adding the default region command in v1.0.5, the command structure for some commands has changed!
+                        <br>
+                        <br> For many LoL commands you used to state <span class="notification-emphasis">[region] [summoner_name]</span>
+                        but now the order is <span class="notification-emphasis">[summoner_name] (region)</span>
+                        <br> The region is only optional if you set a default region for your server using <span class="notification-emphasis">~region
+                            [league region] </span>
+                        <br>
+                        <br>
+                        <span class="notification-emphasis"> Note that you need to remove any spaces from a summoner name
+                            for the commands to work! </span>
+                    </div>
+                </article>
+                <article id="notification" class="message changelog-notif">
+                    <div class="message-header changelog-header">
+                        <p>Version 1.0.5 - Zilean Bot Patch Notes (22/08/18)</p>
+                    </div>
+                    <div class="message-body changelog-body">
+                        <span class="notification-emphasis">A New Command: </span>
+                        <br><span class="notification-emphasis">~region [region] </span> - Sets the default region for all league commands for your discord server. By default if you omit the region argument from any command the default region will be used.
+                        <br><br>
+                        <span class="notification-emphasis">Lots of bug fixes and a complete rehaul of how the regions work:</span>
+                        <ul>
+                            <li><i class="fas fa-star list-star"></i>Fixed the champion info cmd - Champions with long spell
+                                descriptions will now successfully be displayed</li>
+                            <li><i class="fas fa-star list-star"></i>Disabled the tracker auto cmd for the time being due
+                                to performance issues</li>
+                            <li><i class="fas fa-star list-star"></i>Added the new nexus blitz game mode to Zilean, so it
+                                should now display for all match history/live game commands</li>
+                            <li><i class="fas fa-star list-star"></i>Added a region command which allows a server to use
+                                a default region for all league commands</li>
+                            <li><i class="fas fa-star list-star"></i>The Game Info, Graph and Game Tracker commands will
+                                now use the default region if available</li>
+                            <li><i class="fas fa-star list-star"></i> Added a new patch changes message on the help/info
+                                commands that displays some of these changelogs</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <!-- Footer  -->
+    <footer class="footer">
+        <div class="container has-text-centered">
+            <p class="footer-text">Designed by
+                <a class="link" href="https://github.com/Samuel-Maddock"> Samuel Maddock </a>
+            </p>
+        </div>
+        <div class="container has-text-centered">
+            <p>
+                Designed using
+                <a class="link" href="https://bulma.io"> bulma.io </a> and
+                <a class="link" href="https://fontawesome.com"> Font Awesome </a>
+                <i class="fas fa-heart"></i>
+            </p>
+            <p>
+                Background splash by
+                <a href="http://www.freepik.com">
+                    Kjpartgeter
+                </a>
+            </p>
+            <p>
+                <a href="https://github.com/Samuel-Maddock/Zilean" class="icon">
+                    <i class="fab fa-github"></i>
+                </a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

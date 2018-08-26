@@ -26,8 +26,15 @@ class LeagueHelper:
                 return False
         return spectate_info
 
-    def user_exists(self, region, summoner_name, event=None):
+    def user_exists(self, region, summoner_name, event=None, author_id=None):
         summoner = None
+
+        # If the user who sent the message has bound a summoner to there discord user, then use that instead
+        summoner_binds = LiveDataHelper.load_summoner_binds()
+        if LiveDataHelper.user_is_bound(summoner_binds,str(author_id)) and summoner_name is None:
+            summoner_tuple = summoner_binds[str(author_id)]
+            return self.watcher.summoner.by_name(summoner_tuple[1], summoner_tuple[0])
+
         try:
             summoner = self.watcher.summoner.by_name(region, summoner_name)
         except HTTPError as err:
@@ -90,6 +97,7 @@ class LeagueHelper:
             region = None
 
         if event is not None and region is None and send_event_msg:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:")
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:"
+                            + "\nRemember the structure for most commands is **~command [summoner_name] [region]**\nAll summoner names must be **one word** (without spaces)!")
 
         return region

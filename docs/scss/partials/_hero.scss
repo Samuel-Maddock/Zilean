@@ -190,3 +190,77 @@
 .hide-notification{
     display: none;
 }
+
+// Changelog page
+
+.changelog-section{
+    position: relative;
+    overflow: hidden;
+    background-color: $hero-background-color;
+}
+
+.changelog-title{
+    background-color: $nav-hover-color;
+    color: $hero-background-color;
+    text-align: left;
+}
+
+.changelog-title-body{
+    background-color: $changelog-title-body;
+}
+
+.changelog-header{
+    background-color: $nav-font-color;
+}
+
+.changelog-body{
+    background-color: $changelog-body;
+    color: $hero-background-color;
+    text-align: left;
+}
+
+.changelog-arrow{
+    font-size: 1.5rem;
+    margin-top: 5px;
+}
+
+.list-star{
+    margin-right: 10px;
+    margin-left: 20px;
+}
+.changelog-body ul li{
+    margin-top: 10px;
+}
+
+.notif-key{
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 2vw;
+}
+
+.notif-square{
+    margin-left: auto;
+    margin-right: auto;
+    height: 30px;
+    width: 30px;
+    margin-top: 5px;
+    display:inline-block;
+}
+
+.notif-text{
+    white-space: nowrap;
+    margin-left: 35px;
+    margin-top: 5px;
+}
+
+.warning{
+    background-color: #ff3860;
+}
+
+.patch{
+    background-color: $nav-font-color;
+}
+
+.contrast-notif{
+    color: $nav-font-color;
+}

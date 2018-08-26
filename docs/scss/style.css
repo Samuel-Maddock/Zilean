@@ -10982,6 +10982,79 @@ html {
   display: none;
 }
 
+.changelog-section {
+  position: relative;
+  overflow: hidden;
+  background-color: #303f47;
+}
+
+.changelog-title {
+  background-color: #f5d158;
+  color: #303f47;
+  text-align: left;
+}
+
+.changelog-title-body {
+  background-color: #f3e6bc;
+}
+
+.changelog-header {
+  background-color: #42BF94;
+}
+
+.changelog-body {
+  background-color: #9cc9bb;
+  color: #303f47;
+  text-align: left;
+}
+
+.changelog-arrow {
+  font-size: 1.5rem;
+  margin-top: 5px;
+}
+
+.list-star {
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+.changelog-body ul li {
+  margin-top: 10px;
+}
+
+.notif-key {
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 2vw;
+}
+
+.notif-square {
+  margin-left: auto;
+  margin-right: auto;
+  height: 30px;
+  width: 30px;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.notif-text {
+  white-space: nowrap;
+  margin-left: 35px;
+  margin-top: 5px;
+}
+
+.warning {
+  background-color: #ff3860;
+}
+
+.patch {
+  background-color: #42BF94;
+}
+
+.contrast-notif {
+  color: #42BF94;
+}
+
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
   .navbar-brand a {
     font-family: "Exo 2";

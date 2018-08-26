@@ -51,41 +51,48 @@ class GameTrackerCommands(Plugin):
 
         self._display_track(tracker[str(event.msg.guild.id)], event.msg.channel)
 
-    @Plugin.command("add", '<summoner_name:str> [region:str]', group="tracker")
-    def on_track(self, event, summoner_name, region=None):
+    @Plugin.command("add", '[summoner_name:str] [region:str]', group="tracker")
+    def on_track(self, event, summoner_name=None, region=None):
         '''Adds a summoner for Zilean to track whether they are in a live game'''
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
+
+        if region is None and summoner_name is None and LiveDataHelper.user_is_bound(LiveDataHelper.load_summoner_binds(), str(event.msg.author.id)):
+            region = LiveDataHelper.get_user_bound_region(str(event.msg.author.id))
 
         region = LeagueHelper.validate_region(region, event)
         if region is None:
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name)
+        summoner = self.league_helper.user_exists(region, summoner_name, author_id=event.msg.author.id)
 
         if summoner is False:
-            event.msg.reply("This summoner does not exist on " + region + ". Maybe try another region!")
+            event.msg.reply("This summoner `" + summoner_name + "` does not exist on `" + region + "` Maybe try another region!")
             return
 
         self._add_summoner(event, region, summoner)
 
-    @Plugin.command("remove", '<summoner_name:str> [region:str]', group="tracker")
-    def on_remove(self, event, summoner_name, region=None):
+    @Plugin.command("remove", '[summoner_name:str] [region:str]', group="tracker")
+    def on_remove(self, event, summoner_name=None, region=None):
         '''Removes a summoner that is being tracked by Zilean'''
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
+        if region is None and summoner_name is None and LiveDataHelper.user_is_bound(LiveDataHelper.load_summoner_binds(), str(event.msg.author.id)):
+            region = LiveDataHelper.get_user_bound_region(str(event.msg.author.id))
+            summoner_name = LiveDataHelper.get_user_bound_name(str(event.msg.author.id))
+
         region = LeagueHelper.validate_region(region, event, send_event_msg=False)
 
         if not self._summoner_is_tracked(event.guild.id, summoner_name, region):
-            event.msg.reply("This summoner is not being tracked. Track them by ~tracker add <region> <summoner_name>")
+            event.msg.reply("This summoner `" + summoner_name + " " + region + "` is not being tracked. Track them by ~tracker add <region> <summoner_name>")
             return
 
         self._remove_summoner(event, region, summoner_name)
 
     @Plugin.command("reset", group="tracker")
     def on_reset(self, event):
-        '''Removes all of the summoner that are being tracked by Zilean'''
+        '''Removes all of the summoners that are being tracked by Zilean'''
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
@@ -143,10 +150,11 @@ class GameTrackerCommands(Plugin):
             guild_id = str(guild_id)
             if self._guild_is_tracked(guild_id):
                 channel = self.bot.client.state.channels.get(channel_binds[guild_id])
-                summoner_list = tracker[guild_id]
-                logger = CacheHelper.get_logger("TrackerMessage")
-                self._display_track(tracker[guild_id], channel)
-                logger.zilean("Tracker: " + guild_id + " " + self.bot.client.state.guilds.get(int(guild_id)).name)
+                if channel is not None: # Prevents errors if the bot has left a guild, but the guild id still persits in the binds
+                    summoner_list = tracker[guild_id]
+                    logger = CacheHelper.get_logger("TrackerMessage")
+                    self._display_track(tracker[guild_id], channel)
+                    logger.zilean("Tracker: " + guild_id + " " + self.bot.client.state.guilds.get(int(guild_id)).name)
 
     def _display_track(self, summoner_list, channel):
             game_found = False
@@ -256,7 +264,7 @@ class GameTrackerCommands(Plugin):
         tracker[guild_id] = summoner_list
         self.update_tracker(tracker)
 
-        event.msg.reply("The summoner `" + summoner["name"] + "` is now being tracked, tracking messages will be displayed every " + str(int(TRACKER_SCHEDULE/60)) + " minutes :eye:")
+        event.msg.reply("The summoner `" + summoner["name"] + " " + region + "` is now being tracked, tracking messages will be displayed every " + str(int(TRACKER_SCHEDULE/60)) + " minutes :eye:")
         channel_binds = LiveDataHelper.load_guild_binds()
 
         if LiveDataHelper.guild_is_binded(channel_binds, guild_id):
@@ -275,6 +283,7 @@ class GameTrackerCommands(Plugin):
 
         for index, summoner_tuple in enumerate(summoner_list):
             if summoner_tuple[1] == summoner_name.lower() and summoner_tuple[2] == region:
+                summoner_name = summoner_tuple[1]
                 del summoner_list[index]
 
         tracker[guild_id] = summoner_list
