@@ -143,10 +143,11 @@ class GameTrackerCommands(Plugin):
             guild_id = str(guild_id)
             if self._guild_is_tracked(guild_id):
                 channel = self.bot.client.state.channels.get(channel_binds[guild_id])
-                summoner_list = tracker[guild_id]
-                logger = CacheHelper.get_logger("TrackerMessage")
-                self._display_track(tracker[guild_id], channel)
-                logger.zilean("Tracker: " + guild_id + " " + self.bot.client.state.guilds.get(int(guild_id)).name)
+                if channel is not None: # Prevents errors if the bot has left a guild, but the guild id still persits in the binds
+                    summoner_list = tracker[guild_id]
+                    logger = CacheHelper.get_logger("TrackerMessage")
+                    self._display_track(tracker[guild_id], channel)
+                    logger.zilean("Tracker: " + guild_id + " " + self.bot.client.state.guilds.get(int(guild_id)).name)
 
     def _display_track(self, summoner_list, channel):
             game_found = False
