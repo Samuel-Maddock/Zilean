@@ -62,3 +62,8 @@ class LiveDataHelper():
     def get_user_bound_region(user_id):
         summoner_binds = LiveDataHelper.load_summoner_binds()
         return summoner_binds[str(user_id)][1]
+
+    @staticmethod
+    def get_user_bound_name(user_id):
+        summoner_binds = LiveDataHelper.load_summoner_binds()
+        return summoner_binds[str(user_id)][0]
