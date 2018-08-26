@@ -46,7 +46,7 @@ class UtilityCommands(Plugin):
 
     @Plugin.command("help")
     def on_help(self, event):
-        """Displays a list of all of commands"""
+        """Displays help and command information about Zilean"""
         embed = CacheHelper.getZileanEmbed(title="Zilean Command List", footer="Zilean Commands", description="Note that [arg] is a required argument and (arg) is an optional argument")
         embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#command-section")
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
@@ -117,7 +117,7 @@ class UtilityCommands(Plugin):
 
     @Plugin.command("iam", "[summoner_name:str] [region:str]")
     def on_iam(self, event, summoner_name=None, region=None):
-        '''Set a default summoner for yourself that all league command will use if you leave their summoner name and region arguments blank'''
+        '''Set a default summoner for yourself that all league commands will use if you leave their summoner name and region arguments blank'''
         summoner_binds = LiveDataHelper.load_summoner_binds()
         author_id = str(event.author.id)
 
@@ -243,6 +243,9 @@ class UtilityCommands(Plugin):
 
     def get_notification(self):
         embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description=
+            "For previous updates and changes go to the changelog here:\nhttps://samuel-maddock.github.io/Zilean/changelog.html\n\n" +
+            "You can now bind a League of Legends summoner to your discord user by using the ~iam command. Try **~iam [summoner_name] [region]** to get started!\n\n" +
+            "If you do this any command that requires a summoner name and region will work without writing those arguments eg ~match_history will display your own match history.\n\n" +
             "In order to support adding a default LoL region, the command structure for some commands have changed!"
             "\n\n"
             "For many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**."

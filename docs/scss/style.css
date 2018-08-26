@@ -11051,6 +11051,10 @@ html {
   background-color: #42BF94;
 }
 
+.contrast-notif {
+  color: #42BF94;
+}
+
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
   .navbar-brand a {
     font-family: "Exo 2";

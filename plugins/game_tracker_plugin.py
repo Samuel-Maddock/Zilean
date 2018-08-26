@@ -283,6 +283,7 @@ class GameTrackerCommands(Plugin):
 
         for index, summoner_tuple in enumerate(summoner_list):
             if summoner_tuple[1] == summoner_name.lower() and summoner_tuple[2] == region:
+                summoner_name = summoner_tuple[1]
                 del summoner_list[index]
 
         tracker[guild_id] = summoner_list
