@@ -90,6 +90,7 @@ class LeagueHelper:
             region = None
 
         if event is not None and region is None and send_event_msg:
-            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:")
+            event.msg.reply("Please enter a valid **region**: *EUW, NA, EUN, JP, LAN, LAS, OCE, TR, RU, KR, BR* :warning:"
+                            + "\nRemember the structure for most commands is **~command [summoner_name] [region]**\nAll summoner names must be **one word** (without spaces)!")
 
         return region
