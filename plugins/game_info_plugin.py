@@ -98,14 +98,19 @@ class GameInfoCommands(Plugin):
 
         event.msg.reply(embed=embed)
 
-    @Plugin.command('live_game', '"<summoner_name:str> [region:str]"')
-    def on_live_game(self, event, summoner_name, region=None):
+    @Plugin.command('live_game', '"[summoner_name:str] [region:str]"')
+    def on_live_game(self, event, summoner_name=None, region=None):
         '''Displays the live game info if a summoner is in a game. Supports all game types and ranked modes'''
+
+        # Prevent command quit on no region given if the discord user has bound a summoner to there account
+        if region is None and summoner_name is None and LiveDataHelper.user_is_bound(LiveDataHelper.load_summoner_binds(), str(event.msg.author.id)):
+            region = LiveDataHelper.get_user_bound_region(str(event.msg.author.id))
+
         region = LeagueHelper.validate_region(region, event)
         if region is None:
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name, event)
+        summoner = self.league_helper.user_exists(region, summoner_name, event, event.msg.author.id)
 
         if summoner:
             spectate_info = self.league_helper.user_in_game(region, summoner["id"])
@@ -113,10 +118,10 @@ class GameInfoCommands(Plugin):
                 game_info = GameInfo(self.league_helper)
                 game_info.display_live_game(event.msg.channel, region, spectate_info)
             else:
-                event.msg.reply("This summoner is not currently in a game!")
+                event.msg.reply("This summoner `" + summoner["name"] +  " " + region + "` is not currently in a game!")
 
-    @Plugin.command("match_history", "<summoner_name:str> [region:str] [game_number:int]")
-    def on_recent_game(self, event, summoner_name, region=None, game_number=0):
+    @Plugin.command("match_history", "[summoner_name:str] [region:str] [game_number:int]")
+    def on_recent_game(self, event, summoner_name=None, region=None, game_number=0):
         '''Displays a match in the summoners match history, by default displays the most recent game'''
 
         game_number = game_number - 1
@@ -124,27 +129,44 @@ class GameInfoCommands(Plugin):
         if game_number < 0:
             game_number = 0
 
+        # If we want users to have a summoner bound to them we have to deal with the game number being passed as the summoner_name...
+        if region is None and LiveDataHelper.user_is_bound(LiveDataHelper.load_summoner_binds(), str(event.msg.author.id)):
+            region = LiveDataHelper.get_user_bound_region(str(event.msg.author.id))
+            try:
+                game_number = int(summoner_name)
+                if game_number < 0:
+                    game_number = 0
+                summoner_name = None
+            except ValueError as err:
+                pass
+            except TypeError as err:
+                pass
+
         # If we want users to choose a match history game and use the default region for the server
         # Then the game number is actually passed to the region variable
-        # So we swap them or just leave it if the game number they has passe is not an int
+        # So we swap them or just leave it if the game number they has passed is not an int
         if LiveDataHelper.guild_has_region(LiveDataHelper.load_region_binds(), str(event.guild.id)) and region is not None:
             try:
                 game_number = int(region)
+                if game_number < 0:
+                    game_number = 0
                 region = None
             except ValueError as err:
-                region = None
+                pass
+            except TypeError as err:
+                pass
 
         region = LeagueHelper.validate_region(region, event)
         if region is None:
             return
 
-        # TODO: has_match_history returns false if history < 20, need to change this...
-        if not self.league_helper.has_match_history(region, summoner_name):
-            event.msg.reply("This summoner has no valid match history at this time or does not exist on the region given: `" + region + "`")
+        summoner = self.league_helper.user_exists(region, summoner_name, event, event.msg.author.id)
+        if not summoner:
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name, event)
-        if not summoner:
+        # TODO: has_match_history returns false if history < 20, need to change this...
+        if not self.league_helper.has_match_history(region, summoner["name"]):
+            event.msg.reply("This summoner has no valid match history at this time `" + region + "`")
             return
 
         matchlist = self.league_helper.watcher.match.matchlist_by_account(region, summoner["accountId"])
@@ -187,16 +209,20 @@ class GameInfoCommands(Plugin):
         if not champ_found:
             event.msg.reply("This champ does not exist...")
 
-    @Plugin.command("summoner", "<summoner_name:str> [region:str]")
-    def on_summoner(self, event, summoner_name, region=None):
+    @Plugin.command("summoner", "[summoner_name:str] [region:str]")
+    def on_summoner(self, event, summoner_name=None, region=None):
         '''Displays information about a League of Legends summoner'''
         # TODO: Tidy this up...
+
+        # Prevent command quit on no region given if the discord user has bound a summoner to there account
+        if region is None and summoner_name is None and LiveDataHelper.user_is_bound(LiveDataHelper.load_summoner_binds(), str(event.msg.author.id)):
+            region = LiveDataHelper.get_user_bound_region(str(event.msg.author.id))
 
         region = LeagueHelper.validate_region(region, event)
         if region is None:
             return
 
-        summoner = self.league_helper.user_exists(region, summoner_name, event)
+        summoner = self.league_helper.user_exists(region, summoner_name, event, event.msg.author.id)
         if not summoner:
             return
 

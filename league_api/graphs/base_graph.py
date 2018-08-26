@@ -5,3 +5,6 @@ class Graph:
 
     def render(self):
         pass
+
+    def set_region(self, region):
+        self.region = region

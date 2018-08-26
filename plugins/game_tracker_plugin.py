@@ -85,7 +85,7 @@ class GameTrackerCommands(Plugin):
 
     @Plugin.command("reset", group="tracker")
     def on_reset(self, event):
-        '''Removes all of the summoner that are being tracked by Zilean'''
+        '''Removes all of the summoners that are being tracked by Zilean'''
         if event.msg.channel.is_dm:
             return event.msg.reply("You must use this command in a guild!")
 
