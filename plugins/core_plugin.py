@@ -42,7 +42,6 @@ class UtilityCommands(Plugin):
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
         event.msg.reply(embed=embed)
-        event.msg.reply(embed=self.get_notification())
 
     @Plugin.command("help")
     def on_help(self, event):
@@ -51,8 +50,9 @@ class UtilityCommands(Plugin):
         embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#command-section")
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
-        event.msg.reply(embed=embed)
-        event.msg.reply(embed=self.get_notification())
+        event.msg.author.open_dm().send_message(embed=embed)
+        event.msg.author.open_dm().send_message(embed=self.get_notification())
+        event.msg.reply("Check your DMs for more information... :cyclone:")
 
     @Plugin.command("changelog")
     def on_changelog(self, event):
