@@ -23,6 +23,7 @@ class UtilityCommands(Plugin):
 
         self.version = data["version"]
         self.guild_list = dict()
+        self.league_helper = LeagueHelper()
 
     @Plugin.command("info")
     def on_info(self, event):
@@ -52,6 +53,12 @@ class UtilityCommands(Plugin):
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         event.msg.reply(embed=embed)
         event.msg.reply(embed=self.get_notification())
+
+    @Plugin.command("changelog")
+    def on_changelog(self, event):
+        '''Displays a list of recent changes to Zilean'''
+        embed = self.get_notification()
+        event.msg.reply(embed=embed)
 
     @Plugin.command("commands", aliases=["cmd", "cmds", "command"])
     def on_commands(self, event):
@@ -90,20 +97,51 @@ class UtilityCommands(Plugin):
     def on_region(self, event, region=None):
         '''Sets the overall default region for League of Legends commands'''
         region_binds = LiveDataHelper.load_region_binds()
+        endpoints = str(LeagueHelper.API_ENDPOINTS).replace("[","").replace("'","").replace("]", "")
+
         if region is None:
             if LiveDataHelper.guild_has_region(region_binds, str(event.guild.id)):
                 event.msg.reply("The current default region for League of Legends commands is: `" + region_binds[str(event.guild.id)] + "`")
             else:
-                endpoints = str(LeagueHelper.API_ENDPOINTS).replace("[","").replace("'","").replace("]", "")
                 event.msg.reply("This server does not currently have a default region for League of Legends commands.\nTry ~region [region] where the region is one of the following: `" + endpoints + "`")
         else:
-            region = LeagueHelper.validate_region(region, event)
+            region = LeagueHelper.validate_region(region, event, send_event_msg=False)
             if region is None:
+                event.msg.reply("You have entered an invalid region, please enter one of the following: `" + endpoints + "`")
                 return
+
             region_binds = LiveDataHelper.load_region_binds()
             region_binds[str(event.guild.id)] = region
             LiveDataHelper.save_region_binds(region_binds)
             event.msg.reply("The default region for League of Legends commands is now `" + region + "`")
+
+    @Plugin.command("iam", "[summoner_name:str] [region:str]")
+    def on_iam(self, event, summoner_name=None, region=None):
+        '''Set a default summoner for yourself that all league command will use if you leave their summoner name and region arguments blank'''
+        summoner_binds = LiveDataHelper.load_summoner_binds()
+        author_id = str(event.author.id)
+
+        if summoner_name is None and region is None:
+            if LiveDataHelper.user_is_bound(summoner_binds, author_id):
+                summoner_tuple = summoner_binds[author_id]
+                event.msg.reply("You are `" + summoner_tuple[0] + " " + summoner_tuple[1] + "` If you want to change this type ~iam [summoner_name] [region]")
+            else:
+                event.msg.reply("You have not bound a summoner to your discord user! To do this type `~iam [summoner_name] [region]`")
+        elif (summoner_name is not None) and (region is not None):
+            region = LeagueHelper.validate_region(region, event)
+            if region is None:
+                return
+
+            summoner = self.league_helper.user_exists(region, summoner_name, event)
+            if summoner is False:
+                return
+
+            summoner_tuple = (summoner["name"], region)
+            summoner_binds[author_id] = summoner_tuple
+            LiveDataHelper.save_summoner_binds(summoner_binds)
+            event.msg.reply("You have updated your summoner, You are `" + summoner["name"] + " " + region + "`")
+        else:
+            event.msg.reply("You must enter both a summoner name and region!")
 
     @Plugin.listen("Ready")
     def on_ready(self, event):
@@ -158,7 +196,6 @@ class UtilityCommands(Plugin):
         # Send restart messages to those who have bound the bot to a channel
         channel_binds = LiveDataHelper.load_guild_binds()
         for guild_id in channel_binds.keys():
-
             try:
                 channel = self.bot.client.state.channels[channel_binds[guild_id]]
                 channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
@@ -205,6 +242,12 @@ class UtilityCommands(Plugin):
         logger.zilean("Command List Generated")
 
     def get_notification(self):
-        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description="In order to support adding a default LoL region, the command structure for some commands have changed!\n\nFor many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**.\n\nThe region is only optional if you set a default region for your server using **~region [league region]**\n\n**Note that you need to remove any spaces from a summoner name for the commands to work!**")
+        embed = CacheHelper.getZileanEmbed(title="Recent Zilean Changes (" + self.version + ")", footer="Zilean Update", description=
+            "In order to support adding a default LoL region, the command structure for some commands have changed!"
+            "\n\n"
+            "For many LoL commands you used to state **[region] [summoner_name]** but now the order is **[summoner_name] (region)**."
+            "\n\n"
+            "The region is only optional if you set a default region for your server using **~region [league region]**"
+            "\n\n**Note that you need to remove any spaces from a summoner name for the commands to work!**")
         embed.color = 0xFF3B73
         return embed
