@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
+from disco.api.http import APIException
 from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.live_data_helper import LiveDataHelper
 from league_api.helpers.cache_helper import CacheHelper
@@ -214,6 +215,9 @@ class GameTrackerCommands(Plugin):
             except ConnectionError as e:
                 logger = CacheHelper.get_logger("TrackerError")
                 logger.zilean("Tracker message failed to send. Could not connect to the Discord API")
+            except APIException as e:
+                logger = CacheHelper.get_logger("TrackerError")
+                logger.zilean(e.status_code)
 
     def boolMsg(self, bool):
         if bool:
