@@ -28,7 +28,7 @@ class GameInfoCommands(Plugin):
         if not version:
             version = s.join(LeagueHelper.get_champion_data()["version"].split(".", 2)[:2])
 
-        version_url = version.strip(".")
+        version_url = version.replace(".", "")
         patch_url = "http://na.leagueoflegends.com/en/news/game-updates/patch/patch-" + version_url + "-notes"
         version_url = "http://ddragon.leagueoflegends.com/api/versions.json"
 
