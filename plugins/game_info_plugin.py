@@ -134,6 +134,7 @@ class GameInfoCommands(Plugin):
             region = LiveDataHelper.get_user_bound_region(str(event.msg.author.id))
             try:
                 game_number = int(summoner_name)
+                game_number = game_number - 1
                 if game_number < 0:
                     game_number = 0
                 summoner_name = None
@@ -148,6 +149,7 @@ class GameInfoCommands(Plugin):
         if LiveDataHelper.guild_has_region(LiveDataHelper.load_region_binds(), str(event.guild.id)) and region is not None:
             try:
                 game_number = int(region)
+                game_number = game_number - 1
                 if game_number < 0:
                     game_number = 0
                 region = None
