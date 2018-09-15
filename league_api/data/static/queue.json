@@ -889,6 +889,75 @@
       {"id": 200, "name": "Red", "size": 5}
     ],
     "released": "8.16"
-  }
+  },
 
+    {
+    "id": 1030,
+    "name": "Odyssey: Extraction (Intro Difficulty)",
+    "gameMode": "ODYSSEY",
+    "mapType": "CRASH SITE",
+    "rotating": true,
+    "ranked": false,
+    "pickType": "BLIND PICK",
+    "teams": [
+      {"id": 100, "name": "Blue", "size": 5}
+    ],
+    "released": "8.18"
+  },
+
+  {
+    "id": 1040,
+    "name": "Odyssey: Extraction (Cadet Difficulty)",
+    "gameMode": "ODYSSEY",
+    "mapType": "CRASH SITE",
+    "rotating": true,
+    "ranked": false,
+    "pickType": "BLIND PICK",
+    "teams": [
+      {"id": 100, "name": "Blue", "size": 5}
+    ],
+    "released": "8.18"
+  },
+
+  {
+    "id": 1050,
+    "name": "Odyssey: Extraction (Crewmember Difficulty)",
+    "gameMode": "ODYSSEY",
+    "mapType": "CRASH SITE",
+    "rotating": true,
+    "ranked": false,
+    "pickType": "BLIND PICK",
+    "teams": [
+      {"id": 100, "name": "Blue", "size": 5}
+    ],
+    "released": "8.18"
+  },
+
+  {
+    "id": 1060,
+    "name": "Odyssey: Extraction (Captain Difficulty)",
+    "gameMode": "ODYSSEY",
+    "mapType": "CRASH SITE",
+    "rotating": true,
+    "ranked": false,
+    "pickType": "BLIND PICK",
+    "teams": [
+      {"id": 100, "name": "Blue", "size": 5}
+    ],
+    "released": "8.18"
+  },
+
+  {
+    "id": 1070,
+    "name": "Odyssey: Extraction (Onslaught Difficulty)",
+    "gameMode": "ODYSSEY",
+    "mapType": "CRASH SITE",
+    "rotating": true,
+    "ranked": false,
+    "pickType": "BLIND PICK",
+    "teams": [
+      {"id": 100, "name": "Blue", "size": 5}
+    ],
+    "released": "8.18"
+  }
 ]
