@@ -8,8 +8,9 @@ from requests import HTTPError
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from league_api.helpers.league_helper import LeagueHelper
-from league_api.helpers.league_helper import LiveDataHelper
-from league_api.helpers.league_helper import CacheHelper
+from league_api.helpers.live_data_helper import LiveDataHelper
+from league_api.helpers.cache_helper import CacheHelper
+from league_api.helpers.championgg_helper import ChampionGGHelper
 
 class GameInfoCommands(Plugin):
     def load(self,ctx):
@@ -209,7 +210,29 @@ class GameInfoCommands(Plugin):
                 champ_found = True
 
         if not champ_found:
-            event.msg.reply("This champ does not exist...")
+            event.msg.reply("This champion does not exist! Try ~champion Akali as an example...")
+
+    @Plugin.command("ability", "<champion_name:str>, <ability:str>")
+    def on_ability(self, event, champion_name, ability):
+        ''' Displays information about a specific champions ability '''
+        champions = LeagueHelper.get_champion_data()
+        game_info = GameInfo(self.league_helper)
+        abilities = ["q", "w", "e", "r", "passive"]
+        champ_found = False
+
+        if ability.lower() in ["ult", "ultimate"]:
+            ability = "r"
+        elif ability.lower() not in abilities:
+            event.msg.reply("This is not a valid ability, Try from one of these " + str(abilities))
+            return
+
+        for key,name in champions["keys"].items():
+            if champion_name.lower() == name.lower():
+                champ_found = True
+                game_info.display_ability(event.msg.channel, champions["version"], champions["data"][name], ability)
+
+        if not champ_found:
+            event.msg.reply("This champion does not exist! Try ~ability Akali Q as an example...")
 
     @Plugin.command("summoner", "[summoner_name:str] [region:str]")
     def on_summoner(self, event, summoner_name=None, region=None):
@@ -289,6 +312,19 @@ class GameInfoCommands(Plugin):
 
         event.msg.reply(embed=embed)
 
+    @Plugin.command("build", "<champion_name:str>")
+    def on_build(self, event, champion_name):
+        champions = LeagueHelper.get_champion_data()
+        champ_found = False
+
+        for key, name in champions["keys"].items():
+            if champion_name.lower() == name.lower():
+                champion_builder = ChampionGGHelper()
+                champion_builder.generate_build(champions["data"][name])
+                champ_found = True
+
+        if not champ_found:
+            event.msg.reply("This champion does not exist! Try ~champion Akali as an example...")
 
 class GameInfo():
     def __init__(self, league_helper):
@@ -426,6 +462,29 @@ class GameInfo():
         embed.add_field(name="Item Description", value=description, inline=True)
         embed.add_field(name ="Buy Price", value=str(item["gold"]["total"]) + " gold", inline=True)
         embed.add_field(name="Sell Price", value=str(item["gold"]["sell"]) + " gold", inline=True)
+
+        channel.send_message(embed=embed)
+
+    def display_ability(self, channel, version, champion, ability):
+        embed = CacheHelper.getZileanEmbed(title="Champion Ability", description=champion["name"] + " " + champion["title"])
+        ability_list = ["Q", "W", "E", "R"]
+        image_url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/spell/"
+        passive_url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/img/passive/"
+
+        if ability.lower() == "passive":
+            embed.add_field(name="Passive - " + champion["passive"]["name"], value="\n" + champion["passive"]["description"])
+            embed.set_thumbnail(url=passive_url + champion["passive"]["image"]["full"])
+        else:
+            spellIndex = 0
+            for index, abilityTrigger in enumerate(ability_list):
+                if abilityTrigger.lower() == ability.lower():
+                    spellIndex = index
+
+            spell = champion["spells"][spellIndex]
+            name = spell["name"]
+            description = spell["description"]
+            embed.add_field(name=ability.upper() + "- " + name, value="\n" + description)
+            embed.set_thumbnail(url=image_url + spell["image"]["full"])
 
         channel.send_message(embed=embed)
 
