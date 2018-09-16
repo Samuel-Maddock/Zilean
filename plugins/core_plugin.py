@@ -60,6 +60,24 @@ class UtilityCommands(Plugin):
         embed = self.get_notification()
         event.msg.reply(embed=embed)
 
+    @Plugin.command("uptime")
+    def on_uptime(self, event):
+        '''Displays how long Zilean has been online for'''
+        uptime = datetime.now() - self.start_time
+        hours = str(uptime.seconds//3600)
+        minutes = str((uptime.seconds//60)%60)
+        seconds = str(uptime.seconds%60)
+
+        if (hours == "0"):
+            hours = "00"
+
+        if (minutes=="0"):
+            minutes = "00"
+
+        uptime_string = str(uptime.days) + " Days, " + hours + ":" + minutes + ":" + seconds + " (Hrs/Min/Sec)"
+        embed = CacheHelper.getZileanEmbed(title="Zilean Uptime", footer="Zilean Bot", description="Zilean has been online for: " + uptime_string)
+        event.msg.reply(embed=embed)
+
     @Plugin.command("commands", aliases=["cmd", "cmds", "command"])
     def on_commands(self, event):
         """Displays the link to the commands"""
@@ -145,6 +163,7 @@ class UtilityCommands(Plugin):
 
     @Plugin.listen("Ready")
     def on_ready(self, event):
+        self.start_time = datetime.now()
         self.client.update_presence(Status.ONLINE, Game(type=GameType.watching, name="you play League of Legends"))
         command_list = self.generate_command_list()
         self.update_command_list(command_list)
