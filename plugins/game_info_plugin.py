@@ -212,12 +212,12 @@ class GameInfoCommands(Plugin):
         if not champ_found:
             event.msg.reply("This champion does not exist! Try ~champion Akali as an example...")
 
-    @Plugin.command("ability", "<champion_name:str>, <ability:str>")
-    def on_ability(self, event, champion_name, ability):
+    @Plugin.command("ability", "<champion_name:str>, [ability:str]")
+    def on_ability(self, event, champion_name, ability="all"):
         ''' Displays information about a specific champions ability '''
         champions = LeagueHelper.get_champion_data()
         game_info = GameInfo(self.league_helper)
-        abilities = ["q", "w", "e", "r", "passive"]
+        abilities = ["q", "w", "e", "r", "passive", "all"]
         champ_found = False
 
         if ability.lower() in ["ult", "ultimate"]:
@@ -229,7 +229,10 @@ class GameInfoCommands(Plugin):
         for key,name in champions["keys"].items():
             if champion_name.lower() == name.lower():
                 champ_found = True
-                game_info.display_ability(event.msg.channel, champions["version"], champions["data"][name], ability)
+                if ability == "all":
+                    game_info.display_champ(event.msg.channel, champions["version"], champions["data"][name])
+                else:
+                    game_info.display_ability(event.msg.channel, champions["version"], champions["data"][name], ability)
 
         if not champ_found:
             event.msg.reply("This champion does not exist! Try ~ability Akali Q as an example...")
