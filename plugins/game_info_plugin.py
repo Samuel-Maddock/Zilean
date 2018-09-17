@@ -314,13 +314,14 @@ class GameInfoCommands(Plugin):
 
     @Plugin.command("build", "<champion_name:str>")
     def on_build(self, event, champion_name):
+        '''Displays the highest winrate championGG build for the given champion'''
         champions = LeagueHelper.get_champion_data()
         champ_found = False
 
         for key, name in champions["keys"].items():
             if champion_name.lower() == name.lower():
                 champion_builder = ChampionGGHelper()
-                champion_builder.generate_build(champions["data"][name])
+                champion_builder.generate_build(event, champions["data"][name], champions["version"])
                 champ_found = True
 
         if not champ_found:

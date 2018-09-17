@@ -68,6 +68,12 @@ class LeagueHelper:
         return data
 
     @staticmethod
+    def get_rune_data():
+        with open("league_api/data/static/runesReforged.json") as data_file:
+            data = json.load(data_file)
+        return data
+
+    @staticmethod
     def validate_region(region, event=None, send_event_msg=True):
         region_binds = LiveDataHelper.load_region_binds()
 

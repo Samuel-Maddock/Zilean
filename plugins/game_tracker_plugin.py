@@ -198,7 +198,6 @@ class GameTrackerCommands(Plugin):
             else:
                 footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
 
-
             description = "This message is automatically displayed every " + str(int(TRACKER_SCHEDULE/60)) + " minutes!" + \
                                 "\n If auto-display is turned on for a summoner their game is automatically displayed"
 

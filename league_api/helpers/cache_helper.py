@@ -71,7 +71,7 @@ class CacheHelper:
         endpoint_url = "http://ddragon.leagueoflegends.com/cdn/" + server_version + "/data/en_GB/"
         file_path = "league_api/data/static/"
 
-        static_file_list = ["championFull.json", "item.json"]
+        static_file_list = ["championFull.json", "item.json", "runesReforged.json"]
 
         for filename in static_file_list:
             with urllib.request.urlopen(endpoint_url + filename) as url:
