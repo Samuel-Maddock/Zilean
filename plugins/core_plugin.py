@@ -42,7 +42,6 @@ class UtilityCommands(Plugin):
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
         embed.add_field(name="Use ~help for a list of commands!", value=":wave:")
         event.msg.reply(embed=embed)
-        event.msg.reply(embed=self.get_notification())
 
     @Plugin.command("help")
     def on_help(self, event):
@@ -51,13 +50,32 @@ class UtilityCommands(Plugin):
         embed.add_field(name="Zilean Commands", value="You can view the commands by following the link below" + "\nhttps://samuel-maddock.github.io/Zilean/#command-section")
         embed.add_field(name="If you enjoy the bot please upvote it below:heart_exclamation:", value="https://discordbots.org/bot/459139146544578571")
         embed.add_field(name="If you have feature suggestions/spotted some bugs", value="Join the support server: https://discord.gg/ZjAyh7N")
-        event.msg.reply(embed=embed)
-        event.msg.reply(embed=self.get_notification())
+        event.msg.author.open_dm().send_message(embed=embed)
+        event.msg.author.open_dm().send_message(embed=self.get_notification())
+        event.msg.reply("Check your DMs for more information... :cyclone:")
 
     @Plugin.command("changelog")
     def on_changelog(self, event):
         '''Displays a list of recent changes to Zilean'''
         embed = self.get_notification()
+        event.msg.reply(embed=embed)
+
+    @Plugin.command("uptime")
+    def on_uptime(self, event):
+        '''Displays how long Zilean has been online for'''
+        uptime = datetime.now() - self.start_time
+        hours = str(uptime.seconds//3600)
+        minutes = str((uptime.seconds//60)%60)
+        seconds = str(uptime.seconds%60)
+
+        if (hours == "0"):
+            hours = "00"
+
+        if (minutes=="0"):
+            minutes = "00"
+
+        uptime_string = str(uptime.days) + " Days, " + hours + ":" + minutes + ":" + seconds + " (Hrs/Min/Sec)"
+        embed = CacheHelper.getZileanEmbed(title="Zilean Uptime", footer="Zilean Bot", description="Zilean has been online for: " + uptime_string)
         event.msg.reply(embed=embed)
 
     @Plugin.command("commands", aliases=["cmd", "cmds", "command"])
@@ -145,6 +163,7 @@ class UtilityCommands(Plugin):
 
     @Plugin.listen("Ready")
     def on_ready(self, event):
+        self.start_time = datetime.now()
         self.client.update_presence(Status.ONLINE, Game(type=GameType.watching, name="you play League of Legends"))
         command_list = self.generate_command_list()
         self.update_command_list(command_list)
@@ -194,14 +213,14 @@ class UtilityCommands(Plugin):
         logger.zilean("Bot Shutdown - Guild List saved successfully")
 
         # Send restart messages to those who have bound the bot to a channel
-        channel_binds = LiveDataHelper.load_guild_binds()
+        ''' channel_binds = LiveDataHelper.load_guild_binds()
         for guild_id in channel_binds.keys():
             try:
                 channel = self.bot.client.state.channels[channel_binds[guild_id]]
                 channel.send_message("Zilean is restarting - The bot is updating, please be patient... :recycle:")
             except KeyError as err:
                 logger = CacheHelper.get_logger("GuildBindError")
-                logger.zilean("Guild ID failed to be removed when the bot was offline: " + str(guild_id))
+                logger.zilean("Guild ID failed to be removed when the bot was offline: " + str(guild_id)) '''
 
     def generate_command_list(self):
         command_list = dict()

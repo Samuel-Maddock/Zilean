@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from disco.bot import Plugin
 from disco.types.message import MessageEmbed
+from disco.api.http import APIException
 from league_api.helpers.league_helper import LeagueHelper
 from league_api.helpers.live_data_helper import LiveDataHelper
 from league_api.helpers.cache_helper import CacheHelper
@@ -197,7 +198,6 @@ class GameTrackerCommands(Plugin):
             else:
                 footer = "To view a summoner in game use ~game_info <region> <summoner_name>"
 
-
             description = "This message is automatically displayed every " + str(int(TRACKER_SCHEDULE/60)) + " minutes!" + \
                                 "\n If auto-display is turned on for a summoner their game is automatically displayed"
 
@@ -214,6 +214,9 @@ class GameTrackerCommands(Plugin):
             except ConnectionError as e:
                 logger = CacheHelper.get_logger("TrackerError")
                 logger.zilean("Tracker message failed to send. Could not connect to the Discord API")
+            except APIException as e:
+                logger = CacheHelper.get_logger("TrackerError")
+                logger.zilean("APIException - " + e.status_code)
 
     def boolMsg(self, bool):
         if bool:
