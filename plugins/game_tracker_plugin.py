@@ -47,7 +47,7 @@ class GameTrackerCommands(Plugin):
         tracker = self.tracker
 
         if not self._guild_is_tracked(str(event.msg.guild.id)):
-            event.msg.reply("You are currently not tracking any players! Try ~tracker add <region> <summoner_name> to begin...")
+            event.msg.reply("You are currently not tracking any players! Try ~tracker add [summoner_name] [region] to begin...")
             return
 
         self._display_track(tracker[str(event.msg.guild.id)], event.msg.channel)
@@ -216,7 +216,7 @@ class GameTrackerCommands(Plugin):
                 logger.zilean("Tracker message failed to send. Could not connect to the Discord API")
             except APIException as e:
                 logger = CacheHelper.get_logger("TrackerError")
-                logger.zilean("APIException - " + e.status_code)
+                logger.zilean("APIException - " + str(e.status_code))
 
     def boolMsg(self, bool):
         if bool:

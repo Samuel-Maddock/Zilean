@@ -43,9 +43,15 @@ class ChampionGGHelper:
                 rune_image_urls.append(rune_image_url + rune_path["icon"])
             else:
                 rune_arr = []
+                # Get all possible runes for the current rune path
                 for slot in rune_path["slots"]:
                     rune_arr = rune_arr + slot["runes"]
-                specific_rune = [rune for rune in rune_arr if str(rune.get("id")) == rune_id][0]
+
+                # Select the specific rune and add its image url and name
+                for rune in rune_arr:
+                    if str(rune.get("id")) == str(rune_id):
+                        specific_rune = rune
+
                 rune_image_urls.append(rune_image_url + specific_rune["icon"])
                 rune_message += "*" + specific_rune["name"] + "*  |  "
 

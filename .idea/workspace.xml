@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="91dcbe8a-b4cb-4b0e-a7c1-54644898b67f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/commandList.json" afterPath="$PROJECT_DIR$/docs/commandList.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league_api/data/live/tracker.json" afterPath="$PROJECT_DIR$/league_api/data/live/tracker.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league_api/data/static/cache_info.json" afterPath="$PROJECT_DIR$/league_api/data/static/cache_info.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league_api/helpers/cache_helper.py" afterPath="$PROJECT_DIR$/league_api/helpers/cache_helper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/core_plugin.py" afterPath="$PROJECT_DIR$/plugins/core_plugin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/game_info_plugin.py" afterPath="$PROJECT_DIR$/plugins/game_info_plugin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/game_tracker_plugin.py" afterPath="$PROJECT_DIR$/plugins/game_tracker_plugin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/graph_plugin.py" afterPath="$PROJECT_DIR$/plugins/graph_plugin.py" />
-    </list>
+    <list default="true" id="91dcbe8a-b4cb-4b0e-a7c1-54644898b67f" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,124 +15,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="game_info_plugin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/game_info_plugin.py">
+      <file leaf-file-name="championgg_helper.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/league_api/helpers/championgg_helper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-              <folding>
-                <element signature="e#1#12#0" expanded="true" />
-                <element signature="e#3126#3664#0" expanded="false" />
-                <element signature="e#3781#4320#0" expanded="false" />
-                <element signature="e#4463#4583#0" expanded="false" />
-                <element signature="e#4667#5510#0" expanded="false" />
-                <element signature="e#5590#6047#0" expanded="false" />
-                <element signature="e#6111#6866#0" expanded="false" />
-                <element signature="e#6941#10139#0" expanded="false" />
-                <element signature="e#10201#11118#0" expanded="false" />
-                <element signature="e#11185#12525#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="graph_plugin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/graph_plugin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="82" column="31" lean-forward="false" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="commandList.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/commandList.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="game_tracker_plugin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/game_tracker_plugin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
+            <state relative-caret-position="381">
+              <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1533474526684" expanded="true" signature="5256:5281" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="42">
-                <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="core_plugin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/core_plugin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="54" column="115" lean-forward="false" selection-start-line="54" selection-start-column="115" selection-end-line="54" selection-end-column="115" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#4898#6032#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="living_time.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/league_api/graphs/living_time.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="25" column="39" lean-forward="false" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="guilds.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/league_api/data/guilds.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="39" lean-forward="false" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cache_helper.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/league_api/helpers/cache_helper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="17" column="44" lean-forward="false" selection-start-line="17" selection-start-column="44" selection-end-line="17" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="champion_wins.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/league_api/graphs/champion_wins.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -171,6 +50,7 @@
       <find>GameInfo</find>
       <find>datetime</find>
       <find>display</find>
+      <find>heimer</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,14 +59,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/league_api/graphs/league_api_helper.py" />
         <option value="$PROJECT_DIR$/league_api/league_api_helper.py" />
         <option value="$PROJECT_DIR$/plugins/help_plugin.py" />
         <option value="$PROJECT_DIR$/tests/api_test.py" />
         <option value="$PROJECT_DIR$/api_test.py" />
         <option value="$PROJECT_DIR$/league_api/static_data/champions.json" />
-        <option value="$PROJECT_DIR$/league_api/graphs/base_graph.py" />
         <option value="$PROJECT_DIR$/league_api/static_data/items.json" />
         <option value="$PROJECT_DIR$/tests/graph_test.py" />
         <option value="$PROJECT_DIR$/league_api/static_data/update_info.json" />
@@ -207,19 +85,30 @@
         <option value="$PROJECT_DIR$/plugins/live_game_plugin.py" />
         <option value="$PROJECT_DIR$/league_api/helpers/adad.py" />
         <option value="$PROJECT_DIR$/league_api/helpers/static_cache_helper.py" />
-        <option value="$PROJECT_DIR$/league_api/helpers/live_data_helper.py" />
         <option value="$PROJECT_DIR$/league_api/data/live/guild_channel_binds.json" />
-        <option value="$PROJECT_DIR$/league_api/data/live/tracker.json" />
-        <option value="$PROJECT_DIR$/league_api/helpers/league_helper.py" />
-        <option value="$PROJECT_DIR$/league_api/data/version.json" />
-        <option value="$PROJECT_DIR$/config.json" />
-        <option value="$PROJECT_DIR$/plugins/game_info_plugin.py" />
-        <option value="$PROJECT_DIR$/league_api/helpers/cache_helper.py" />
         <option value="$PROJECT_DIR$/league_api/data/guilds.json" />
-        <option value="$PROJECT_DIR$/plugins/core_plugin.py" />
-        <option value="$PROJECT_DIR$/plugins/graph_plugin.py" />
-        <option value="$PROJECT_DIR$/plugins/game_tracker_plugin.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/docs/index.html" />
+        <option value="$PROJECT_DIR$/league_api/data/live/region_binds.json" />
+        <option value="$PROJECT_DIR$/league_api/data/live/tracker.json" />
+        <option value="$PROJECT_DIR$/league_api/data/live/summoner_binds.json" />
+        <option value="$PROJECT_DIR$/league_api/graphs/base_graph.py" />
+        <option value="$PROJECT_DIR$/plugins/graph_plugin.py" />
+        <option value="$PROJECT_DIR$/league_api/helpers/live_data_helper.py" />
+        <option value="$PROJECT_DIR$/docs/changelog.html" />
+        <option value="$PROJECT_DIR$/league_api/data/static/queue.json" />
+        <option value="$PROJECT_DIR$/config.json" />
+        <option value="$PROJECT_DIR$/league_api/data/static/rune.json" />
+        <option value="$PROJECT_DIR$/league_api/helpers/cache_helper.py" />
+        <option value="$PROJECT_DIR$/league_api/data/static/cache_info.json" />
+        <option value="$PROJECT_DIR$/league_api/data/static/runesReforged.json" />
+        <option value="$PROJECT_DIR$/league_api/helpers/league_helper.py" />
+        <option value="$PROJECT_DIR$/plugins/game_info_plugin.py" />
+        <option value="$PROJECT_DIR$/league_api/data/version.json" />
+        <option value="$PROJECT_DIR$/plugins/core_plugin.py" />
+        <option value="$PROJECT_DIR$/plugins/game_tracker_plugin.py" />
+        <option value="$PROJECT_DIR$/league_api/helpers/championgg_helper.py" />
       </list>
     </option>
   </component>
@@ -243,6 +132,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -301,16 +191,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zilean" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zilean" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="league_api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="FullScreen" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/samuelmaddock/Documents/GitHub/Zilean/league_api/graphs/champion_mastery.py" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -447,16 +354,16 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20886981" sideWeight="0.47333333" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17238913" sideWeight="0.45022288" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23614457" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2253012" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18097281" sideWeight="0.52666664" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2074392" sideWeight="0.5497771" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -472,65 +379,17 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/league_api/helpers/league_helper.py</url>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/league_api/helpers/league_helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="8" column="39" lean-forward="true" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/core_plugin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/games_per_month.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sammiah.png" />
-    <entry file="file://$PROJECT_DIR$/samueltherandom.png" />
-    <entry file="file://$PROJECT_DIR$/league_api/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api_test.py" />
-    <entry file="file://$PROJECT_DIR$/tests/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/tests/champions.json" />
     <entry file="file://$PROJECT_DIR$/tests/config.json" />
     <entry file="file://$PROJECT_DIR$/tests/graph_test.py" />
     <entry file="file://$PROJECT_DIR$/league_api/graphs/config.json" />
@@ -538,41 +397,13 @@
     <entry file="file://$PROJECT_DIR$/plugins/graph_test.py" />
     <entry file="file://$PROJECT_DIR$/league_api/graphs/win_rate.py" />
     <entry file="file://$PROJECT_DIR$/plugins/config.json" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/league_api/static_data/items.json" />
     <entry file="file://$PROJECT_DIR$/league_api/static_data/champions.json" />
-    <entry file="file://$PROJECT_DIR$/league_api/data/static/queue.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="620" column="26" lean-forward="true" selection-start-line="620" selection-start-column="26" selection-end-line="620" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/league_api/helpers/cache_helper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="28">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -583,13 +414,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/kill_participation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="53" column="35" lean-forward="false" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/league_api/data/static/item.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
@@ -597,24 +421,132 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/graphs/champion_wins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/commandList.json" />
+    <entry file="file://$PROJECT_DIR$/docs/commandList.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="42">
+            <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/graphs/living_time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/static/championFull.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-689">
+          <caret line="0" column="1050002" lean-forward="true" selection-start-line="0" selection-start-column="1050002" selection-end-line="0" selection-end-column="1050002" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/scss/partials/_colours.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="167" column="28" lean-forward="true" selection-start-line="167" selection-start-column="28" selection-end-line="167" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/live/region_binds.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="30" lean-forward="false" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/live/tracker.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/league_api/data/live/guild_channel_binds.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="84" lean-forward="false" selection-start-line="0" selection-start-column="84" selection-end-line="0" selection-end-column="84" />
+          <caret line="0" column="33" lean-forward="false" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/changelog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1610">
+          <caret line="115" column="84" lean-forward="false" selection-start-line="115" selection-start-column="84" selection-end-line="115" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/live/summoner_binds.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/static/queue.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2462">
+          <caret line="907" column="2" lean-forward="false" selection-start-line="907" selection-start-column="2" selection-end-line="907" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/helpers/live_data_helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="68" column="45" lean-forward="false" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/data/static/rune.json" />
     <entry file="file://$PROJECT_DIR$/league_api/data/static/cache_info.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="52" lean-forward="false" selection-start-line="0" selection-start-column="52" selection-end-line="0" selection-end-column="52" />
+          <caret line="0" column="53" lean-forward="false" selection-start-line="0" selection-start-column="53" selection-end-line="0" selection-end-column="53" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/base_graph.py">
+    <entry file="file://$PROJECT_DIR$/league_api/data/static/runesReforged.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="37416" />
         </state>
       </provider>
     </entry>
@@ -625,81 +557,114 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/data/live/tracker.json">
+    <entry file="file://$PROJECT_DIR$/test.jpg" />
+    <entry file="file://$PROJECT_DIR$/league_api/graphs/kill_participation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="273" lean-forward="false" selection-start-line="0" selection-start-column="273" selection-end-line="0" selection-end-column="273" />
+        <state relative-caret-position="700">
+          <caret line="53" column="35" lean-forward="false" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/data/static/championFull.json">
+    <entry file="file://$PROJECT_DIR$/plugins/graph_plugin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-377658">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="432">
+          <caret line="97" column="12" lean-forward="false" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="75" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/helpers/live_data_helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="5" column="35" lean-forward="false" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/runepath1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/helpers/league_helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="11" selection-end-column="51" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/runepath2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/league_api/data/version.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="20" lean-forward="false" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.json">
+    <entry file="file://$PROJECT_DIR$/league_api/graphs/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="28">
-          <caret line="2" column="63" lean-forward="false" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
+          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/champion_wins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/data/commandList.json" />
     <entry file="file://$PROJECT_DIR$/plugins/game_info_plugin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+        <state relative-caret-position="378">
+          <caret line="234" column="20" lean-forward="false" selection-start-line="234" selection-start-column="20" selection-end-line="234" selection-end-column="20" />
           <folding>
-            <element signature="e#1#12#0" expanded="true" />
-            <element signature="e#3126#3664#0" expanded="false" />
-            <element signature="e#3781#4320#0" expanded="false" />
-            <element signature="e#4463#4583#0" expanded="false" />
-            <element signature="e#4667#5510#0" expanded="false" />
-            <element signature="e#5590#6047#0" expanded="false" />
-            <element signature="e#6111#6866#0" expanded="false" />
-            <element signature="e#6941#10139#0" expanded="false" />
-            <element signature="e#10201#11118#0" expanded="false" />
-            <element signature="e#11185#12525#0" expanded="false" />
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#822#1907#0" expanded="false" />
+            <element signature="e#2008#2824#0" expanded="false" />
+            <element signature="e#2873#2986#0" expanded="false" />
+            <element signature="e#3049#4694#0" expanded="false" />
+            <element signature="e#4843#5915#0" expanded="false" />
+            <element signature="e#6101#8834#0" expanded="false" />
+            <element signature="e#8935#9473#0" expanded="false" />
+            <element signature="e#11509#15837#0" expanded="false" />
+            <element signature="e#16667#16787#0" expanded="false" />
+            <element signature="e#16871#17714#0" expanded="false" />
+            <element signature="e#17794#18251#0" expanded="false" />
+            <element signature="e#18315#19070#0" expanded="false" />
+            <element signature="e#19145#21996#0" expanded="false" />
+            <element signature="e#22058#22756#0" expanded="false" />
+            <element signature="e#22834#23975#0" expanded="false" />
+            <element signature="e#24042#25164#0" expanded="false" />
+            <element signature="e#25245#27743#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/core_plugin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1624">
+          <caret line="264" column="134" lean-forward="false" selection-start-line="264" selection-start-column="134" selection-end-line="264" selection-end-column="134" />
+          <folding>
+            <element signature="e#4114#4279#0" expanded="false" />
+            <element signature="e#4347#4611#0" expanded="false" />
+            <element signature="e#4679#5471#0" expanded="false" />
+            <element signature="e#5572#6836#0" expanded="false" />
+            <element signature="e#6971#8415#0" expanded="false" />
+            <element signature="e#8999#9219#0" expanded="false" />
+            <element signature="e#9301#9845#0" expanded="false" />
+            <element signature="e#9931#10081#0" expanded="false" />
+            <element signature="e#10179#10239#0" expanded="false" />
+            <element signature="e#10280#11058#0" expanded="false" />
+            <element signature="e#11105#12240#0" expanded="false" />
+            <element signature="e#12299#12502#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/league_api/helpers/cache_helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="17" column="44" lean-forward="false" selection-start-line="17" selection-start-column="44" selection-end-line="17" selection-end-column="44" />
+        <state relative-caret-position="298">
+          <caret line="77" column="58" lean-forward="false" selection-start-line="77" selection-start-column="58" selection-end-line="77" selection-end-column="58" />
           <folding />
         </state>
       </provider>
@@ -707,72 +672,64 @@
     <entry file="file://$PROJECT_DIR$/league_api/data/guilds.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="39" lean-forward="false" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
+          <caret line="0" column="117" lean-forward="false" selection-start-line="0" selection-start-column="117" selection-end-line="0" selection-end-column="117" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/core_plugin.py">
+    <entry file="file://$PROJECT_DIR$/league_api/helpers/league_helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="54" column="115" lean-forward="false" selection-start-line="54" selection-start-column="115" selection-end-line="54" selection-end-column="115" />
+        <state relative-caret-position="238">
+          <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#4898#6032#0" expanded="false" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league_api/graphs/living_time.py">
+    <entry file="file://$PROJECT_DIR$/config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="25" column="39" lean-forward="false" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/commandList.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/graph_plugin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="82" column="31" lean-forward="false" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
+        <state relative-caret-position="224">
+          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/plugins/game_tracker_plugin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
+        <state relative-caret-position="242">
+          <caret line="218" column="69" lean-forward="true" selection-start-line="218" selection-start-column="69" selection-end-line="218" selection-end-column="69" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1533474526684" expanded="true" signature="5256:5281" ph="..." />
+            <element signature="e#2019#2885#0" expanded="false" />
+            <element signature="e#3043#3939#0" expanded="false" />
+            <element signature="e#4026#4602#0" expanded="false" />
+            <element signature="e#4749#6259#0" expanded="false" />
+            <element signature="e#7261#10296#0" expanded="false" />
+            <element signature="e#10335#10410#0" expanded="false" />
+            <element signature="e#10463#10697#0" expanded="false" />
+            <element signature="e#10776#11140#0" expanded="false" />
+            <element signature="e#11219#12905#0" expanded="false" />
+            <element signature="e#12977#13513#0" expanded="false" />
+            <marker date="1545143313311" expanded="true" signature="6375:6400" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="42">
-            <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-            <folding />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/league_api/graphs/base_graph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league_api/helpers/championgg_helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
