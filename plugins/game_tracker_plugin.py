@@ -176,7 +176,8 @@ class GameTrackerCommands(Plugin):
                     spectate_info = self.league_helper.user_in_game(summoner[2], summoner[0])
                 except ConnectionError as e:
                     logger = CacheHelper.get_logger("TrackerError")
-                    logger.zilean("Could not connect to the Riot API. Summoner: " + summoner[1] + "Channel: " + channel.name)
+                    logger.zilean("Could not connect to the Riot API. Summoner: " + summoner[1] + " Channel: " + channel.name)
+                    spectate_info = None
                     summoner_failed = True
                     connection_failure = True
 
